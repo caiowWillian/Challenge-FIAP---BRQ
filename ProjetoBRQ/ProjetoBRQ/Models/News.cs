@@ -31,6 +31,12 @@ namespace ProjetoBRQ.Models
         //[Column("DATA_ALTERACAO")]
         //public DateTime DataAlteracao { get; set; }
 
+        //[Column("ID_IMD")]
+        //[Column("ID_NOTICIA")]
+        public ICollection<ImgNews> ImgNews { get; set; }
+
+        [NotMapped]
+        public HttpPostedFileBase File { get; set; }
         //public virtual List<ImgNews> ImgNews { get; set; }
     }
 }

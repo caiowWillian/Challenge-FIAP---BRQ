@@ -1,7 +1,43 @@
-﻿
+﻿@model IEnumerable<ProjetoBRQ.Models.News>
 @{
     ViewBag.Title = "Index";
 }
+
+<div id="content" class="col-md-12">
+    <i id="load" class="fa fa-spinner fa-spin text-center" style="font-size:54px"></i>
+</div>
+<script>
+    $.ajax({
+        type: "GET",
+        url: "@Url.Action("TableIndex", "News")",
+        dataType: "json",
+        success: function (data) {
+            var table = '<table class="table table-bordered table-hover table-striped">';
+
+            table += '<tr>';
+            table += '<td><b>Código</b></td>';
+            table += '<td><b>Titulo</b></td>';
+            table += '<td><b>Descrição</b></td>';
+            table += '<td><b>Ações</b></td>';
+            table += '</tr>';
+            
+            for (var i = 0; i < data.list.length; i++) {
+                table += '<tr>';
+                table += `<td> ${data.list[i].Id}</td>`;
+                table += `<td> ${data.list[i].Title}</td>`;
+                table += `<td> ${data.list[i].Description}</td>`;
+                table += '<td>'
+                table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>`;
+                table += '</td>'; 
+                table += '</tr>'
+            }
+            table+= '</table>'
+            $('#content').append(table);
+            $('#load').css('display', 'none');
+        }
+    })
+</script>
 
 <h2>Index</h2>
 

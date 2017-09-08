@@ -22,19 +22,32 @@ namespace ProjetoBRQ.Models
         [Column("FILE_CONTENT")]
         public byte[] FileContent { get; set; }
 
-        [Column("ID_NOTICIA")]
-        public virtual News News { get; set; }
 
-        [Column("DELETADO")]
-        public bool Deletado { get; set; }
+        //public int IdNoticia { get; set; }
 
-        [Column("DATA_CADASTRO")]
-        public DateTime DataCadastro { get; set; }
+        //[ForeignKey("IdNoticia")]
+        //[Column("ID_NOTICIA")]
+        public News News { get; set; }
 
-        [Column("DATA_ALTERACAO")]
-        public DateTime? DataAlteracao { get; set; }
+        [ForeignKey("News"),Column("ID_NOTICIA")]
+        public int IdNews { get; set; }
+
+        //[Column("DELETADO")]
+        //public bool Deletado { get; set; }
+
+        //[Column("DATA_CADASTRO")]
+        //public DateTime DataCadastro { get; set; }
+
+        //[Column("DATA_ALTERACAO")]
+        //public DateTime? DataAlteracao { get; set; }
 
         [Column("FILE_LENGHT")]
         public int FileLenght { get; set; }
+
+        public string Base64Image()
+        {
+            if (FileContent != null && MimeType != null) return "data:"+MimeType+";base64,"+Convert.ToBase64String(FileContent);
+            return "";
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace ProjetoBRQ.Context
     {
         
         public DbSet<News> News { get; set; }
+        public DbSet<ImgNews> ImgNews { get; set; }
 
         public DbBRQ() : base("name=DbBRQ")
         {

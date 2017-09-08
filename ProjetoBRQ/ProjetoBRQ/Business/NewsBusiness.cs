@@ -13,9 +13,14 @@ namespace ProjetoBRQ.Business
 {
     public class NewsBusiness
     {
-        public int Add(News news)
+        public int Update(News News)
         {
-            return new NewsRepository().Add(news);
+            return new NewsRepository().Update(News);
+        }
+
+        public int Add(News News)
+        {
+            return new NewsRepository().Add(News);
         }
     }
 }
