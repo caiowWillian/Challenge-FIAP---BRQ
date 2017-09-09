@@ -165,12 +165,23 @@ namespace ProjetoBRQ.Controllers
             return View(news);
         }
 
-        public JsonResult TableIndex()
+        public JsonResult TableIndex(int? Page)
         {
+            const int registers = 10;
 
-            var arr = Db.News.Where(x => x.Deletado != 1).ToArray();
+            Page = Page ?? 1;
+            Page--;
 
-            return Json(new { list = arr }, JsonRequestBehavior.AllowGet);
+            var arr = Db.News.Where(x => x.Deletado != 1).OrderBy(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
+            var count = Db.News.Count();
+            var countPages = (count % registers) == 0 ? (count / registers) : Convert.ToInt32((count / registers)) + 1;
+
+            return Json(new
+            {
+                list = arr,
+                count = count,
+                countPages = countPages
+            }, JsonRequestBehavior.AllowGet);
         }
     }
 }

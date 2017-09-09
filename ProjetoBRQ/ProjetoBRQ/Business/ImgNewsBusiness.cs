@@ -1,8 +1,6 @@
 ﻿using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using ProjetoBRQ.Repository;
-using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Web;
