@@ -3,6 +3,7 @@ using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
@@ -23,18 +24,18 @@ namespace ProjetoBRQ.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(News News)
+        public async Task<ActionResult> Create(News News)
         {
             if (ModelState.IsValid)
             {
-                int id = new NewsBusiness().Add(News);
+                int id = await new NewsBusiness().AddAsync(News);
                 if(id > 0)
                 {
                     if(News.File != null)
                     {
                         try
                         {
-                            int idImg = new ImgNewsBusiness().Add(News.File, id);
+                            int idImg = await new ImgNewsBusiness().AddAsync(News.File, id);
                         }
                         catch (Exception) { }
                         
@@ -94,7 +95,7 @@ namespace ProjetoBRQ.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(News News)
+        public async Task<ActionResult> Edit(News News)
         {
             try
             {
@@ -104,22 +105,22 @@ namespace ProjetoBRQ.Controllers
                     var img = Db.ImgNews.Where(x => x.IdNews == News.Id).FirstOrDefault();
                     if (img != null)
                     {
-                        new ImgNewsBusiness().Update(News.File, img.Id);
+                        await new ImgNewsBusiness().UpdateAsync(News.File, img.Id);
                     }
                     else //Insert
                     {
-                        new ImgNewsBusiness().Add(News.File, News.Id);
+                        await new ImgNewsBusiness().AddAsync(News.File, News.Id);
                     }
 
                 }
-                new NewsBusiness().Update(News);
+                await new NewsBusiness().UpdateAsync(News);
             }
             catch (Exception) { return View("Index"); }
 
             return RedirectToAction("Details",new { Id = News.Id });
         }
 
-        public ActionResult Delete(int? Id)
+        public async Task<ActionResult> Delete(int? Id)
         {
             if(Id == null)
             {
@@ -136,7 +137,7 @@ namespace ProjetoBRQ.Controllers
                     return RedirectToAction("Index");
                 }
 
-                new NewsBusiness().Delete(Id.Value);
+                await new NewsBusiness().DeleteAsync(Id.Value);
             }
             catch (Exception) { return View("Index"); }
 
@@ -173,7 +174,7 @@ namespace ProjetoBRQ.Controllers
             Page--;
 
             var arr = Db.News.Where(x => x.Deletado != 1).OrderBy(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
-            var count = Db.News.Count();
+            var count = arr.Count();
             var countPages = (count % registers) == 0 ? (count / registers) : Convert.ToInt32((count / registers)) + 1;
 
             return Json(new

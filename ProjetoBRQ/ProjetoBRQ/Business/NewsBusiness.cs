@@ -1,23 +1,25 @@
 ﻿using ProjetoBRQ.DAO;
 using ProjetoBRQ.Models;
+using System.Threading.Tasks;
 
 namespace ProjetoBRQ.Business
 {
     public class NewsBusiness
     {
-        public int Delete(int Id)
+        public async Task<int> DeleteAsync(int Id)
         {
-            return new NewsRepository().Delete(Id);
+            
+            return await new NewsRepository().DeleteAsync(Id);
         }
 
-        public int Update(News News)
+        public async Task<int> UpdateAsync(News News)
         {
-            return new NewsRepository().Update(News);
+            return await new NewsRepository().UpdateAsync(News);
         }
 
-        public int Add(News News)
+        public async Task<int> AddAsync(News News)
         {
-            return new NewsRepository().Add(News);
+            return await new NewsRepository().AddAsync(News);
         }
     }
 }

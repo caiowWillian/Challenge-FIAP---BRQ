@@ -3,13 +3,14 @@ using ProjetoBRQ.Models;
 using ProjetoBRQ.Repository;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace ProjetoBRQ.Business
 {
     public class ImgNewsBusiness
     {
-        public int Update(HttpPostedFileBase File, int Id)
+        public async Task<int> UpdateAsync(HttpPostedFileBase File, int Id)
         {
             int error = -1;
             using (Stream inputStream = File.InputStream)
@@ -43,13 +44,13 @@ namespace ProjetoBRQ.Business
                     FileContent = memoryStream.ToArray()
                 };
 
-                new ImgNewsRepository().Update(imgNews);
+                await new ImgNewsRepository().UpdateAsync(imgNews);
             }
             
             return 0;
         }
 
-        public int Add(HttpPostedFileBase file,int idNews)
+        public async Task<int> AddAsync(HttpPostedFileBase file,int idNews)
         {
             int id = -1;
 
@@ -73,7 +74,7 @@ namespace ProjetoBRQ.Business
                     FileContent = memoryStream.ToArray()
                 };
 
-                id = new ImgNewsRepository().Add(imgNews, idNews);
+                id = await new ImgNewsRepository().AddAsync(imgNews, idNews);
             }
             return id;
         }

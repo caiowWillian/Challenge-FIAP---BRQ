@@ -3,12 +3,13 @@ using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace ProjetoBRQ.Repository
 {
     public class ImgNewsRepository
     {
-        public int Update(ImgNews ImgNews)
+        public async Task<int> UpdateAsync(ImgNews ImgNews)
         {
             string result;
             using (var db = new DbBRQ())
@@ -27,7 +28,7 @@ namespace ProjetoBRQ.Repository
                     cmd.Parameters.Add(new OracleParameter("v_file_lenght", OracleDbType.Int32, ImgNews.FileLenght, ParameterDirection.Input));
                     cmd.Parameters.Add("result", OracleDbType.Int32).Direction = ParameterDirection.Output;
 
-                    cmd.ExecuteNonQuery();
+                    await cmd.ExecuteNonQueryAsync();
 
                     result = cmd.Parameters["result"].Value.ToString();
                 }
@@ -35,7 +36,7 @@ namespace ProjetoBRQ.Repository
                 return 0;
         }
 
-        public int Add(ImgNews ImgNews, int idNews)
+        public async Task<int> AddAsync(ImgNews ImgNews, int idNews)
         {
             string id = "-1";
                 using (var db = new DbBRQ())
@@ -54,7 +55,7 @@ namespace ProjetoBRQ.Repository
                         cmd.Parameters.Add(new OracleParameter("v_file_lenght", OracleDbType.Int32, ImgNews.FileLenght, ParameterDirection.Input));
                         cmd.Parameters.Add("result_img_news", OracleDbType.Int32).Direction = ParameterDirection.Output;
 
-                        var i = cmd.ExecuteNonQuery();
+                        await cmd.ExecuteNonQueryAsync();
                         id = cmd.Parameters["result_img_news"].Value.ToString();
                         connection.Close();
                     }
