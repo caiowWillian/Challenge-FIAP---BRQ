@@ -1,14 +1,8 @@
-﻿using Newtonsoft.Json;
-using ProjetoBRQ.Business;
+﻿using ProjetoBRQ.Business;
 using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Web;
 using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
@@ -38,7 +32,12 @@ namespace ProjetoBRQ.Controllers
                 {
                     if(News.File != null)
                     {
-                        int idImg = new ImgNewsBusiness().Add(News.File, id);
+                        try
+                        {
+                            int idImg = new ImgNewsBusiness().Add(News.File, id);
+                        }
+                        catch (Exception) { }
+                        
                     }
                 }
                 if(id < 0)
@@ -58,14 +57,19 @@ namespace ProjetoBRQ.Controllers
                 return View("Index");
             }
 
-            var u = Db.News.Where(x => x.Id == Id).FirstOrDefault();
-            Db.ImgNews.Where(x => x.IdNews == Id).ToList();
-            if (u == null)
+            try
             {
-                return View("Index");
-            }
+                var u = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+                Db.ImgNews.Where(x => x.IdNews == Id).ToList();
 
-            return View(u);
+                if (u == null)
+                {
+                    return View("Index");
+                }
+                return View(u);
+            }
+            catch (Exception) { return View("Index"); }
+
         }
 
         public ActionResult Edit(int? Id)
@@ -75,46 +79,98 @@ namespace ProjetoBRQ.Controllers
                 return RedirectToAction("Index");
             }
 
-            var n = Db.News.Where(x => x.Id == Id).FirstOrDefault();
-            Db.ImgNews.Where(x => x.IdNews == Id).ToList();
-
-            if(n == null)
+            try
             {
-                return RedirectToAction("Index");
-            }
+                var n = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+                Db.ImgNews.Where(x => x.IdNews == Id).ToList();
 
-            return View(n);
+                if (n == null)
+                {
+                    return RedirectToAction("Index");
+                }
+                return View(n);
+            }
+            catch (Exception) { return View("Index"); }
         }
 
         [HttpPost]
         public ActionResult Edit(News News)
         {
-            if(News.File != null)
+            try
             {
-                //Update
-                var img = Db.ImgNews.Where(x => x.IdNews == News.Id).FirstOrDefault();
-                if (img != null)
+                if (News.File != null)
                 {
-                    new ImgNewsBusiness().Update(News.File,img.Id);
-                }
-                else //Insert
-                {
-                    new ImgNewsBusiness().Add(News.File, News.Id);
-                }
+                    //Update
+                    var img = Db.ImgNews.Where(x => x.IdNews == News.Id).FirstOrDefault();
+                    if (img != null)
+                    {
+                        new ImgNewsBusiness().Update(News.File, img.Id);
+                    }
+                    else //Insert
+                    {
+                        new ImgNewsBusiness().Add(News.File, News.Id);
+                    }
 
+                }
+                new NewsBusiness().Update(News);
             }
-            new NewsBusiness().Update(News);
+            catch (Exception) { return View("Index"); }
 
             return RedirectToAction("Details",new { Id = News.Id });
         }
 
+        public ActionResult Delete(int? Id)
+        {
+            if(Id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            try
+            {
+
+                var news = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+
+                if (news == null)
+                {
+                    return RedirectToAction("Index");
+                }
+
+                new NewsBusiness().Delete(Id.Value);
+            }
+            catch (Exception) { return View("Index"); }
+
+            return RedirectToAction("Index");
+        }
+
+        public ActionResult Preview(int? Id)
+        {
+            News news = null;
+            if(Id == null)
+            {
+                return View("Index");
+            }
+
+            try
+            {
+                news = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+
+                if(news == null)
+                {
+                    return View("Index");
+                }
+            }
+            catch (Exception) { return View("Index"); }
+
+            return View(news);
+        }
+
         public JsonResult TableIndex()
         {
-            var content = new StringContent(JsonConvert.SerializeObject(Db.News.ToList()), Encoding.UTF8, "application/json").ToString();
 
-            var arr = Db.News.ToArray();
+            var arr = Db.News.Where(x => x.Deletado != 1).ToArray();
 
-            return Json(new { list = arr },JsonRequestBehavior.AllowGet);
+            return Json(new { list = arr }, JsonRequestBehavior.AllowGet);
         }
     }
 }

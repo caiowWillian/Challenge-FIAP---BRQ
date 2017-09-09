@@ -22,8 +22,8 @@ namespace ProjetoBRQ.Models
         [Column("BODY")]
         public string Body { get; set; }
 
-        //[Column("DELETADO")]
-        //public bool Deletado { get; set; }
+        [Column("DELETADO")]
+        public int? Deletado { get; set; }
 
         //[Column("DATA_CADASTRO")]
         //public DateTime DataCadastro { get; set; }

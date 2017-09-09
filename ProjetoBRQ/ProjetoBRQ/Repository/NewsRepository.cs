@@ -2,20 +2,38 @@
 using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Web;
 
 namespace ProjetoBRQ.DAO
 {
     public class NewsRepository
     {
+        public int Delete(int Id)
+        {
+            string result = "0";
+            using(var db = new DbBRQ())
+            {
+                using(var cmd = db.Database.Connection.CreateCommand() as OracleCommand)
+                {
+                    var connection = (OracleConnection)db.Database.Connection;
+                    connection.Open();
+                    cmd.CommandText = "sp_delete_news";
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.Add(new OracleParameter("v_id", OracleDbType.Int32, Id, ParameterDirection.Input));
+                    cmd.Parameters.Add("result", OracleDbType.Int32).Direction = ParameterDirection.Output;
+                    cmd.ExecuteNonQuery();
+                    result = cmd.Parameters["result"].Value.ToString();
+                    connection.Close();
+                }
+            }
+
+            return Convert.ToInt32(result);
+        }
+
         public int Update(News News)
         {
             string id = "0";
-            try
-            {
+
                 using(var db = new DbBRQ())
                 {
                     using(var cmd = db.Database.Connection.CreateCommand() as OracleCommand)
@@ -35,8 +53,6 @@ namespace ProjetoBRQ.DAO
                         connection.Close();
                     }
                 }
-            }
-            catch (Exception e) { }
 
             return Convert.ToInt32(id);
         }
@@ -44,8 +60,6 @@ namespace ProjetoBRQ.DAO
         public int Add(News news)
         {
             string id = "-1";
-            try
-            {
                 using (var db = new DbBRQ())
                 {
                     using(var cmd = db.Database.Connection.CreateCommand() as OracleCommand)
@@ -66,7 +80,6 @@ namespace ProjetoBRQ.DAO
                         connection.Close();
                     }
                 }
-            }catch (Exception e) { }
 
             return Convert.ToInt32(id);
         }

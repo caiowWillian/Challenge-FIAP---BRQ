@@ -41,8 +41,6 @@ namespace ProjetoBRQ.Repository
         public int Add(ImgNews ImgNews, int idNews)
         {
             string id = "-1";
-            try
-            {
                 using (var db = new DbBRQ())
                 {
                     using (var cmd = db.Database.Connection.CreateCommand() as OracleCommand)
@@ -64,8 +62,6 @@ namespace ProjetoBRQ.Repository
                         connection.Close();
                     }
                 }
-            }
-            catch (Exception e) { }
 
             return Convert.ToInt32(id);
         }
