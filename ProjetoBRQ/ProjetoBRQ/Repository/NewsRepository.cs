@@ -71,9 +71,9 @@ namespace ProjetoBRQ.DAO
                         cmd.CommandText = "sp_insert_news";
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add(new OracleParameter("title", OracleDbType.Varchar2, news.Title, ParameterDirection.Input));
-                        cmd.Parameters.Add(new OracleParameter("body", OracleDbType.Varchar2, news.Body, ParameterDirection.Input));
-                        cmd.Parameters.Add(new OracleParameter("description", OracleDbType.Varchar2, news.Description, ParameterDirection.Input));
+                        cmd.Parameters.Add(new OracleParameter("v_title", OracleDbType.Varchar2, news.Title, ParameterDirection.Input));
+                        cmd.Parameters.Add(new OracleParameter("v_description", OracleDbType.Varchar2, news.Description, ParameterDirection.Input));
+                        cmd.Parameters.Add(new OracleParameter("v_body", OracleDbType.Varchar2, news.Body, ParameterDirection.Input));
                         cmd.Parameters.Add("result_img_news", OracleDbType.Int32).Direction = ParameterDirection.Output;
 
                         await cmd.ExecuteNonQueryAsync();

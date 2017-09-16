@@ -24,25 +24,20 @@ namespace ProjetoBRQ.Models
         [Column("FILE_CONTENT")]
         public byte[] FileContent { get; set; }
 
-
-        //public int IdNoticia { get; set; }
-
-        //[ForeignKey("IdNoticia")]
-        //[Column("ID_NOTICIA")]
         [ScriptIgnore(ApplyToOverrides = true)]
         public virtual News News { get; set; }
 
         [ForeignKey("News"),Column("ID_NOTICIA")]
         public int IdNews { get; set; }
 
-        //[Column("DELETADO")]
-        //public bool Deletado { get; set; }
+        [Column("DELETADO")]
+        public bool Deletado { get; set; }
 
-        //[Column("DATA_CADASTRO")]
-        //public DateTime DataCadastro { get; set; }
+        [Column("DATA_CADASTRO")]
+        public DateTime DataCadastro { get; set; } = DateTime.Now;
 
-        //[Column("DATA_ALTERACAO")]
-        //public DateTime? DataAlteracao { get; set; }
+        [Column("DATA_ALTERACAO")]
+        public DateTime? DataAlteracao { get; set; }
 
         [Column("FILE_LENGHT")]
         public int FileLenght { get; set; }

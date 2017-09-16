@@ -39,7 +39,7 @@
                 </table>
             </div>
             <div class="col-md-5">
-                @if (Model.ImgNews != null)
+                @if (Model.ImgNews.Count() > 0)
                 {
                     <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
                 }

@@ -13,7 +13,7 @@
         <h3>@Model.Description</h3>
         <div class="row">
             <div class="col-md5" style="float:left">
-                @if (Model.ImgNews != null)
+                @if (Model.ImgNews.Count() > 0)
                 {
                     <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
                 }

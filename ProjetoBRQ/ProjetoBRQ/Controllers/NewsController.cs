@@ -24,31 +24,32 @@ namespace ProjetoBRQ.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(News News)
+        public async Task<ActionResult> Create(News model)
         {
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
-                int id = await new NewsBusiness().AddAsync(News);
-                if(id > 0)
-                {
-                    if(News.File != null)
-                    {
-                        try
-                        {
-                            int idImg = await new ImgNewsBusiness().AddAsync(News.File, id);
-                        }
-                        catch (Exception) { }
-                        
-                    }
-                }
-                if(id < 0)
-                {
-                    return View(News);
-                }
-                return RedirectToAction("Details", new { Id = id });
+                return View(model);
             }
 
-            return View();
+            int id = await new NewsBusiness().AddAsync(model);
+
+            if (id > 0)
+            {
+                if (model.File != null)
+                {
+                    try
+                    {
+                        int idImg = await new ImgNewsBusiness().AddAsync(model.File, id);
+                    }
+                    catch (Exception) { }
+                }
+            }
+            if (id < 0)
+            {
+                return View(model);
+            }
+            return RedirectToAction("Details", new { Id = id });
         }
 
         public ActionResult Details(int? Id)
@@ -61,6 +62,7 @@ namespace ProjetoBRQ.Controllers
             try
             {
                 var u = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+                var q = u.ImgNews;
                 if (u == null)
                 {
                     return View("Index");
@@ -93,29 +95,34 @@ namespace ProjetoBRQ.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Edit(News News)
+        public async Task<ActionResult> Edit(News model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             try
             {
-                if (News.File != null)
+                if (model.File != null)
                 {
                     //Update
-                    var img = Db.ImgNews.Where(x => x.IdNews == News.Id).FirstOrDefault();
+                    var img = Db.ImgNews.Where(x => x.IdNews == model.Id).FirstOrDefault();
                     if (img != null)
                     {
-                        await new ImgNewsBusiness().UpdateAsync(News.File, img.Id);
+                        await new ImgNewsBusiness().UpdateAsync(model.File, img.Id);
                     }
                     else //Insert
                     {
-                        await new ImgNewsBusiness().AddAsync(News.File, News.Id);
+                        await new ImgNewsBusiness().AddAsync(model.File, model.Id);
                     }
 
                 }
-                await new NewsBusiness().UpdateAsync(News);
+                await new NewsBusiness().UpdateAsync(model);
             }
             catch (Exception) { return View("Index"); }
 
-            return RedirectToAction("Details",new { Id = News.Id });
+            return RedirectToAction("Details",new { Id = model.Id });
         }
 
         public async Task<ActionResult> Delete(int? Id)
