@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace ProjetoBRQ.Models
 {
@@ -33,7 +35,7 @@ namespace ProjetoBRQ.Models
 
         //[Column("ID_IMD")]
         //[Column("ID_NOTICIA")]
-        public ICollection<ImgNews> ImgNews { get; set; }
+        public virtual ICollection<ImgNews> ImgNews { get; set; }
 
         [NotMapped]
         public HttpPostedFileBase File { get; set; }

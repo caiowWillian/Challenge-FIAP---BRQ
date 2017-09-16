@@ -2,6 +2,7 @@
 using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -12,7 +13,6 @@ namespace ProjetoBRQ.Controllers
     {
         private DbBRQ Db = new DbBRQ();
 
-        // GET: Noticia
         public ActionResult Index()
         {
             return View();
@@ -61,8 +61,6 @@ namespace ProjetoBRQ.Controllers
             try
             {
                 var u = Db.News.Where(x => x.Id == Id).FirstOrDefault();
-                Db.ImgNews.Where(x => x.IdNews == Id).ToList();
-
                 if (u == null)
                 {
                     return View("Index");
@@ -169,13 +167,13 @@ namespace ProjetoBRQ.Controllers
         public JsonResult TableIndex(int? Page)
         {
             const int registers = 10;
-
+            
             Page = Page ?? 1;
             Page--;
 
-            var arr = Db.News.Where(x => x.Deletado != 1).OrderBy(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
-            var count = arr.Count();
-            var countPages = (count % registers) == 0 ? (count / registers) : Convert.ToInt32((count / registers)) + 1;
+            var arr = Db.News.Where(x => x.Deletado != 1).OrderByDescending(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
+            var count = Db.News.Count();
+            int countPages = (int)(count / registers);
 
             return Json(new
             {

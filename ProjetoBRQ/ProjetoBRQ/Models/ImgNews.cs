@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 
 namespace ProjetoBRQ.Models
 {
@@ -27,7 +29,8 @@ namespace ProjetoBRQ.Models
 
         //[ForeignKey("IdNoticia")]
         //[Column("ID_NOTICIA")]
-        public News News { get; set; }
+        [ScriptIgnore(ApplyToOverrides = true)]
+        public virtual News News { get; set; }
 
         [ForeignKey("News"),Column("ID_NOTICIA")]
         public int IdNews { get; set; }
