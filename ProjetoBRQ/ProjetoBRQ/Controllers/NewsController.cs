@@ -115,7 +115,7 @@ namespace ProjetoBRQ.Controllers
                     }
                     else //Insert
                     {
-                        await new ImgNewsBusiness().AddAsync(model.File, model.Id);
+                        await new ImgNewsBusiness().AddAsync(model.File, model.Id ?? 0);
                     }
 
                 }
@@ -172,22 +172,34 @@ namespace ProjetoBRQ.Controllers
             return View(news);
         }
 
-        public JsonResult TableIndex(int? Page)
+        public JsonResult TableIndex(int? Page, News Model)
         {
             const int registers = 10;
             
             Page = Page ?? 1;
             Page--;
 
-            var arr = Db.News.Where(x => x.Deletado != 1).OrderByDescending(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
-            var count = Db.News.Count();
+            var query = Db.News.Where(x => x.Deletado != 1);
+
+            if (Model.Id != null)
+                query = query.Where(x => x.Id == Model.Id);
+
+            if (Model.Title != null)
+                query = query.Where(x => x.Title == Model.Title);
+
+            //var arr = Db.News.Where(x => x.Deletado != 1).OrderByDescending(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
+
+            var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
+            var count = query.Count();
             int countPages = (int)(count / registers);
 
             return Json(new
             {
                 list = arr,
                 count = count,
-                countPages = countPages
+                countPages = countPages,
+                cod = Model.Id,
+                titulo = Model.Title == null ? "" : Model.Title
             }, JsonRequestBehavior.AllowGet);
         }
     }

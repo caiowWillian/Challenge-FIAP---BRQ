@@ -13,23 +13,23 @@
                 <table class="table table-bordered table-condensed table-condensed table-hover ">
                     <tr>
                         <td>
-                            <b>@Html.LabelFor(x => x.Title)</b>
+                            <b>@Html.LabelFor(m => m.Title)</b>
                         </td>
                         <td>
-                            @Html.DisplayFor(x => x.Title)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>@Html.LabelFor(x => x.Description)</b>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(x => x.Description)
+                            @Html.DisplayFor(m => m.Title)
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <b>@Html.LabelFor(x => x.Body)</b>
+                            <b>@Html.LabelFor(m => m.Description)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Body)</b>
                         </td>
                         <td>
                             @Html.Raw(Model.Body)

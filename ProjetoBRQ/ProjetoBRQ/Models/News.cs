@@ -1,11 +1,8 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
 using System.Web;
-using System.Web.Script.Serialization;
 
 namespace ProjetoBRQ.Models
 {
@@ -14,7 +11,7 @@ namespace ProjetoBRQ.Models
     {
         [Key]
         [Column("ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = "Titulo")]
         [Column("TITLE")]
