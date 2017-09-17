@@ -24,6 +24,7 @@ namespace ProjetoBRQ.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public async Task<ActionResult> Create(News model)
         {
 

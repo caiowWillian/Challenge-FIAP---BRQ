@@ -4,7 +4,6 @@
     ViewBag.Title = "Preview";
 }
 
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3 class="text-center">@Model.Title</h3>
@@ -19,7 +18,7 @@
                 }
             </div>
             <div class="col-md-5">
-                <p>@Model.Body</p>
+                @Html.Raw(Model.Body)
             </div>
         </div>
     </div>

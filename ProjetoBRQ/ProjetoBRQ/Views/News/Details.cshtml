@@ -3,7 +3,6 @@
     ViewBag.Title = "Details";
 }
 
-
 <div class="panel panel-default">
     <div class="panel-heading">
         <h3>Informações</h3>
@@ -33,7 +32,7 @@
                             <b>@Html.LabelFor(x => x.Body)</b>
                         </td>
                         <td>
-                            @Html.DisplayFor(x => x.Body)
+                            @Html.Raw(Model.Body)
                         </td>
                     </tr>
                 </table>
