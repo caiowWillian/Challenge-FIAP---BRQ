@@ -1,6 +1,7 @@
 ﻿using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using ProjetoBRQ.Repository;
+using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,7 +9,7 @@ using System.Web;
 
 namespace ProjetoBRQ.Business
 {
-    public class ImgNewsBusiness
+    public class ImgNewsBusiness : IDisposable
     {
         public async Task<int> UpdateAsync(HttpPostedFileBase File, int Id)
         {
@@ -77,6 +78,11 @@ namespace ProjetoBRQ.Business
                 id = await new ImgNewsRepository().AddAsync(imgNews, idNews);
             }
             return id;
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

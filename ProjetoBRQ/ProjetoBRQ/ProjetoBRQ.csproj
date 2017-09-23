@@ -195,16 +195,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Business\ClienteBusiness.cs" />
+    <Compile Include="Business\ContatosBusiness.cs" />
     <Compile Include="Business\ImgNewsBusiness.cs" />
     <Compile Include="Business\NewsBusiness.cs" />
     <Compile Include="Context\DbBRQ.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ContatosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />
     <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\Contatos.cs" />
     <Compile Include="Repository\ClientesRepository.cs" />
+    <Compile Include="Repository\ContatosRepository.cs" />
     <Compile Include="Repository\ImgNewsRepository.cs" />
     <Compile Include="Repository\NewsRepository.cs" />
     <Compile Include="Global.asax.cs">
@@ -286,6 +290,10 @@
     <Content Include="Views\Clientes\Details.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Contatos\Index.cshtml" />
+    <Content Include="Views\Contatos\Create.cshtml" />
+    <Content Include="Views\Contatos\Edit.cshtml" />
+    <Content Include="Views\Contatos\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,10 +1,11 @@
 ﻿using ProjetoBRQ.DAO;
 using ProjetoBRQ.Models;
+using System;
 using System.Threading.Tasks;
 
 namespace ProjetoBRQ.Business
 {
-    public class NewsBusiness
+    public class NewsBusiness : IDisposable
     {
         public async Task<int> DeleteAsync(int Id)
         {
@@ -20,6 +21,11 @@ namespace ProjetoBRQ.Business
         public async Task<int> AddAsync(News News)
         {
             return await new NewsRepository().AddAsync(News);
+        }
+
+        public void Dispose()
+        {
+            
         }
     }
 }

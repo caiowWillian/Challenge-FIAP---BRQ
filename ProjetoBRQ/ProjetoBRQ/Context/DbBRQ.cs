@@ -13,6 +13,8 @@ namespace ProjetoBRQ.Context
         public DbSet<News> News { get; set; }
         public DbSet<ImgNews> ImgNews { get; set; }
         public DbSet<Cliente> Cliente { get; set; }
+        public DbSet<Contatos> Contatos { get; set; }
+
 
         public DbBRQ() : base("name=DbBRQ")
         {

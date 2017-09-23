@@ -12,7 +12,7 @@ namespace ProjetoBRQ.Models
     {
         [Key]
         [Column("ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [Display(Name = "Cpf")]
         [Column("CPF")]

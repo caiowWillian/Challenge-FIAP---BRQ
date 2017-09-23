@@ -1,7 +1,6 @@
 ﻿using ProjetoBRQ.Business;
 using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
-using ProjetoBRQ.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,24 +10,54 @@ using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
 {
-    public class ClientesController : Controller
+    public class ContatosController : Controller
     {
-
         private DbBRQ Db = new DbBRQ();
-        
+
+        // GET: Contatos
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Details(int? Id)
+        public ActionResult Create()
         {
-            if(Id == null)
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Create(Contatos model)
+        {
+            string result = "";
+            if (!ModelState.IsValid)
+                return View(model);
+
+            try
+            {
+                var cb = new ContatosBusiness();
+                result = await cb.AddAsync(model);
+
+                if (cb.Error(result))
+                {
+                    ModelState.AddModelError("", result);
+                    return View(model);
+                }
+            }catch(Exception e)
+            {
+                ModelState.AddModelError("", e.Message);
+                return View(model);
+            }
+            return RedirectToAction("Details", new { id = Convert.ToInt32(result) });
+        }
+
+        public async Task<ActionResult> Edit(int? id)
+        {
+            if(id == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var model = Db.Cliente.Find(Id);
+            var model = await Db.Contatos.FindAsync(id);
 
             if(model == null)
             {
@@ -38,46 +67,8 @@ namespace ProjetoBRQ.Controllers
             return View(model);
         }
 
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        public async Task<ActionResult> Delete(int? Id)
-        {
-            if(Id == null)
-            {
-                ModelState.AddModelError("", "Código invalido!");
-                return RedirectToAction("Index");
-            }
-            
-            if(await Db.Cliente.FindAsync(Id) == null)
-            {
-                ModelState.AddModelError("", "Cliente não encontrado!");
-                return RedirectToAction("Index");
-            }
-
-            string result = "";
-            try
-            {
-                var cb = new ClienteBusiness();
-                result = await cb.DeleteAsync(Id ?? 0);
-
-                if (cb.Error(result))
-                {
-                    ModelState.AddModelError("", result);
-                    return RedirectToAction("Index");
-                }
-            }
-            catch(Exception e)
-            {
-                ModelState.AddModelError("", "Erro ao deletar "+e.Message);
-            }
-            return RedirectToAction("Index"); 
-        }
-
         [HttpPost]
-        public async Task<ActionResult> Create(Cliente model)
+        public async Task<ActionResult> Edit(Contatos model)
         {
             string result = "";
             if (!ModelState.IsValid)
@@ -85,8 +76,8 @@ namespace ProjetoBRQ.Controllers
 
             try
             {
-                var cb = new ClienteBusiness();
-                result = await cb.AddAsync(model);
+                var cb = new ContatosBusiness();
+                result = await cb.UpdateAsync(model);
 
                 if (cb.Error(result))
                 {
@@ -99,20 +90,19 @@ namespace ProjetoBRQ.Controllers
                 ModelState.AddModelError("", e.Message);
                 return View(model);
             }
-
             return RedirectToAction("Details", new { id = Convert.ToInt32(result) });
         }
 
-        public ActionResult Edit(int? Id)
+        public async Task<ActionResult> Details(int? id)
         {
-            if (Id == null)
+            if(id == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var model = Db.Cliente.Find(Id);
+            var model = await Db.Contatos.FindAsync(id);
 
-            if (model == null)
+            if(model == null)
             {
                 return RedirectToAction("Index");
             }
@@ -120,63 +110,66 @@ namespace ProjetoBRQ.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Edit(Cliente model)
+        public async Task<ActionResult> Delete(int? id)
         {
+            if(id == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            if(await Db.Contatos.FindAsync(id) == null)
+            {
+                return RedirectToAction("Index");
+            }
+
             string result = "";
-            if (!ModelState.IsValid)
-                return View(model);
 
             try
             {
-                var cb = new ClienteBusiness();
-                result = await cb.UpdateAsync(model);
+                var cb = new ContatosBusiness();
+                result = await cb.DeleteAsync(id ?? 0);
 
                 if (cb.Error(result))
                 {
                     ModelState.AddModelError("", result);
-                    return View(model);
+                    return RedirectToAction("Index");
                 }
             }
             catch(Exception e)
             {
-                ModelState.AddModelError("", e.Message);
-                return View(model);
+                ModelState.AddModelError("", "Erro ao deletar: " + e.Message);
             }
-
-            return RedirectToAction("Details", new { id = model.Id });
+            return RedirectToAction("Index");
         }
 
-        public JsonResult TableIndex(int? Page, Cliente model)
+        public JsonResult TableIndex(int? Page, Contatos model)
         {
             const int registers = 10;
 
             Page = Page ?? 1;
             Page--;
 
-            IQueryable<Cliente> query = Db.Cliente.Where(x => !x.Deletado);
+            IQueryable<Contatos> query = Db.Contatos.Where(x => !x.Deletado);
 
             if (model.Id != null)
                 query = query.Where(m => m.Id == model.Id);
-
-            if (model.Cpf != null)
-                query = query.Where(m => m.Cpf == model.Cpf);
-
-            if (model.Nome != null)
+            if (!string.IsNullOrEmpty(model.Nome))
                 query = query.Where(m => m.Nome == model.Nome);
-
-            if (model.Email != null)
+            if (!string.IsNullOrEmpty(model.Email))
                 query = query.Where(m => m.Email == model.Email);
+            if (!string.IsNullOrEmpty(model.Telefone))
+                query = query.Where(m => m.Telefone == model.Telefone);
 
             var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
-            var count = Db.Cliente.Count();
+            var count = query.Count();
             int countPages = (int)(count / registers);
 
             return Json(new
             {
                 list = arr,
                 count = count,
-                countPages = countPages
+                countPages = countPages,
+                cod = model.Id,
             }, JsonRequestBehavior.AllowGet);
         }
     }
