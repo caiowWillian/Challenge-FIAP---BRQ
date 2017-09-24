@@ -1,20 +1,26 @@
-﻿using ProjetoBRQ.Business;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using ProjetoBRQ.Business;
 using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class NewsController : Controller
     {
         private DbBRQ Db = new DbBRQ();
 
         public ActionResult Index()
         {
+            var user = User.Identity;
+            ApplicationDbContext context = new ApplicationDbContext();
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
+            var s = UserManager.GetRoles(user.GetUserId());
             return View();
         }
 
@@ -152,6 +158,8 @@ namespace ProjetoBRQ.Controllers
 
         public ActionResult Preview(int? Id)
         {
+            
+
             News news = null;
             if(Id == null)
             {

@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class ContatosController : Controller
     {
         private DbBRQ Db = new DbBRQ();

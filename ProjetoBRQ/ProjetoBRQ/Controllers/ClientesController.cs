@@ -11,6 +11,8 @@ using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
 {
+
+    [Authorize(Roles = "ADMIN")]
     public class ClientesController : Controller
     {
 
