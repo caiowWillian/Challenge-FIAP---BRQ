@@ -3,32 +3,41 @@
     ViewBag.Title = "Index";
 }
 
-<style>
-    .paged {
-        border: 1px solid black;
-        padding: 3px;
-    }
-</style>
+<link href="~/Content/TablesStyle.css" type="text/css" rel="stylesheet" />
 
-<div id="content" class="col-md-12">
-    <table id="table" class="table table-bordered table-hover table-striped">
-        <tr>
-            <td>@Html.TextBoxFor(m => m.Id, new { @class="form-control" })</td>
-            <td>@Html.TextBoxFor(m => m.Cpf, new { @class = "form-control" })</td>
-            <td>@Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })</td>
-            <td>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</td>
-        </tr>
-        <tr id="head">
-            <td>@Html.LabelFor(m => m.Id)</td>
-            <td>@Html.LabelFor(m => m.Cpf)</td>
-            <td>@Html.LabelFor(m => m.Nome)</td>
-            <td>@Html.LabelFor(m => m.Email)</td>
-            <td>Ações</td>
-        </tr>
-    </table>
-    <i id="load" class="fa fa-spinner fa-spin text-center" style="font-size:54px"></i>
+<div class="container">
+
+    <h2>Clientes</h2>
+    <div id="content" class="col-md-12">
+        <table id="table" class="table table-bordered table-hover table-striped">
+            <tr>
+                <td>@Html.TextBoxFor(m => m.Id, new { @placeholder = "Pesquisar por ID" })</td>
+                <td>@Html.TextBoxFor(m => m.Cpf, new { @placeholder = "Pesquisar por CPF" })</td>
+                <td>@Html.TextBoxFor(m => m.Nome, new { @placeholder = "Pesquisar por Nome" })</td>
+                <td>@Html.TextBoxFor(m => m.Email, new { @placeholder = "Pesquisar por E-mail" })</td>
+            </tr>
+            <tr id="head">
+                <td>@Html.LabelFor(m => m.Id)</td>
+                <td>@Html.LabelFor(m => m.Cpf)</td>
+                <td>@Html.LabelFor(m => m.Nome)</td>
+                <td>@Html.LabelFor(m => m.Email)</td>
+                <td>Ações</td>
+            </tr>
+        </table>
+        <div class="preloader-wrapper big active centered" id="load">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+        <div id="page">
+            <ul class="pagination" id="ulPage"></ul>
+        </div>
+    </div>
+    <div id="page"></div>
 </div>
-<div id="page"></div>
+
 <script>
     initTable()
     $('#Id').keypress(function (e) {
@@ -47,9 +56,11 @@
         enterPress(e);
     });
 
-    $(document).on('click', '.paged', function () {
+    $(document).on('click', '.eoq', function () {
 
         var id = $(this).attr('id').split('-')[1];
+
+        $('li').removeClass('active');
         $(".dynamic").remove();
         $('#load').css('display', 'inline-block');
         $.ajax({
@@ -61,6 +72,7 @@
                 $('#load').css('display', 'none');
             }
         });
+        $('li').parent().addClass('active');
     });
 
     function enterPress(e) {
@@ -72,7 +84,7 @@
 
     function initTable() {
         $(".dynamic").remove();
-        $(".paged").remove();
+        $(".eoq").remove();
         $.ajax({
             type: "GET",
             url: `@Url.Action("TableIndex", "Clientes")?Page=null&Id=${$('#Id').val()}&Cpf=${$("#Cpf").val()}&Nome=${$("#Nome").val()}&Email=${$("#Email").val()}`,
@@ -89,10 +101,14 @@
     function createPaged(data) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages; i++) {
-            html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+        for (var i = 1; i <= data.countPages; i++) {            
+            if (i == 1) {
+                html += `<li class="waves-effect active"><a class='eoq' href='#' id="paged-${i}">${i}</a></li>`;
+            } else {
+                html += `<li class="waves-effect"><a class='eoq' href='#' id="paged-${i}">${i}</a></li>`;
+            }
         }
-        $('#page').append(html);
+        $('#ulPage').append(html);
     }
 
     function createTable(data) {
@@ -104,9 +120,9 @@
             table += `<td> ${data.list[i].Nome}</td>`;
             table += `<td> ${data.list[i].Email}</td>`;
             table += '<td>';
-            table += `<a href="@Url.Action("Details","Clientes")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Edit", "Clientes")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Delete", "Clientes")/${data.list[i].Id}"><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Details","Clientes")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>info</i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Edit", "Clientes")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>create</i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Delete", "Clientes")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>delete</i></a>&nbsp&nbsp`;
             table += '</td>';
             table += '</tr>';
         }
@@ -114,5 +130,4 @@
     }
 </script>
 
-<h2>Index</h2>
 

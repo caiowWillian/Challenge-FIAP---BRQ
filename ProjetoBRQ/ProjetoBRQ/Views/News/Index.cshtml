@@ -3,50 +3,15 @@
     ViewBag.Title = "Index";
 }
 
-<style>
-    .paged {
-        border: 1px solid black;
-        padding: 3px;
-    }
+<link href="~/Content/TablesStyle.css" type="text/css" rel="stylesheet" />
 
-    ::-webkit-input-placeholder {
-        color: dimgrey;
-    }
-
-    :-moz-placeholder { /* Firefox 18- */
-        color: dimgrey;
-    }
-
-    ::-moz-placeholder { /* Firefox 19+ */
-        color: dimgrey;
-    }
-
-    :-ms-input-placeholder {
-        color: dimgrey;
-    }
-
-    #load {
-        position: relative;
-        /*top: 0;*/
-        left: 50%;
-        right: 50%;
-        /*bottom: 0;*/
-        margin: auto;
-    }
-</style>
 <div class="container">
     <h2>Notícias</h2>
     <div id="content" class="col-md-12">
-        <table id="table" class="table table-bordered table-hover table-striped info">
+        <table id="table" class="bordered">
             <tr>
-                <td>
-                    @Html.TextBoxFor(m => m.Id, new
-               { @*@class = "form-control",*@ @placeholder = "Pesquisar por ID"
-               })
-                </td>
-                <td>@Html.TextBoxFor(m => m.Title, new
-               { @*@class = "form-control"*@ @placeholder = "Pesquisar por Titulo"
-               })</td>
+                <td>@Html.TextBoxFor(m => m.Id, new{ @placeholder = "Pesquisar por ID"})</td>
+                <td>@Html.TextBoxFor(m => m.Title, new { @placeholder = "Pesquisar por Titulo"})</td>
             </tr>
             <tr id="head">
                 <td>@Html.LabelFor(m => m.Id)</td>
@@ -63,8 +28,6 @@
                 </div>
             </div>
         </div>
-
-        @*<i id="load" class="fa fa-spinner fa-spin text-center" style="font-size:54px"></i>*@
     </div>
     <div id="page">
         <ul class="pagination" id="ulPage"></ul>
@@ -92,7 +55,6 @@
 
     function initTable() {
         $(".dynamic").remove();
-        //$(".paged").remove();
         $(".eoq").remove();
         $.ajax({
             type: "GET",
@@ -112,7 +74,6 @@
         var id = $(this).attr('id').split('-')[1];
 
         $('li').removeClass('active');
-
         $(".dynamic").remove();
         $('#load').css('display', 'inline-block');
         $.ajax({
@@ -124,7 +85,6 @@
                 $('#load').css('display', 'none');
             }
         });
-
         $('#paged-' + id).parent().addClass('active');
     });
 

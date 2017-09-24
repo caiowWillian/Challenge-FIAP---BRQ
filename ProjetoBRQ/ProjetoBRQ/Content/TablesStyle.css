@@ -1,0 +1,29 @@
+﻿.paged {
+    border: 1px solid black;
+    padding: 3px;
+}
+
+::-webkit-input-placeholder {
+    color: dimgrey;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: dimgrey;
+}
+
+::-moz-placeholder { /* Firefox 19+ */
+    color: dimgrey;
+}
+
+:-ms-input-placeholder {
+    color: dimgrey;
+}
+
+#load {
+    position: relative;
+    /*top: 0;*/
+    left: 50%;
+    right: 50%;
+    /*bottom: 0;*/
+    margin: auto;
+}
