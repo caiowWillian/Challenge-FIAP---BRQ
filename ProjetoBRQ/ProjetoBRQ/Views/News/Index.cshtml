@@ -4,29 +4,73 @@
 }
 
 <style>
-    .paged{
+    .paged {
         border: 1px solid black;
         padding: 3px;
     }
 
-</style>
+    ::-webkit-input-placeholder {
+        color: dimgrey;
+    }
 
-<div id="content" class="col-md-12">
-    <table id="table" class="table table-bordered table-hover table-striped">
-        <tr>
-            <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
-            <td>@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })</td>
-        </tr>
-        <tr id="head">
-            <td>@Html.LabelFor(m => m.Id)</td>
-            <td>@Html.LabelFor(m => m.Title)</td>
-            <td>@Html.LabelFor(m => m.Description)</td>
-            <td>Ações</td>
-        </tr>
-    </table>
-    <i id="load" class="fa fa-spinner fa-spin text-center" style="font-size:54px"></i>
+    :-moz-placeholder { /* Firefox 18- */
+        color: dimgrey;
+    }
+
+    ::-moz-placeholder { /* Firefox 19+ */
+        color: dimgrey;
+    }
+
+    :-ms-input-placeholder {
+        color: dimgrey;
+    }
+
+    #load {
+        position: relative;
+        /*top: 0;*/
+        left: 50%;
+        right: 50%;
+        /*bottom: 0;*/
+        margin: auto;
+    }
+</style>
+<div class="container">
+    <h2>Notícias</h2>
+    <div id="content" class="col-md-12">
+        <table id="table" class="table table-bordered table-hover table-striped info">
+            <tr>
+                <td>
+                    @Html.TextBoxFor(m => m.Id, new
+               { @*@class = "form-control",*@ @placeholder = "Pesquisar por ID"
+               })
+                </td>
+                <td>@Html.TextBoxFor(m => m.Title, new
+               { @*@class = "form-control"*@ @placeholder = "Pesquisar por Titulo"
+               })</td>
+            </tr>
+            <tr id="head">
+                <td>@Html.LabelFor(m => m.Id)</td>
+                <td>@Html.LabelFor(m => m.Title)</td>
+                <td>@Html.LabelFor(m => m.Description)</td>
+                <td>Ações</td>
+            </tr>
+        </table>
+
+        <div class="preloader-wrapper big active centered" id="load">
+            <div class="spinner-layer spinner-blue-only">
+                <div class="circle-clipper left">
+                    <div class="circle"></div>
+                </div>
+            </div>
+        </div>
+
+        @*<i id="load" class="fa fa-spinner fa-spin text-center" style="font-size:54px"></i>*@
+    </div>
+    <div id="page">
+        <ul class="pagination" id="ulPage"></ul>
+    </div>
 </div>
-<div id="page"></div>
+
 <script>
 
     $('#Id').keypress(function (e) {
@@ -48,7 +92,8 @@
 
     function initTable() {
         $(".dynamic").remove();
-        $(".paged").remove();
+        //$(".paged").remove();
+        $(".eoq").remove();
         $.ajax({
             type: "GET",
             url: `@Url.Action("TableIndex", "News")?Page=null&Id=${$('#Id').val()}&Title=${$("#Title").val()}`,
@@ -61,9 +106,13 @@
         });
     }
 
-    $(document).on('click', '.paged', function () {
+    //$(document).on('click', '.paged', function () {
+    $(document).on('click', '.eoq', function () {
 
         var id = $(this).attr('id').split('-')[1];
+
+        $('li').removeClass('active');
+
         $(".dynamic").remove();
         $('#load').css('display', 'inline-block');
         $.ajax({
@@ -75,15 +124,23 @@
                 $('#load').css('display', 'none');
             }
         });
+
+        $('#paged-' + id).parent().addClass('active');
     });
 
     function createPaged(data) {
         var html = '';
 
         for (var i = 1; i <= data.countPages; i++) {
-            html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+            //html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+            if (i == 1) {
+                html += `<li class="waves-effect active"><a class='eoq' href='#' id="paged-${i}">${i}</a></li>`;
+            } else {
+                html += `<li class="waves-effect"><a class='eoq' href='#' id="paged-${i}">${i}</a></li>`;
+            }
         }
-        $('#page').append(html);
+        $('#ulPage').append(html);
+        //$('#page').append(html);
     }
 
 
@@ -96,10 +153,10 @@
             table += `<td> ${data.list[i].Title}</td>`;
             table += `<td> ${data.list[i].Description}</td>`;
             table += '<td>'
-            table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Delete","News")/${data.list[i].Id}"><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
-            table += `<a href="@Url.Action("Preview","News")/${data.list[i].Id}"><i class="fa fa-newspaper-o" aria-hidden="true" style='color:black'></i></a>`
+            table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>info</i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>create</i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Delete","News")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>delete</i></a>&nbsp&nbsp`
+            table += `<a href="@Url.Action("Preview","News")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>web</i></a>`
             table += '</td>';
             table += '</tr>'
         }
@@ -109,5 +166,5 @@
 
 </script>
 
-<h2>Index</h2>
+
 
