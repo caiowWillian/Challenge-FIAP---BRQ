@@ -11,10 +11,26 @@
     <div id="content" class="col-md-12">
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
-                <td>@Html.TextBoxFor(m => m.Id, new { @placeholder = "Pesquisar por ID" })</td>
-                <td>@Html.TextBoxFor(m => m.Cpf, new { @placeholder = "Pesquisar por CPF" })</td>
-                <td>@Html.TextBoxFor(m => m.Nome, new { @placeholder = "Pesquisar por Nome" })</td>
-                <td>@Html.TextBoxFor(m => m.Email, new { @placeholder = "Pesquisar por E-mail" })</td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i> @Html.TextBoxFor(m => m.Id, new { @placeholder = "Pesquisar por ID" })
+                    </div>
+                </td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i> @Html.TextBoxFor(m => m.Cpf, new { @placeholder = "Pesquisar por CPF" })
+                    </div>
+                </td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i> @Html.TextBoxFor(m => m.Nome, new { @placeholder = "Pesquisar por Nome" })
+                    </div>
+                </td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i> @Html.TextBoxFor(m => m.Email, new { @placeholder = "Pesquisar por E-mail" })
+                    </div>
+                </td>
             </tr>
             <tr id="head">
                 <td>@Html.LabelFor(m => m.Id)</td>
@@ -37,6 +53,7 @@
     </div>
     <div id="page"></div>
 </div>
+<br />
 
 <script>
     initTable()
@@ -101,7 +118,7 @@
     function createPaged(data) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages; i++) {            
+        for (var i = 1; i <= data.countPages; i++) {
             if (i == 1) {
                 html += `<li class="waves-effect active"><a class='eoq' href='#' id="paged-${i}">${i}</a></li>`;
             } else {

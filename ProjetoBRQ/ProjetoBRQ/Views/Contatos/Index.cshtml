@@ -1,17 +1,35 @@
 ﻿@model ProjetoBRQ.Models.Contatos
+
 @{
     ViewBag.Title = "Index";
 }
-<link href="~/Content/TablesStyle.css" type="text/css" rel="stylesheet"/>
+
+<link href="~/Content/TablesStyle.css" type="text/css" rel="stylesheet" />
 
 <div class="container">
     <h2>Contatos</h2>
+
     <div id="content" class="col-md-12">
         <table id="table" class="bordered">
             <tr>
-                <td>@Html.TextBoxFor(m => m.Id, new { @placeholder = "Pesquisar por ID" })</td>
-                <td>@Html.TextBoxFor(m => m.Nome, new { @placeholder = "Pesquisar por Nome" })</td>
-                <td>@Html.TextBoxFor(m => m.Email, new { @placeholder = "Pesquisar por E-mail" })</td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i>
+                        @Html.TextBoxFor(m => m.Id, new { @placeholder = "Pesquisar por ID" })
+                    </div>
+                </td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i>
+                        @Html.TextBoxFor(m => m.Nome, new { @placeholder = "Pesquisar por Nome" })
+                    </div>
+                </td>
+                <td>
+                    <div class="input-field">
+                        <i class="material-icons prefix">search</i> 
+                        @Html.TextBoxFor(m => m.Email, new { @placeholder = "Pesquisar por E-mail" })
+                    </div>
+                </td>
             </tr>
             <tr id="head">
                 <td>@Html.LabelFor(m => m.Id)</td>
@@ -28,14 +46,13 @@
                 </div>
             </div>
         </div>
-
-
-        @*<i id="load" class="fa fa-spinner fa-spin text-center" style="font-size:54px"></i>*@
     </div>
     <div id="page">
         <ul class="pagination" id="ulPage"></ul>
     </div>
 </div>
+<br />
+
 <script>
 
     initTable()
