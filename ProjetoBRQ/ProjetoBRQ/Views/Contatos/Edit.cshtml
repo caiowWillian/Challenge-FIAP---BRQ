@@ -2,27 +2,37 @@
 @{
     ViewBag.Title = "Edit";
 }
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nome)
-        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Telefone)
-        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
-    </div>
 
-    <input type="submit" class="btn btn-default" value="Cadastrar Contato" />
-}
-<h2>Edit</h2>
+<div class="container">
+    <h2>Editar contato</h2>
+    <a href="@Url.Action("Index","Contatos")">Listar contatos</a>
+    <br />
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="input-field">
+            @Html.LabelFor(m => m.Nome)
+            @Html.TextBoxFor(m => m.Nome, new { @class = "validate" })
+            @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+        </div>
+        <div class="input-field">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @type = "email" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="input-field">
+            @Html.LabelFor(m => m.Telefone)
+            @Html.TextBoxFor(m => m.Telefone, new { @type = "tel" })
+            @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+        </div>
+
+        <button class="btn waves-effect waves-light" type="submit" name="action">
+            Concluir Edição
+            <i class="material-icons right">send</i>
+        </button>        
+    }
+    <br />
+</div>
 

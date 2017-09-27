@@ -6,8 +6,9 @@
 <link href="~/Content/TablesStyle.css" type="text/css" rel="stylesheet" />
 
 <div class="container">
-    <h2>Notícias</h2>
-    <div id="content" class="col-md-12">
+    <h2>Notícias cadastradas</h2>
+
+    <div id="content" class="col m12">
         <table id="table" class="bordered">
             <tr>
                 <td>
@@ -115,10 +116,10 @@
         var table = '';
 
         for (var i = 0; i < data.list.length; i++) {
-            table += '<tr class="dynamic">';
+            table += '<tr>';
             table += `<td> ${data.list[i].Id}</td>`;
             table += `<td> ${data.list[i].Title}</td>`;
-            table += `<td> ${data.list[i].Description}</td>`;
+            table += `<td class="table-truncate"><div class="table-truncate__body">${data.list[i].Description}</div></td>`;
             table += '<td>'
             table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>info</i></a>&nbsp&nbsp`;
             table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="material-icons" aria-hidden="true" style='color:black'>create</i></a>&nbsp&nbsp`;

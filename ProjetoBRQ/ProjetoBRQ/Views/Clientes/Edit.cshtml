@@ -4,7 +4,10 @@
 }
 
 <div class="container">
-    <h2>Editar</h2>
+    <h2>Editar cliente</h2>
+    <a href="@Url.Action("Index","Contatos")">Listar contatos</a>
+    <br />
+
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
@@ -38,6 +41,7 @@
             @Html.LabelFor(m => m.Complemento)
             @Html.TextAreaFor(m => m.Complemento, new { @class = "materialize-textarea" })
         </div>
+
         <div class="input-field">
             <button class="btn waves-effect waves-light" type="submit">
                 Editar Cliente

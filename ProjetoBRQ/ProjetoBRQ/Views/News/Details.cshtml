@@ -4,15 +4,14 @@
 }
 <div class="container">
 
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3>Informações</h3>
         </div>
         <div class="panel-body">
             <div class="row">
-                <div class="col-md-5">
-                    <table class="table table-bordered table-condensed table-condensed table-hover ">
+                <div class="col l12">
+                    <table class="bordered">
                         <tr>
                             <td>
                                 <b>@Html.LabelFor(m => m.Title)</b>
@@ -42,15 +41,16 @@
                 <div class="col-md-5">
                     @if (Model.ImgNews.Count() > 0)
                     {
-                        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
+                        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()" class="responsive-img">
                     }
                     else
                     {
-                        <img src="">
+                        <img src="" class="responsive-img">
                     }
                 </div>
             </div>
         </div>
-        <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Edit</a>
+        <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Editar</a>
     </div>
 </div>
+<br />

@@ -5,60 +5,61 @@
 
 <div class="container">
     <div class="panel panel-default">
-        <h3>Informações</h3>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col-md-5">
-                    <table class="table table-bordered table-condensed table-hover ">
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Nome)</b>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => m.Nome)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Email)</b>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => m.Email)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Telefone)</b>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => m.Telefone)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Endereco)</b>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => m.Endereco)
-                            </td>
-                        </tr>
-                        @if (Model.Complemento != null)
-                        {
-                            <tr>
-                                <td>
-                                    <b>@Html.LabelFor(m => m.Complemento)</b>
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(m => m.Complemento)
-                                </td>
-                            </tr>
-                        }
+        <h3>Informações do cliente</h3>
+        <a href="@Url.Action("Index","Contatos")">Listar contatos</a>
+        <br />
 
-                    </table>
-                </div>
+        <div class="row">
+            <div class="col m5">
+                <table class="bordered">
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Nome)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Nome)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Email)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Email)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Telefone)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Telefone)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Endereco)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Endereco)
+                        </td>
+                    </tr>
+                    @if (Model.Complemento != null)
+                    {
+                        <tr>
+                            <td>
+                                <b>@Html.LabelFor(m => m.Complemento)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => m.Complemento)
+                            </td>
+                        </tr>
+                    }
+                </table>
             </div>
         </div>
         <a href="@Url.Action("Edit","Clientes", new { Id = Model.Id })">Edit</a>
     </div>
+    <br />
 </div>
 

@@ -27,3 +27,15 @@
     /*bottom: 0;*/
     margin: auto;
 }
+
+.table-truncate__body {
+    position: absolute;
+    max-width: 95%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.table-truncate {
+    position: relative;
+}
