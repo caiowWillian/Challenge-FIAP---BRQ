@@ -4,54 +4,32 @@
     ViewBag.Title = "Create";
 }
 
-<div class="container">
+@using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Body)
+        @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Body, "", new { @class = "text-danger" })
+    </div>
 
-    <h2>Cadastrar notícia</h2>
-    <a href="@Url.Action("Index","News")">Listar notícias</a>
-    <br />
+    <input type="file" name="File" id="File">
 
-    @using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="input-field">
-            @Html.LabelFor(m => m.Title)
-            @Html.TextBoxFor(m => m.Title, new { @class = "validate" })
-            @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Description)
-            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Body)
-            @Html.TextAreaFor(m => m.Body, new { @class = "materialize-textarea" })
-            @Html.ValidationMessageFor(m => m.Body, "", new { @class = "text-danger" })
-        </div>
-
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>Anexo</span>
-                <input type="file" id="File">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
-        </div>
-
-        <button class="btn waves-effect waves-light" type="submit" name="action">
-            Concluir Cadastro
-            <i class="material-icons right">send</i>
-        </button>
-
-        @*<button class="btn btn-default" type="submit">Submeter</button>*@
-    }
-    <div id="file-content"></div>
-    <img src="" height="200" id="pw" alt="Prévia da imagem...">
-</div>
-<br />
-
+    <button class="btn btn-default" type="submit">Submeter</button>
+}
+<div id="file-content"></div>
+<img src="" height="200" id="pw" alt="Prévia da imagem...">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
@@ -61,12 +39,12 @@
 
     $(function () {
         $('#Body').froalaEditor({
-            iframe:true
+            iframe: true
         })
     });
 
     function previewFile() {
-        var preview = document.getElementById('pw'); 
+        var preview = document.getElementById('pw');
         var file = document.getElementById('File').files[0];
         var reader = new FileReader();
 

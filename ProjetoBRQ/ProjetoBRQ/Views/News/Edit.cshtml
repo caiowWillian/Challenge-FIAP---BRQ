@@ -4,73 +4,39 @@
     ViewBag.Title = "Create";
 }
 
-<div class="container">
-    <h2>Editar notícia</h2>
-    <a href="@Url.Action("Index","News")">Listar notícias</a>
-    <br />
+@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Title)
+        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Body)
+        @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+    </div>
 
-    @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="input-field">
-            @Html.LabelFor(m => m.Title)
-            @Html.TextBoxFor(m => m.Title)
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Description)
-            @Html.TextBoxFor(m => m.Description)
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Body)
-            @Html.TextAreaFor(m => m.Body, new { @class = "materialize-textarea" })
-        </div>
+    <input type="file" name="File" id="File">
 
-        <div class="file-field input-field">
-            <div class="btn">
-                <span>Anexo</span>
-                <input type="file" id="File">
-            </div>
-            <div class="file-path-wrapper">
-                <input class="file-path validate" type="text">
-            </div>
-        </div>
+    <button class="btn btn-default" type="submit">Submeter</button>
+}
+<div id="file-content"></div>
+<h2>Create</h2>
 
-        @*<input type="file" name="File" id="File">*@
-        
-        <button class="btn waves-effect waves-light" type="submit" name="action">
-            Concluir Edição
-            <i class="material-icons right">send</i>
-        </button>
-    }
-
-    <br />
-
-    <div id="file-content"></div>
-
-    @if ((Model.ImgNews != null) && Model.ImgNews.FirstOrDefault() != null)
-    {
-        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()" height="200" id="pw" alt="Prévia da imagem...">
-    }
-    else
-    {
-        <img src="" height="200" id="pw" alt="Prévia da imagem...">
-    }
-
+@if ((Model.ImgNews != null) && Model.ImgNews.FirstOrDefault() != null)
+{
+    <img src="@Model.ImgNews.FirstOrDefault().Base64Image()" height="200" id="pw" alt="Prévia da imagem...">
+}
+else
+{
     <img src="" height="200" id="pw" alt="Prévia da imagem...">
-</div>
-<br />
+}
 
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<img src="" height="200" id="pw" alt="Prévia da imagem...">
 <script>
-    tinymce.init({ selector: 'textarea' });
-    $('#File').change(function () { previewFile() });
-
-    $(function () {
-        $('#Body').froalaEditor({
-            iframe: true
-        })
-    });
-
-
     $('#File').change(function () { previewFile() });
 
     function previewFile() {

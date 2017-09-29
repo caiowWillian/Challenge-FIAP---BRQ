@@ -3,37 +3,27 @@
     ViewBag.Title = "Create";
 }
 
-<div class="container">
-    <h2>Cadastrar contato</h2>
-    <a href="@Url.Action("Index","Contatos")">Listar contatos</a>
-    <br />
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="input-field">
-            @Html.LabelFor(m => m.Nome)
-            @Html.TextBoxFor(m => m.Nome)
-            @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email, new { @type = "email" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Telefone)
-            @Html.TextBoxFor(m => m.Telefone, new { @type = "tel" })
-            @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
-        </div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nome)
+        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Telefone)
+        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+    </div>
 
-        <button class="btn waves-effect waves-light" type="submit" name="action">
-            Cadastrar Contato
-            <i class="material-icons right">send</i>
-        </button>        
-    }
-    <br />
-
-</div>
-
+    <input type="submit" class="btn btn-default" value="Cadastrar Contato" />
+}
+<h2>Create</h2>

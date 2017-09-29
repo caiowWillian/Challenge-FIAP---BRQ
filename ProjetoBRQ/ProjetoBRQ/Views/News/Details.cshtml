@@ -2,55 +2,53 @@
 @{
     ViewBag.Title = "Details";
 }
-<div class="container">
 
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3>Informações</h3>
-        </div>
-        <div class="panel-body">
-            <div class="row">
-                <div class="col l12">
-                    <table class="bordered">
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Title)</b>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => m.Title)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Description)</b>
-                            </td>
-                            <td>
-                                @Html.DisplayFor(m => m.Description)
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <b>@Html.LabelFor(m => m.Body)</b>
-                            </td>
-                            <td>
-                                @Html.Raw(Model.Body)
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-                <div class="col-md-5">
-                    @if (Model.ImgNews.Count() > 0)
-                    {
-                        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()" class="responsive-img">
-                    }
-                    else
-                    {
-                        <img src="" class="responsive-img">
-                    }
-                </div>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>Informações</h3>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-5">
+                <table class="table table-bordered table-condensed table-condensed table-hover ">
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Title)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Title)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Description)</b>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(m => m.Description)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <b>@Html.LabelFor(m => m.Body)</b>
+                        </td>
+                        <td>
+                            @Html.Raw(Model.Body)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-5">
+                @if (Model.ImgNews.Count() > 0)
+                {
+                    <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
+                }
+                else
+                {
+                    <img src="">
+                }
             </div>
         </div>
-        <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Editar</a>
     </div>
+    <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Edit</a>
 </div>
-<br />
+

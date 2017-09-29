@@ -1,53 +1,43 @@
 ﻿@model ProjetoBRQ.Models.Cliente
 @{
-    ViewBag.Title = "Editar";
+    ViewBag.Title = "Create";
 }
 
-<div class="container">
-    <h2>Editar cliente</h2>
-    <a href="@Url.Action("Index","Contatos")">Listar contatos</a>
-    <br />
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nome)
+        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Cpf)
+        @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Email)
+        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Telefone)
+        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Endereco)
+        @Html.TextBoxFor(m => m.Endereco, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Endereco, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Complemento)
+        @Html.TextAreaFor(m => m.Complemento, new { @class = "form-control" })
+    </div>
 
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="input-field">
-            @Html.LabelFor(m => m.Nome)
-            @Html.TextBoxFor(m => m.Nome, new { @class = "validate" })
-            @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Cpf)
-            @Html.TextBoxFor(m => m.Cpf, new { @class = "validate" })
-            @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Email)
-            @Html.TextBoxFor(m => m.Email, new { @class = "validate", @type = "email" })
-            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Telefone)
-            @Html.TextBoxFor(m => m.Telefone, new { @class = "validate", @type = "tel" })
-            @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Endereco)
-            @Html.TextBoxFor(m => m.Endereco, new { @class = "validate" })
-            @Html.ValidationMessageFor(m => m.Endereco, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-field">
-            @Html.LabelFor(m => m.Complemento)
-            @Html.TextAreaFor(m => m.Complemento, new { @class = "materialize-textarea" })
-        </div>
+    <input type="submit" class="btn btn-default" value="Cadastrar Cliente" />
+}
 
-        <div class="input-field">
-            <button class="btn waves-effect waves-light" type="submit">
-                Editar Cliente
-                <i class="material-icons right">send</i>
-            </button>
-        </div>        
-    }
-</div>
-<br />
+<h2>Create</h2>
