@@ -2,6 +2,12 @@
 @{
     ViewBag.Title = "Edit";
 }
+
+<a class="btn btn-default" href="@Url.Action("Index","Contatos")">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    Listar Contatos
+</a>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()

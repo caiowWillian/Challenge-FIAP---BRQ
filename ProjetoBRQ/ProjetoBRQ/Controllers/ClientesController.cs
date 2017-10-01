@@ -12,25 +12,27 @@ using System.Web.Mvc;
 namespace ProjetoBRQ.Controllers
 {
 
-    [Authorize(Roles = "ADMIN")]
+    
     public class ClientesController : Controller
     {
 
         private DbBRQ Db = new DbBRQ();
-        
+
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Details(int? Id)
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult> Details(int? Id)
         {
             if(Id == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var model = Db.Cliente.Find(Id);
+            var model = await Db.Cliente.FindAsync(Id);
 
             if(model == null)
             {
@@ -40,11 +42,13 @@ namespace ProjetoBRQ.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult> Delete(int? Id)
         {
             if(Id == null)
@@ -78,6 +82,7 @@ namespace ProjetoBRQ.Controllers
             return RedirectToAction("Index"); 
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> Create(Cliente model)
         {
@@ -105,14 +110,15 @@ namespace ProjetoBRQ.Controllers
             return RedirectToAction("Details", new { id = Convert.ToInt32(result) });
         }
 
-        public ActionResult Edit(int? Id)
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult> Edit(int? Id)
         {
             if (Id == null)
             {
                 return RedirectToAction("Index");
             }
 
-            var model = Db.Cliente.Find(Id);
+            var model = await Db.Cliente.FindAsync(Id);
 
             if (model == null)
             {
@@ -122,6 +128,7 @@ namespace ProjetoBRQ.Controllers
             return View(model);
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> Edit(Cliente model)
         {

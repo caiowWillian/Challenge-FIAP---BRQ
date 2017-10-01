@@ -10,25 +10,28 @@ using System.Web.Mvc;
 
 namespace ProjetoBRQ.Controllers
 {
-    [Authorize(Roles = "ADMIN")]
     public class NewsController : Controller
     {
         private DbBRQ Db = new DbBRQ();
 
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Index()
         {
             var user = User.Identity;
             ApplicationDbContext context = new ApplicationDbContext();
             var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(context));
             var s = UserManager.GetRoles(user.GetUserId());
+
             return View();
         }
 
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateInput(false)]
         public async Task<ActionResult> Create(News model)
@@ -59,7 +62,8 @@ namespace ProjetoBRQ.Controllers
             return RedirectToAction("Details", new { Id = id });
         }
 
-        public ActionResult Details(int? Id)
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult> Details(int? Id)
         {
             if (Id == null)
             {
@@ -68,7 +72,7 @@ namespace ProjetoBRQ.Controllers
 
             try
             {
-                var u = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+                var u = await Db.News.FindAsync(Id);
                 var q = u.ImgNews;
                 if (u == null)
                 {
@@ -80,7 +84,8 @@ namespace ProjetoBRQ.Controllers
 
         }
 
-        public ActionResult Edit(int? Id)
+        [Authorize(Roles = "ADMIN")]
+        public async Task<ActionResult> Edit(int? Id)
         {
             if(Id == null)
             {
@@ -89,7 +94,7 @@ namespace ProjetoBRQ.Controllers
 
             try
             {
-                var n = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+                var n = await Db.News.FindAsync(Id);
                 Db.ImgNews.Where(x => x.IdNews == Id).ToList();
 
                 if (n == null)
@@ -101,6 +106,7 @@ namespace ProjetoBRQ.Controllers
             catch (Exception) { return View("Index"); }
         }
 
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> Edit(News model)
         {
@@ -132,6 +138,7 @@ namespace ProjetoBRQ.Controllers
             return RedirectToAction("Details",new { Id = model.Id });
         }
 
+        [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult> Delete(int? Id)
         {
             if(Id == null)
@@ -156,10 +163,8 @@ namespace ProjetoBRQ.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Preview(int? Id)
+        public async Task<ActionResult> Preview(int? Id)
         {
-            
-
             News news = null;
             if(Id == null)
             {
@@ -168,10 +173,11 @@ namespace ProjetoBRQ.Controllers
 
             try
             {
-                news = Db.News.Where(x => x.Id == Id).FirstOrDefault();
+                news = await Db.News.FindAsync(Id);
 
                 if(news == null)
                 {
+                    ModelState.AddModelError("", "Nenhuma noticia encontrada! Tente novamente");
                     return View("Index");
                 }
             }
@@ -194,8 +200,6 @@ namespace ProjetoBRQ.Controllers
 
             if (Model.Title != null)
                 query = query.Where(x => x.Title == Model.Title);
-
-            //var arr = Db.News.Where(x => x.Deletado != 1).OrderByDescending(x => x.Id).Skip(Page.Value* registers).Take(registers).ToArray();
 
             var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
             var count = query.Count();

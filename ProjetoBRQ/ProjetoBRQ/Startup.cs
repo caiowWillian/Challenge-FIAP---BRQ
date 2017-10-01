@@ -14,7 +14,7 @@ namespace ProjetoBRQ
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            createRolesandUsers();
+            //createRolesandUsers();
         }
 
         private async void createRolesandUsers()
@@ -37,8 +37,7 @@ namespace ProjetoBRQ
 
                 var ckUser = await UserManager.CreateAsync(user, userPWD);
                 if (ckUser.Succeeded)
-                    UserManager.AddToRole(user.Id,role.Name);
-                                          
+                    UserManager.AddToRole(user.Id,role.Name);                              
             }
         }
     }

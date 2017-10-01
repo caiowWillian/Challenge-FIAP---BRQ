@@ -63,6 +63,7 @@ namespace ProjetoBRQ.Business
 
         public void Dispose()
         {
+
             Db.Dispose();
         }
     }

@@ -1,4 +1,5 @@
 ﻿using ProjetoBRQ.Context;
+using ProjetoBRQ.Interface;
 using ProjetoBRQ.Models;
 using ProjetoBRQ.Repository;
 using ProjetoBRQ.Utils;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoBRQ.Business
 {
-    public class ClienteBusiness : IDisposable
+    public class ClienteBusiness : IDisposable, OperationBD
     {
         private DbBRQ Db;
 
@@ -17,7 +18,7 @@ namespace ProjetoBRQ.Business
             Db = new DbBRQ();
         }
 
-        public async Task<string> DeleteAsync(int Id)
+        public async Task<dynamic> DeleteAsync(int Id)
         {
             var x = await new ClientesRepository().DeleteAsync(Id);
 
@@ -74,5 +75,6 @@ namespace ProjetoBRQ.Business
         {
             Db.Dispose();
         }
+
     }
 }

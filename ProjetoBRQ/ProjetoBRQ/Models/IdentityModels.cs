@@ -25,7 +25,6 @@ namespace ProjetoBRQ.Models
         {
         }
 
-
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("RM73879");
@@ -36,5 +35,7 @@ namespace ProjetoBRQ.Models
         {
             return new ApplicationDbContext();
         }
+
+
     }
 }

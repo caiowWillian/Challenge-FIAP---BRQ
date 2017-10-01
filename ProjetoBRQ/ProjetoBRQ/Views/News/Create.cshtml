@@ -4,6 +4,11 @@
     ViewBag.Title = "Create";
 }
 
+<a class="btn btn-default" href="@Url.Action("Index","News")">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    Listar Noticias
+</a>
+
 @using (Html.BeginForm("Create", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()

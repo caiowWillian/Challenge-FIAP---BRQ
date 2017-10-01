@@ -44,7 +44,8 @@ namespace ProjetoBRQ.Models
 
         public string Base64Image()
         {
-            if (FileContent != null && MimeType != null) return "data:"+MimeType+";base64,"+Convert.ToBase64String(FileContent);
+            if (FileContent != null && MimeType != null)
+                return "data:"+MimeType+";base64,"+Convert.ToBase64String(FileContent);
             return "";
         }
     }

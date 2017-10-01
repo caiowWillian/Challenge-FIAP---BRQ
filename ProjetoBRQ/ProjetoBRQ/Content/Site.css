@@ -23,8 +23,7 @@ textarea {
     max-width: 280px;
 }
 
-footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+
+#table{
+    margin-top:10px;
 }

@@ -1,4 +1,4 @@
-﻿@model  ProjetoBRQ.Models.News
+﻿@model ProjetoBRQ.Models.Investiment
 @{
     ViewBag.Title = "Index";
 }
@@ -33,53 +33,51 @@
 
 <div id="content" class="col-md-12">
 
-    @Html.ActionLink("Cadastrar Noticias","Create","News", new { @class = "btn btn-default" })
+    @Html.ActionLink("Cadastrar Investimento", "Create", "Investiment", new { @class = "btn btn-default" })
 
     <table id="table" class="table table-bordered table-hover table-striped">
         <tr>
             <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
-            <td>@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })</td>
+            <td>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</td>
+            <td>@Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })</td>
+            <td>@Html.TextBoxFor(m => m.Value, new { @class= "form-control" })</td>
         </tr>
         <tr id="head">
             <td>@Html.LabelFor(m => m.Id)</td>
-            <td>@Html.LabelFor(m => m.Title)</td>
-            <td>@Html.LabelFor(m => m.Description)</td>
+            <td>@Html.LabelFor(m => m.Name)</td>
+            <td>@Html.LabelFor(m => m.Stock)</td>
+            <td>@Html.LabelFor(m => m.Value)</td>
             <td>Ações</td>
         </tr>
     </table>
     <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
 </div>
 <div id="page"></div>
-<script>
 
+<script>
     $('#Id').keypress(function (e) {
         enterPress(e);
     });
 
-    $('#Title').keypress(function (e) {
+    $('#Name').keypress(function (e) {
         enterPress(e);
     });
 
-    function enterPress(e) {
-        if (e.which == 13) {
-            initTable();
-            $(this).blur();
-        }
-    }
+    $('#Stock').keypress(function (e) {
+        enterPress(e);
+    });
 
-    initTable()
+    $('#Value').keypress(function (e) {
+        enterPress(e);
+    });
 
-    function removeElements() {
-        $(".dynamic").remove();
-        $(".paged").remove();
-    }
-
+    initTable();
     function initTable() {
         removeElements();
 
         $.ajax({
             type: "GET",
-            url: `@Url.Action("TableIndex", "News")?Page=null&Id=${$('#Id').val()}&Title=${$("#Title").val()}`,
+            url: `@Url.Action("TableIndex", "Investiment")?Page=null&Id=${$('#Id').val()}&Name=${$("#Name").val()}&Stock=${$('#Stock').val()}&Value=${$('#Value').val()}`,
             dataType: "json",
             success: function (data) {
                 createTable(data);
@@ -90,7 +88,7 @@
     }
 
     $(document).on('click', '.delete', function () {
-        $('.modal-body').append(`<a class='btn btn-default' href="@Url.Action("Delete","News")/${$(this).attr('id').split('-')[1]}">isso ai</a>`)
+        $('.modal-body').append(`<a class='btn btn-default' href="@Url.Action("Delete","Investiment")/${$(this).attr('id').split('-')[1]}">isso ai</a>`)
     });
 
     $(document).on('click', '.paged', function () {
@@ -99,7 +97,7 @@
         $('#load').css('display', 'inline-block');
         $.ajax({
             type: "GET",
-            url: `@Url.Action("TableIndex", "News")?Page=${id}&Id=${$('#Id').val()}&Title=${$("#Title").val()}`,
+            url: `@Url.Action("TableIndex", "Investiment")?Page=${id}&Id=${$('#Id').val()}&Name=${$("#Name").val()}&Stock=${$('#Stock').val()}&Value=${$('#Value').val()}`,
             dataType: "json",
             success: function (data) {
                 createTable(data);
@@ -109,11 +107,10 @@
         });
     });
 
-    function createPaged(data, id=1) {
+    function createPaged(data, id = 1) {
         var html = '';
-
-        for (var i = 1; i <= data.countPages; i++) {
-            if(i == id)
+        for (var i = 1; i <= data.countPages+1; i++) {
+            if (i == id)
                 html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}">${i}</a>`;
             else
                 html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
@@ -121,25 +118,36 @@
         $('#page').append(html);
     }
 
-    function createTable(data) {
+   function createTable(data) {
         var table = '';
+
         for (var i = 0; i < data.list.length; i++) {
             table += '<tr class="dynamic">';
             table += `<td> ${data.list[i].Id}</td>`;
-            table += `<td> ${data.list[i].Title}</td>`;
-            table += `<td> ${data.list[i].Description}</td>`;
+            table += `<td> ${data.list[i].Name}</td>`;
+            table += `<td> ${data.list[i].Stock}</td>`;
+            table += `<td> ${data.list[i].Value}</td>`;
             table += '<td>'
-            table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+            table += `<a href="@Url.Action("Edit", "Investiment")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
             table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
-            table += `<a href="@Url.Action("Preview","News")/${data.list[i].Id}"><i class="fa fa-newspaper-o" aria-hidden="true" style='color:black'></i></a>`
             table += '</td>';
             table += '</tr>'
+
         }
+
         $('#table').append(table);
     }
+    function enterPress(e) {
+        if (e.which == 13) {
+            initTable();
+            $(this).blur();
+        }
+    }
 
+    function removeElements() {
+        $(".dynamic").remove();
+        $(".paged").remove();
+    }
 </script>
-
-<h2>Index</h2>
 

@@ -3,6 +3,11 @@
     ViewBag.Title = "Create";
 }
 
+<a class="btn btn-default" href="@Url.Action("Index","Clientes")">
+    <i class="fa fa-list" aria-hidden="true"></i>
+    Listar Clientes
+</a>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
