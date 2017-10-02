@@ -1,0 +1,9 @@
+﻿@using Microsoft.AspNet.Identity
+@if (Request.IsAuthenticated)
+{   
+    if(User.IsInRole("ADMIN"))
+    {
+        <!-- /#sidebar-wrapper -->
+        <a href="#menu-toggle" class="btn btn-secondary" id="menu-toggle">Area Adm</a>
+    }       
+}

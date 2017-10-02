@@ -2,92 +2,65 @@
     ViewBag.Title = "Home Page";
 }
 
-<style>
-    #list-news li {
-        color: #000000;
-        list-style-type: none;
-        margin: 10px;
-        padding: 20px;
-        height: 150px;
-        border-radius: 11px;
-        box-shadow: 0 3px 7px -3px rgba(0, 0, 0, 0.3);
-        background-color: #FAFDFD;
-    }
-</style>
-
-<ul id="list-news">
-</ul>
-<p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
-
-<p class="text-center">
-    <button class="btn btn-link" id="more">Carregar mais noticias</button>
-</p>
-<script>
-    var count = 1;
-
-    $('#more').click(function () {
-        count++;
-        $('#load').css('display', 'inline-block');
-        initList();
-    });
-
-    initList();
-
-    function initList() {
-        $('#more').css('display', 'none');
-        $.ajax({
-            type: "GET",
-            url: `@Url.Action("TableIndex", "News")?Page=${count}`,
-            dataType: "json",
-            success: function (data) {
-                createList(data);
-                if (count < data.countPages)
-                    $('#more').css('display', 'inline-block');
-                $('#load').css('display', 'none');
-            }
-        });
-    }
-
-    function createList(data) {
-        var l = '';
-
-        for (var i = 0; i < data.list.length; i++) {
-            l += `<a target="_blank" href = '@Url.Action("Preview","News")/${data.list[i].Id}'>`;
-            l += `<li><h3>${data.list[i].Title}</h3>`;
-            l += `<h4>${data.list[i].Description}</h4>`;
-            l += `</li>`
-            l += '</a>';
-        }
-        $('#list-news').append(l);
-    }
-</script>
-
-<!--
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+<header class="masthead">
+    <div class="overlay">
+        <div class="container">
+            <h1 class="display-1 text-white">One Page Wonder</h1>
+            <h2 class="display-4 text-white">Will Rock Your Socks Off</h2>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+</header>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 order-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=836" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 order-1">
+                <div class="p-5">
+                    <h2 class="display-4">For those about to rock...</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+</section>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=452" alt="">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="p-5">
+                    <h2 class="display-4">We salute you!</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
--->
+</section>
+
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 order-2">
+                <div class="p-5">
+                    <img class="img-fluid rounded-circle" src="https://unsplash.it/500/500?image=453" alt="">
+                </div>
+            </div>
+            <div class="col-md-6 order-1">
+                <div class="p-5">
+                    <h2 class="display-4">Let there be rock!</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quod aliquid, mollitia odio veniam sit iste esse assumenda amet aperiam exercitationem, ea animi blanditiis recusandae! Ratione voluptatum molestiae adipisci, beatae obcaecati.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

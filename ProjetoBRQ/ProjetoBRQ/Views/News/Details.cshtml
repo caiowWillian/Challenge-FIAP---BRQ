@@ -3,57 +3,60 @@
     ViewBag.Title = "Details";
 }
 
-<a class="btn btn-default" href="@Url.Action("Index","News")">
-    <i class="fa fa-list" aria-hidden="true"></i>
-    Listar Noticias
-</a>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3>Informações</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-5">
-                <table class="table table-bordered table-condensed table-condensed table-hover ">
-                    <tr>
-                        <td>
-                            <b>@Html.LabelFor(m => m.Title)</b>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => m.Title)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>@Html.LabelFor(m => m.Description)</b>
-                        </td>
-                        <td>
-                            @Html.DisplayFor(m => m.Description)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>@Html.LabelFor(m => m.Body)</b>
-                        </td>
-                        <td>
-                            @Html.Raw(Model.Body)
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div class="col-md-5">
-                @if (Model.ImgNews.Count() > 0)
-                {
-                    <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
-                }
-                else
-                {
-                    <img src="">
-                }
+<div class="container">
+    <a class="btn btn-default" href="@Url.Action("Index","News")">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Listar Noticias
+    </a>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Informações</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <table class="table table-bordered table-condensed table-condensed table-hover ">
+                        <tr>
+                            <td>
+                                <b>@Html.LabelFor(m => m.Title)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => m.Title)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>@Html.LabelFor(m => m.Description)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => m.Description)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>@Html.LabelFor(m => m.Body)</b>
+                            </td>
+                            <td>
+                                @Html.Raw(Model.Body)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-5">
+                    @if (Model.ImgNews.Count() > 0)
+                    {
+                        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
+                    }
+                    else
+                    {
+                        <img src="">
+                    }
+                </div>
             </div>
         </div>
+        <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Edit</a>
     </div>
-    <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Edit</a>
 </div>
-
+<br />

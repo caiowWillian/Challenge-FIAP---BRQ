@@ -4,43 +4,47 @@
     ViewBag.Title = "Create";
 }
 
-<a class="btn btn-default" href="@Url.Action("Index","News")">
-    <i class="fa fa-list" aria-hidden="true"></i>
-    Listar Noticias
-</a>
+<br />
+<div class="container">
+    <a class="btn btn-default" href="@Url.Action("Index","News")">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Listar Noticias
+    </a>
 
-@using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <div class="form-group">
-        @Html.LabelFor(m => m.Title)
-        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Description)
-        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Body)
-        @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
-    </div>
+    @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title)
+            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Body)
+            @Html.TextAreaFor(m => m.Body, new { @class = "form-control" })
+        </div>
 
-    <input type="file" name="File" id="File">
+        <input type="file" name="File" id="File">
 
-    <button class="btn btn-default" type="submit">Submeter</button>
-}
-<div id="file-content"></div>
-<h2>Create</h2>
+        <button class="btn btn-default" type="submit">Submeter</button>
+    }
+    <div id="file-content"></div>
+    <h2>Create</h2>
 
-@if ((Model.ImgNews != null) && Model.ImgNews.FirstOrDefault() != null)
-{
-    <img src="@Model.ImgNews.FirstOrDefault().Base64Image()" height="200" id="pw" alt="Prévia da imagem...">
-}
-else
-{
+    @if ((Model.ImgNews != null) && Model.ImgNews.FirstOrDefault() != null)
+    {
+        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()" height="200" id="pw" alt="Prévia da imagem...">
+    }
+    else
+    {
+        <img src="" height="200" id="pw" alt="Prévia da imagem...">
+    }
+
     <img src="" height="200" id="pw" alt="Prévia da imagem...">
-}
+</div>
 
-<img src="" height="200" id="pw" alt="Prévia da imagem...">
 <script>
     $('#File').change(function () { previewFile() });
 

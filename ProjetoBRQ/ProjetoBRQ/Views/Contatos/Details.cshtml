@@ -3,46 +3,50 @@
     ViewBag.Title = "Details";
 }
 
-<a class="btn btn-default" href="@Url.Action("Index","Contatos")">
-    <i class="fa fa-list" aria-hidden="true"></i>
-    Listar Contatos
-</a>
+<div class="container">
+    <h2>Details</h2>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3>Informações</h3>
-    </div>
-    <div class="panel-body">
-        <div class="row">
-            <div class="col-md-5">
-                <table class="tbale table-bordered table-condensed table-hover">
-                    <tr>
-                        <td>@Html.LabelFor(m => m.Nome)</td>
-                        <td>@Html.DisplayFor(m => m.Nome)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => m.Email)</td>
-                        <td>@Html.DisplayFor(m => m.Email)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => m.Telefone)</td>
-                        <td>@Html.DisplayFor(m => m.Telefone)</td>
-                    </tr>
-                    <tr>
-                        <td>@Html.LabelFor(m => m.DataCadastro)</td>
-                        <td>@Html.DisplayFor(m => m.DataCadastro)</td>
-                    </tr>
-                    @if (Model.DataAlteracao != null)
-                    {
+    <a class="btn btn-default" href="@Url.Action("Index","Contatos")">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Listar Contatos
+    </a>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Informações</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-5">
+                    <table class="tbale table-bordered table-condensed table-hover">
                         <tr>
-                            <td>@Html.LabelFor(m => m.DataAlteracao)</td>
-                            <td>@Html.DisplayFor(m => m.DataAlteracao)</td>
+                            <td>@Html.LabelFor(m => m.Nome)</td>
+                            <td>@Html.DisplayFor(m => m.Nome)</td>
                         </tr>
-                    }
-                </table>
+                        <tr>
+                            <td>@Html.LabelFor(m => m.Email)</td>
+                            <td>@Html.DisplayFor(m => m.Email)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(m => m.Telefone)</td>
+                            <td>@Html.DisplayFor(m => m.Telefone)</td>
+                        </tr>
+                        <tr>
+                            <td>@Html.LabelFor(m => m.DataCadastro)</td>
+                            <td>@Html.DisplayFor(m => m.DataCadastro)</td>
+                        </tr>
+                        @if (Model.DataAlteracao != null)
+                        {
+                            <tr>
+                                <td>@Html.LabelFor(m => m.DataAlteracao)</td>
+                                <td>@Html.DisplayFor(m => m.DataAlteracao)</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<h2>Details</h2>
+
+</div>

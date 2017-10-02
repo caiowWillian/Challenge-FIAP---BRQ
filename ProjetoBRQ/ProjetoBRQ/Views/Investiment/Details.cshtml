@@ -3,49 +3,51 @@
     ViewBag.Title = "Details";
 }
 
-<a class="btn btn-default" href="@Url.Action("Index","Investiment")">
-    <i class="fa fa-list" aria-hidden="true"></i>
-    Listar Investimento
-</a>
+<div class="container">
+    <a class="btn btn-default" href="@Url.Action("Index","Investiment")">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Listar Investimento
+    </a>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h3>Informações</h3>
-    </div>
-    <div class="panel-body">
-        <div class="col-md-5">
-            <table class="table table-hover table-bordered table-condensed">
-                <tr>
-                    <td>@Html.LabelFor(m => m.Name)</td>
-                    <td>@Html.DisplayFor(m => m.Name)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.Stock)</td>
-                    <td>@Html.DisplayFor(m => m.Stock)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.Value)</td>
-                    <td>@Html.DisplayFor(m => m.Value)</td>
-                </tr>
-                <tr>
-                    <td>@Html.LabelFor(m => m.InputDate)</td>
-                    <td>@Html.DisplayFor(m => m.InputDate)</td>
-                </tr>
-                @if (Model.UpdateDate != null)
-                {
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3>Informações</h3>
+        </div>
+        <div class="panel-body">
+            <div class="col-md-5">
+                <table class="table table-hover table-bordered table-condensed">
                     <tr>
-                        <td>@Html.LabelFor(m => m.UpdateDate)</td>
-                        <td>@Html.DisplayFor(m => m.UpdateDate)</td>
+                        <td>@Html.LabelFor(m => m.Name)</td>
+                        <td>@Html.DisplayFor(m => m.Name)</td>
                     </tr>
-                }
-                <tr>
-                    <td>@Html.LabelFor(m => m.Description)</td>
-                    <td>@Html.Raw(Model.Description)</td>
-                </tr>
-            </table>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.Stock)</td>
+                        <td>@Html.DisplayFor(m => m.Stock)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.Value)</td>
+                        <td>@Html.DisplayFor(m => m.Value)</td>
+                    </tr>
+                    <tr>
+                        <td>@Html.LabelFor(m => m.InputDate)</td>
+                        <td>@Html.DisplayFor(m => m.InputDate)</td>
+                    </tr>
+                    @if (Model.UpdateDate != null)
+                    {
+                        <tr>
+                            <td>@Html.LabelFor(m => m.UpdateDate)</td>
+                            <td>@Html.DisplayFor(m => m.UpdateDate)</td>
+                        </tr>
+                    }
+                    <tr>
+                        <td>@Html.LabelFor(m => m.Description)</td>
+                        <td>@Html.Raw(Model.Description)</td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 
-<h2>Details</h2>
+    <h2>Details</h2>
+</div>
 

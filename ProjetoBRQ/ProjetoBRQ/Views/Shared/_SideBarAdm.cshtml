@@ -1,0 +1,75 @@
+﻿@using Microsoft.AspNet.Identity
+
+@if (Request.IsAuthenticated)
+{
+    <!-- Sidebar -->
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a href="#">
+                        Administrador
+                    </a>
+                </li>
+
+                <li class="nav-item" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentsNoticias" data-parent="#exampleAccordion">
+                        <span class="nav-link-text">Notícias</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponentsNoticias">
+                        <li>
+                            @Html.ActionLink("Cadastrar", "Create", "News", routeValues: null, htmlAttributes: new { id = "createNewsLink" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Listar", "Index", "News", routeValues: null, htmlAttributes: new { id = "indexNewsLink" })
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentsContatos" data-parent="#exampleAccordion">
+                        <span class="nav-link-text">Contatos</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponentsContatos">
+                        <li>
+                            @Html.ActionLink("Cadastrar", "Create", "Contatos", routeValues: null, htmlAttributes: new { id = "createContatosLink" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Listar", "Index", "Contatos", routeValues: null, htmlAttributes: new { id = "indexContatosLink" })
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentsClientes" data-parent="#exampleAccordion">
+                        <span class="nav-link-text">Clientes</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponentsClientes">
+                        <li>
+                            @Html.ActionLink("Cadastrar", "Create", "Clientes", routeValues: null, htmlAttributes: new { id = "createClientesLink" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Listar", "Index", "Clientes", routeValues: null, htmlAttributes: new { id = "indexClientesLink" })
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item" data-placement="right" title="Components">
+                    <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponentsInvestimentos" data-parent="#exampleAccordion">
+                        <span class="nav-link-text">Investimentos</span>
+                    </a>
+                    <ul class="sidenav-second-level collapse" id="collapseComponentsInvestimentos">
+                        <li>
+                            @Html.ActionLink("Cadastrar", "Create", "Investiment", routeValues: null, htmlAttributes: new { id = "createClientesLink" })
+                        </li>
+                        <li>
+                            @Html.ActionLink("Listar", "Index", "Investiment", routeValues: null, htmlAttributes: new { id = "indexClientesLink" })
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+    <!-- /#sidebar-wrapper -->
+}

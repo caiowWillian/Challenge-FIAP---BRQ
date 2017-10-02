@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    #list-news li {
+        color: #000000;
+        list-style-type: none;
+        margin: 10px;
+        padding: 20px;
+        height: 150px;
+        border-radius: 11px;
+        box-shadow: 0 3px 7px -3px rgba(0, 0, 0, 0.3);
+        background-color: #FAFDFD;
+    }
+</style>
+
+<ul id="list-news"></ul>
+<p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+
+<p class="text-center">
+    <button class="btn btn-link" id="more">Carregar mais noticias</button>
+</p>
+<script>
+    var count = 1;
+
+    $('#more').click(function () {
+        count++;
+        $('#load').css('display', 'inline-block');
+        initList();
+    });
+
+    initList();
+
+    function initList() {
+        $('#more').css('display', 'none');
+        $.ajax({
+            type: "GET",
+            url: `@Url.Action("TableIndex", "News")?Page=${count}`,
+            dataType: "json",
+            success: function (data) {
+                createList(data);
+                if (count < data.countPages)
+                    $('#more').css('display', 'inline-block');
+                $('#load').css('display', 'none');
+            }
+        });
+    }
+
+    function createList(data) {
+        var l = '';
+
+        for (var i = 0; i < data.list.length; i++) {
+            l += `<a target="_blank" href = '@Url.Action("Preview","News")/${data.list[i].Id}'>`;
+            l += `<li><h3>${data.list[i].Title}</h3>`;
+            l += `<h4>${data.list[i].Description}</h4>`;
+            l += `</li>`
+            l += '</a>';
+        }
+        $('#list-news').append(l);
+    }
+</script>

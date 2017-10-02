@@ -26,5 +26,10 @@ namespace ProjetoBRQ.Controllers
 
             return View();
         }
+
+        public ActionResult Novidades()
+        {
+            return View();
+        }
     }
 }

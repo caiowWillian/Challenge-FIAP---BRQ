@@ -9,7 +9,7 @@
         padding: 3px;
     }
 </style>
-
+<br />
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
@@ -27,31 +27,34 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-
     </div>
 </div>
 
-<div id="content" class="col-md-12">
+<div class="container">
+    <div id="content" class="col-md-12">
+        <h2>Notícias</h2>
 
-    @Html.ActionLink("Cadastrar Noticias","Create","News", new { @class = "btn btn-default" })
+        @Html.ActionLink("Cadastrar Noticias", "Create", "News", new { @class = "btn btn-default" })
 
-    <table id="table" class="table table-bordered table-hover table-striped">
-        <tr>
-            <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
-            <td>@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })</td>
-        </tr>
-        <tr id="head">
-            <td>@Html.LabelFor(m => m.Id)</td>
-            <td>@Html.LabelFor(m => m.Title)</td>
-            <td>@Html.LabelFor(m => m.Description)</td>
-            <td>Ações</td>
-        </tr>
-    </table>
-    <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+        <table id="table" class="table table-bordered table-hover table-striped">
+            <tr>
+                <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
+                <td>@Html.TextBoxFor(m => m.Title, new { @class = "form-control" })</td>
+            </tr>
+            <tr id="head">
+                <td>@Html.LabelFor(m => m.Id)</td>
+                <td>@Html.LabelFor(m => m.Title)</td>
+                <td>@Html.LabelFor(m => m.Description)</td>
+                <td>Ações</td>
+            </tr>
+        </table>
+        <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+    </div>
+    <div id="page"></div>
 </div>
-<div id="page"></div>
-<script>
+<br />
 
+<script>
     $('#Id').keypress(function (e) {
         enterPress(e);
     });
@@ -107,9 +110,9 @@
                 $('#load').css('display', 'none');
             }
         });
-    });
+    });    
 
-    function createPaged(data, id=1) {
+    function createPaged(data, id = 1) {
         var html = '';
 
         for (var i = 1; i <= data.countPages; i++) {
@@ -121,25 +124,25 @@
         $('#page').append(html);
     }
 
-    function createTable(data) {
-        var table = '';
-        for (var i = 0; i < data.list.length; i++) {
-            table += '<tr class="dynamic">';
-            table += `<td> ${data.list[i].Id}</td>`;
-            table += `<td> ${data.list[i].Title}</td>`;
-            table += `<td> ${data.list[i].Description}</td>`;
-            table += '<td>'
-            table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
-            table += `<a href="@Url.Action("Preview","News")/${data.list[i].Id}"><i class="fa fa-newspaper-o" aria-hidden="true" style='color:black'></i></a>`
-            table += '</td>';
-            table += '</tr>'
+        function createTable(data) {
+            var table = '';
+            for (var i = 0; i < data.list.length; i++) {
+                table += '<tr class="dynamic">';
+                table += `<td> ${data.list[i].Id}</td>`;
+                table += `<td> ${data.list[i].Title}</td>`;
+                table += `<td> ${data.list[i].Description}</td>`;
+                table += '<td>'
+                table += `<a href="@Url.Action("Details","News")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href="@Url.Action("Edit","News")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
+                table += `<a href="@Url.Action("Preview","News")/${data.list[i].Id}"><i class="fa fa-newspaper-o" aria-hidden="true" style='color:black'></i></a>`
+                table += '</td>';
+                table += '</tr>'
+            }
+            $('#table').append(table);
         }
-        $('#table').append(table);
-    }
 
 </script>
 
-<h2>Index</h2>
+
 
