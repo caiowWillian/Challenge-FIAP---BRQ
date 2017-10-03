@@ -36,10 +36,10 @@
         @Html.ActionLink("Cadastrar Investimento", "Create", "Investiment", new { @class = "btn btn-default" })
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
-                <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
-                <td>@Html.TextBoxFor(m => m.Name, new { @class = "form-control" })</td>
-                <td>@Html.TextBoxFor(m => m.Stock, new { @class = "form-control" })</td>
-                <td>@Html.TextBoxFor(m => m.Value, new { @class = "form-control" })</td>
+                <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Pesquisar por ID" })</td>
+                <td>@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Pesquisar por nome" })</td>
+                <td>@Html.TextBoxFor(m => m.Stock, new { @class = "form-control", @placeholder = "Pesquisar por estoque" })</td>
+                <td>@Html.TextBoxFor(m => m.Value, new { @class = "form-control", @placeholder = "Pesquisar por valor" })</td>
             </tr>
             <tr id="head">
                 <td>@Html.LabelFor(m => m.Id)</td>
