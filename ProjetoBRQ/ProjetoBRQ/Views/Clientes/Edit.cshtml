@@ -3,45 +3,48 @@
     ViewBag.Title = "Create";
 }
 
-<a class="btn btn-default" href="@Url.Action("Index","Clientes")">
-    <i class="fa fa-list" aria-hidden="true"></i>
-    Listar Clientes
-</a>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Nome)
-        @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Cpf)
-        @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Email)
-        @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Telefone)
-        @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Endereco)
-        @Html.TextBoxFor(m => m.Endereco, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Endereco, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(m => m.Complemento)
-        @Html.TextAreaFor(m => m.Complemento, new { @class = "form-control" })
-    </div>
+<br />
+<div class="container">
+    <h2>Editar Cliente</h2>
+    <a class="btn btn-default" href="@Url.Action("Index","Clientes")">
+        <i class="fa fa-list" aria-hidden="true"></i>
+        Listar Clientes
+    </a>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Nome)
+            @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Cpf)
+            @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Email)
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Telefone)
+            @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Endereco)
+            @Html.TextBoxFor(m => m.Endereco, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Endereco, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Complemento)
+            @Html.TextAreaFor(m => m.Complemento, new { @class = "form-control" })
+        </div>
 
-    <input type="submit" class="btn btn-default" value="Cadastrar Cliente" />
-}
-
-<h2>Create</h2>
+        <input type="submit" class="btn btn-default" value="Concluir alteração" />
+    }
+</div>
+<br />
