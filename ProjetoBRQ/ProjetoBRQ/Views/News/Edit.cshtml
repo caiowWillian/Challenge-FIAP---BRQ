@@ -1,16 +1,14 @@
 ﻿@model ProjetoBRQ.Models.News
-
 @{
     ViewBag.Title = "Create";
 }
-
 <br />
 <div class="container">
+    <h2>Editar</h2>
     <a class="btn btn-default" href="@Url.Action("Index","News")">
         <i class="fa fa-list" aria-hidden="true"></i>
         Listar Noticias
     </a>
-
     @using (Html.BeginForm("Edit", "News", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         <div class="form-group">
@@ -31,7 +29,6 @@
         <button class="btn btn-default" type="submit">Submeter</button>
     }
     <div id="file-content"></div>
-    <h2>Create</h2>
 
     @if ((Model.ImgNews != null) && Model.ImgNews.FirstOrDefault() != null)
     {
@@ -41,10 +38,9 @@
     {
         <img src="" height="200" id="pw" alt="Prévia da imagem...">
     }
-
     <img src="" height="200" id="pw" alt="Prévia da imagem...">
 </div>
-
+<br />
 <script>
     $('#File').change(function () { previewFile() });
 

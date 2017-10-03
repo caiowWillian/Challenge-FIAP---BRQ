@@ -2,18 +2,16 @@
 @{
     ViewBag.Title = "Details";
 }
-
-
+<br />
 <div class="container">
-    <a class="btn btn-default" href="@Url.Action("Index","News")">
-        <i class="fa fa-list" aria-hidden="true"></i>
-        Listar Noticias
-    </a>
-
     <div class="panel panel-default">
         <div class="panel-heading">
             <h3>Informações</h3>
         </div>
+        <a class="btn btn-default" href="@Url.Action("Index","News")">
+            <i class="fa fa-list" aria-hidden="true"></i>
+            Listar Noticias
+        </a>
         <div class="panel-body">
             <div class="row">
                 <div class="col-md-5">
@@ -56,7 +54,10 @@
                 </div>
             </div>
         </div>
-        <a href="@Url.Action("Edit","News", new { Id = Model.Id })">Edit</a>
+        <a href="@Url.Action("Edit","News", new { Id = Model.Id })">
+            <i class="fa fa-edit" aria-hidden="true"></i>
+            Editar
+        </a>
     </div>
 </div>
 <br />

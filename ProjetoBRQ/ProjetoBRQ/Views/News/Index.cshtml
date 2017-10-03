@@ -3,34 +3,34 @@
     ViewBag.Title = "Index";
 }
 
+
 <style>
     .paged {
         border: 1px solid black;
         padding: 3px;
     }
 </style>
+
 <br />
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Modal Header</h4>
-            </div>
-            <div class="modal-body">
-                <p>Você deseja deletar a noticia?</p>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+<div class="container">
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Excluir</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <p>Tem certeza de que você deseja deletar esta noticia?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="container">
     <div id="content" class="col-md-12">
         <h2>Notícias</h2>
 
@@ -48,7 +48,7 @@
                 <td>Ações</td>
             </tr>
         </table>
-        <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+        <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size: 54px"></i></p>
     </div>
     <div id="page"></div>
 </div>
@@ -83,17 +83,17 @@
         $.ajax({
             type: "GET",
             url: `@Url.Action("TableIndex", "News")?Page=null&Id=${$('#Id').val()}&Title=${$("#Title").val()}`,
-            dataType: "json",
-            success: function (data) {
-                createTable(data);
-                createPaged(data);
-                $('#load').css('display', 'none');
-            }
-        });
+    dataType: "json",
+        success: function (data) {
+            createTable(data);
+            createPaged(data);
+            $('#load').css('display', 'none');
+        }
+    });
     }
 
     $(document).on('click', '.delete', function () {
-        $('.modal-body').append(`<a class='btn btn-default' href="@Url.Action("Delete","News")/${$(this).attr('id').split('-')[1]}">isso ai</a>`)
+        $('.modal-footer').append(`<a href="@Url.Action("Delete","News")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
     });
 
     $(document).on('click', '.paged', function () {
@@ -103,14 +103,14 @@
         $.ajax({
             type: "GET",
             url: `@Url.Action("TableIndex", "News")?Page=${id}&Id=${$('#Id').val()}&Title=${$("#Title").val()}`,
-            dataType: "json",
-            success: function (data) {
-                createTable(data);
-                createPaged(data,id);
-                $('#load').css('display', 'none');
-            }
-        });
-    });    
+    dataType: "json",
+    success: function (data) {
+        createTable(data);
+        createPaged(data,id);
+        $('#load').css('display', 'none');
+    }
+    });
+    });
 
     function createPaged(data, id = 1) {
         var html = '';
@@ -118,8 +118,8 @@
         for (var i = 1; i <= data.countPages; i++) {
             if(i == id)
                 html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}">${i}</a>`;
-            else
-                html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+        else
+            html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
         }
         $('#page').append(html);
     }
@@ -143,6 +143,3 @@
         }
 
 </script>
-
-
-
