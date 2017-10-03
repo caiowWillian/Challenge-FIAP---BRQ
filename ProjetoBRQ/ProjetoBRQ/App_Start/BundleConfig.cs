@@ -20,11 +20,11 @@ namespace ProjetoBRQ
                         "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
+                      "~/Content/Layout/vendor/bootstrap/js/bootstrap.js",
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
+                      "~/Content/Layout/vendor/bootstrap/css/bootstrap.css",
                       "~/Content/site.css"));
         }
     }

@@ -9,21 +9,55 @@
     <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="~/Content/Layout/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/Layout/vendor/bootstrap/css/bootstrap.css" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
-    @*<link href="" />*@
     <link href="~/Content/Layout/css/one-page-wonder.css" rel="stylesheet" />
     <link href="~/Content/Layout/css/simple-sidebar.css" rel="stylesheet" />
+
+    <link href="~/Content/sidebarStyle.css" rel="stylesheet" />
 
     @*@Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")*@
 </head>
 <body>
+    <style>
+        html {
+            position: relative;
+            min-height: 100%;
+        }
+
+        body {
+            margin: 0 0 60px;
+            /* bottom = footer height */
+        }
+
+        header {
+            min-height: 255px;
+            background-color: blue;
+        }
+
+        article {
+            padding-bottom: 60px;
+            width: 900px;
+            margin: 0 auto;
+        }
+
+        footer {
+            position: absolute;
+            bottom: 0px;
+            width: 100%;
+            height: 60px;
+            background-color: green;
+        }
+    </style>
+
     @Html.Partial("_SideBarAdm")
+
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         @Html.Partial("_ToogleForSideBarAdm")
+
 
         <div class="container">
             <a class="navbar-brand" href="#">Nome do APP</a>
@@ -45,12 +79,15 @@
                 </ul>
                 <ul class="navbar-nav">
                     @Html.Partial("_LoginPartial")
+
                 </ul>
             </div>
         </div>
     </nav>
 
-    @RenderBody()
+    <div class="responsive">
+        @RenderBody()
+    </div>
 
     <!-- Footer -->
     <footer class="py-5 bg-dark">
@@ -59,6 +96,12 @@
         </div>
         <!-- /.container -->
     </footer>
+
+
+    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
+    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>*@
+    <script src="~/Content/Layout/vendor/popper/popper.js"></script>
+    <script src="~/Content/Layout/vendor/jquery/jquery.js"></script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
