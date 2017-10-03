@@ -9,37 +9,34 @@
     }
 </style>
 
-<div class="container">
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Você deseja deletar a noticia?</p>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Excluir</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>                
             </div>
-
+            <div class="modal-body">
+                <p>Você tem certeza de que deseja deletar este contato?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+            </div>
         </div>
     </div>
+</div>
 
+<br />
+<div class="container">
+    <h2>Contatos</h2>
     <div id="content" class="col-md-12">
-
         @Html.ActionLink("Cadastrar Contatos", "Create", "Contatos", new { @class = "btn btn-default" })
-
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
-                <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
-                <td>@Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })</td>
-                <td>@Html.TextBoxFor(m => m.Email, new { @class = "form-control" })</td>
+                <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Pesquisar por ID" })</td>
+                <td>@Html.TextBoxFor(m => m.Nome, new { @class = "form-control", @placeholder = "Pesquisar por nome" })</td>
+                <td>@Html.TextBoxFor(m => m.Email, new { @class = "form-control", @placeholder = "Pesquisar por email" })</td>
             </tr>
             <tr id="head">
                 <td>@Html.LabelFor(m => m.Id)</td>
@@ -52,6 +49,8 @@
     </div>
     <div id="page"></div>
 </div>
+<br />
+
 <script>
 
     initTable()
@@ -68,7 +67,7 @@
     });
 
     $(document).on('click', '.delete', function () {
-        $('.modal-body').append(`<a class='btn btn-default' href="@Url.Action("Delete","Contatos")/${$(this).attr('id').split('-')[1]}">isso ai</a>`)
+        $('.modal-footer').append(`<a class='btn btn-default' href="@Url.Action("Delete","Contatos")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
     });
 
     $(document).on('click', '.paged', function () {
@@ -94,7 +93,7 @@
         }
     }
 
-   function initTable() {
+    function initTable() {
         $(".dynamic").remove();
         $(".paged").remove();
         $.ajax({
@@ -135,4 +134,3 @@
         $('#table').append(table);
     }
 </script>
-<h2>Index</h2>
