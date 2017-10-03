@@ -3,14 +3,13 @@
     ViewBag.Title = "Create";
 }
 
-
+<br />
 <div class="container">
-    <h2>Create</h2>
+    <h2>Editar investimento</h2>
     <a class="btn btn-default" href="@Url.Action("Index","Investiment")">
         <i class="fa fa-list" aria-hidden="true"></i>
-        Listar Investiment
+        Listar Investimento
     </a>
-
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken();
@@ -42,12 +41,12 @@
             @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
         </div>
 
-        <input type="submit" class="btn btn-default" value="Cadastrar Cliente" />
+        <input type="submit" class="btn btn-default" value="Concluir alteração" />
     }
-
 </div>
-<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+<br />
 
+<script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
 <script>
     tinymce.init({ selector: 'textarea' });
     $(function () {
@@ -56,5 +55,4 @@
         })
     });
 </script>
-
 

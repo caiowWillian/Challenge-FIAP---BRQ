@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Index";
 }
-
 <style>
     .paged {
         border: 1px solid black;
@@ -10,35 +9,31 @@
     }
 </style>
 
+@*botão sim do modal fica se multiplicando*@
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Excluir</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>                
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza de que você deseja deletar este investimento?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <br />
 <div class="container">
-
-    <div id="myModal" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Modal Header</h4>
-                </div>
-                <div class="modal-body">
-                    <p>Você deseja deletar a noticia?</p>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
+    <h2>Investimentos</h2>
     <div id="content" class="col-md-12">
-
         @Html.ActionLink("Cadastrar Investimento", "Create", "Investiment", new { @class = "btn btn-default" })
-
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
                 <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control" })</td>
@@ -93,8 +88,8 @@
         });
     }
 
-    $(document).on('click', '.delete', function () {
-        $('.modal-body').append(`<a class='btn btn-default' href="@Url.Action("Delete","Investiment")/${$(this).attr('id').split('-')[1]}">isso ai</a>`)
+    $(document).on('click', '.delete', function () {        
+        $('.modal-footer').append(`<a class='btn btn-default' href="@Url.Action("Delete","Investiment")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
     });
 
     $(document).on('click', '.paged', function () {
@@ -124,36 +119,35 @@
         $('#page').append(html);
     }
 
-   function createTable(data) {
-        var table = '';
+        function createTable(data) {
+            var table = '';
 
-        for (var i = 0; i < data.list.length; i++) {
-            table += '<tr class="dynamic">';
-            table += `<td> ${data.list[i].Id}</td>`;
-            table += `<td> ${data.list[i].Name}</td>`;
-            table += `<td> ${data.list[i].Stock}</td>`;
-            table += `<td> ${data.list[i].Value}</td>`;
-            table += '<td>'
-            table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Edit", "Investiment")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
-            table += '</td>';
-            table += '</tr>'
+            for (var i = 0; i < data.list.length; i++) {
+                table += '<tr class="dynamic">';
+                table += `<td> ${data.list[i].Id}</td>`;
+                table += `<td> ${data.list[i].Name}</td>`;
+                table += `<td> ${data.list[i].Stock}</td>`;
+                table += `<td> ${data.list[i].Value}</td>`;
+                table += '<td>'
+                table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href="@Url.Action("Edit", "Investiment")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
+                table += '</td>';
+                table += '</tr>'
 
+            }
+
+            $('#table').append(table);
+        }
+        function enterPress(e) {
+            if (e.which == 13) {
+                initTable();
+                $(this).blur();
+            }
         }
 
-        $('#table').append(table);
-    }
-    function enterPress(e) {
-        if (e.which == 13) {
-            initTable();
-            $(this).blur();
+        function removeElements() {
+            $(".dynamic").remove();
+            $(".paged").remove();
         }
-    }
-
-    function removeElements() {
-        $(".dynamic").remove();
-        $(".paged").remove();
-    }
 </script>
-
