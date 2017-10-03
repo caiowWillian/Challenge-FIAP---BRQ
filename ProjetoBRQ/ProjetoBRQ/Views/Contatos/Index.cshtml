@@ -67,7 +67,8 @@
     });
 
     $(document).on('click', '.delete', function () {
-        $('.modal-footer').append(`<a class='btn btn-default' href="@Url.Action("Delete","Contatos")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
+        $(".delete-yes-modal").remove();
+        $('.modal-footer').append(`<a class='btn btn-default delete-yes-modal' href="@Url.Action("Delete","Contatos")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
     });
 
     $(document).on('click', '.paged', function () {

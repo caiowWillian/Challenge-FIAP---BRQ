@@ -53,7 +53,9 @@
         </table>
         <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size: 54px"></i></p>
     </div>
-    <div id="page"></div>
+    <ul id="page" class="pagination">
+        
+    </ul>
 </div>
 <br />
 
@@ -92,7 +94,8 @@
     });
 
     $(document).on('click', '.delete', function () {
-        $('.modal-footer').append(`<a class='btn btn-default' href="@Url.Action("Delete","Clientes")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
+        $(".delete-yes-modal").remove();
+        $('.modal-footer').append(`<a class='btn btn-default delete-yes-modal' href="@Url.Action("Delete","Clientes")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
     });
 
     function enterPress(e) {
@@ -121,7 +124,7 @@
         var html = '';
 
         for (var i = 1; i <= data.countPages; i++) {
-            html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+            html += `<li class="page-item"><a class='paged page-link' href='#' id="paged-${i}">${i}</a></li>`;
         }
         $('#page').append(html);
     }
