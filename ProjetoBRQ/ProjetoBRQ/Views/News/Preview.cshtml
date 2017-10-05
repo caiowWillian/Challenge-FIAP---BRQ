@@ -3,25 +3,45 @@
     ViewBag.Title = "Preview";
 }
 
+<style>
+    img {
+        /*  To contain the image to the confines of the div  */
+        max-width: 100%;
+    }
+
+    .hero-image {
+        max-width: 100%;
+        width: 100%;
+        margin: auto;
+    }
+
+        .hero-image::after {
+            display: block;
+            position: relative;
+            background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0, #fff 100%);
+            margin-top: -150px;
+            height: 150px;
+            width: 100%;
+            content: '';
+        }
+</style>
+
+
 <br />
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="text-center">@Model.Title</h3>
+    <div class="card">
+        <br />
+        <div class="col-xs-6 col-md-12 hero-image">
+            @if (Model.ImgNews.Count() > 0)
+            {
+                <img class="card-img-top" src="@Model.ImgNews.FirstOrDefault().Base64Image()">
+            }
         </div>
-        <div class="panel-body">
-            <h3>@Model.Description</h3>
-            <div class="row">
-                <div class="col-md5" style="float:left">
-                    @if (Model.ImgNews.Count() > 0)
-                    {
-                        <img src="@Model.ImgNews.FirstOrDefault().Base64Image()">
-                    }
-                </div>
-                <div class="col-md-5">
-                    @Html.Raw(Model.Body)
-                </div>
-            </div>
+
+        <div class="col-xs-6 col-md-12 card-body">
+            <h3 class="card-title text-center">@Model.Title</h3>
+            <h5 class="card-title text-center">@Model.Description</h5>
+            <p class="card-text text-center">@Html.Raw(Model.Body)</p>
         </div>
     </div>
 </div>
