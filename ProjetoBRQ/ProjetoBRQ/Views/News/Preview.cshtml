@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Preview";
 }
-
 <style>
     img {
         /*  To contain the image to the confines of the div  */
@@ -26,18 +25,20 @@
         }
 </style>
 
-
 <br />
 <div class="container">
     <div class="card">
         <br />
+        <div class="col-xs-6 col-md-12">
+            <p><font size="2">Data: @Model.DataCadastro</font></p>
+        </div>
+
         <div class="col-xs-6 col-md-12 hero-image">
             @if (Model.ImgNews.Count() > 0)
             {
                 <img class="card-img-top" src="@Model.ImgNews.FirstOrDefault().Base64Image()">
             }
         </div>
-
         <div class="col-xs-6 col-md-12 card-body">
             <h3 class="card-title text-center">@Model.Title</h3>
             <h5 class="card-title text-center">@Model.Description</h5>

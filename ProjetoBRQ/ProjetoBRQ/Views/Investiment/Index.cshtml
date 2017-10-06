@@ -8,16 +8,13 @@
         padding: 3px;
     }
 </style>
-
-@*botão sim do modal fica se multiplicando*@
-
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Excluir</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>                
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
                 <p>Tem certeza de que você deseja deletar este investimento?</p>
@@ -28,12 +25,15 @@
         </div>
     </div>
 </div>
-
 <br />
 <div class="container">
-    <h2>Investimentos</h2>
     <div id="content" class="col-md-12">
-        @Html.ActionLink("Cadastrar Investimento", "Create", "Investiment", new { @class = "btn btn-default" })
+        <h2>Investimentos</h2>
+        <a href="@Url.Action("Create","Investiment")">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Cadastrar Investimento
+        </a>
+
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
                 <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Pesquisar por ID" })</td>
@@ -50,12 +50,12 @@
             </tr>
         </table>
         <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+        <ul id="page"></ul>
     </div>
-    <div id="page"></div>
 </div>
 <br />
-
 <script>
+    //Inicio - Scripts para pesquisa
     $('#Id').keypress(function (e) {
         enterPress(e);
     });
@@ -72,7 +72,21 @@
         enterPress(e);
     });
 
-    initTable();
+    function enterPress(e) {
+        if (e.which == 13) {
+            initTable();
+            $(this).blur();
+        }
+    }
+    //Fim - Scripts para pesquisa
+
+    initTable()
+
+    function removeElements() {
+        $(".dynamic").remove();
+        $(".page-item").remove();
+    }
+
     function initTable() {
         removeElements();
 
@@ -88,13 +102,16 @@
         });
     }
 
-    $(document).on('click', '.delete', function () {        
-        $('.modal-footer').append(`<a class='btn btn-default' href="@Url.Action("Delete","Investiment")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
+    $(document).on('click', '.delete', function () {
+        $(".delete-yes-modal").remove();
+        $('.modal-footer').append(`<a class='btn btn-default delete-yes-modal' href="@Url.Action("Delete","Investiment")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
     });
 
-    $(document).on('click', '.paged', function () {
+    $(document).on('click', '.page-link', function () {
         removeElements();
+
         var id = $(this).attr('id').split('-')[1];
+
         $('#load').css('display', 'inline-block');
         $.ajax({
             type: "GET",
@@ -110,14 +127,17 @@
 
     function createPaged(data, id = 1) {
         var html = '';
+
         for (var i = 1; i <= data.countPages+1; i++) {
-            if (i == id)
-                html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}">${i}</a>`;
-            else
-                html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+            if (i == id) {
+                html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+                //html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}"></a>`;
+            } else {
+                html += `<li class="page-item"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+                //html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+            }
+            $('#page').append(html);
         }
-        $('#page').append(html);
-    }
 
         function createTable(data) {
             var table = '';
@@ -128,26 +148,13 @@
                 table += `<td> ${data.list[i].Name}</td>`;
                 table += `<td> ${data.list[i].Stock}</td>`;
                 table += `<td> ${data.list[i].Value}</td>`;
-                table += '<td>'
+                table += '<td>';
                 table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
                 table += `<a href="@Url.Action("Edit", "Investiment")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-                table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
+                table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
                 table += '</td>';
-                table += '</tr>'
-
+                table += '</tr>';
             }
-
             $('#table').append(table);
-        }
-        function enterPress(e) {
-            if (e.which == 13) {
-                initTable();
-                $(this).blur();
-            }
-        }
-
-        function removeElements() {
-            $(".dynamic").remove();
-            $(".paged").remove();
-        }
+        }      
 </script>

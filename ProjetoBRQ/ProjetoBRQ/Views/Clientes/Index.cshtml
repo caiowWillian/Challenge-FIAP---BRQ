@@ -2,15 +2,6 @@
 @{
     ViewBag.Title = "Index";
 }
-
-
-<style>
-    .paged {
-        border: 1px solid black;
-        padding: 3px;
-    }
-</style>
-
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->
@@ -28,14 +19,14 @@
         </div>
     </div>
 </div>
-
 <br />
 <div class="container">
-    <h2>Clientes</h2>
     <div id="content" class="col-md-12">
-        
-        @Html.ActionLink("Cadastrar Clientes", "Create", "Clientes", new { @class = "btn btn-default" })
-
+        <h2>Clientes</h2>
+        <a href="@Url.Action("Create","Clientes")">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Cadastrar Clientes
+        </a>
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
                 <td>@Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Pesquisar por ID" })</td>
@@ -52,15 +43,13 @@
             </tr>
         </table>
         <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size: 54px"></i></p>
+
+        <ul id="page" class="pagination"></ul>
     </div>
-    <ul id="page" class="pagination">
-        
-    </ul>
 </div>
 <br />
-
 <script>
-    initTable()
+    //Inicio - Scripts para pesquisa
     $('#Id').keypress(function (e) {
         enterPress(e);
     });
@@ -77,73 +66,90 @@
         enterPress(e);
     });
 
-    $(document).on('click', '.paged', function () {
-
-        var id = $(this).attr('id').split('-')[1];
-        $(".dynamic").remove();
-        $('#load').css('display', 'inline-block');
-        $.ajax({
-            type: "GET",
-            url: `@Url.Action("TableIndex", "Clientes")?Page=null&Id=${$('#Id').val()}&Cpf=${$("#Cpf").val()}&Nome=${$("#Nome").val()}&Email=${$("#Email").val()}`,
-    dataType: "json",
-        success: function (data) {
-            createTable(data);
-            $('#load').css('display', 'none');
-        }
-    });
-    });
-
-    $(document).on('click', '.delete', function () {
-        $(".delete-yes-modal").remove();
-        $('.modal-footer').append(`<a class='btn btn-default delete-yes-modal' href="@Url.Action("Delete","Clientes")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
-    });
-
     function enterPress(e) {
         if (e.which == 13) {
             initTable();
             $(this).blur();
         }
     }
+    //Fim - Scripts para pesquisa
+
+    initTable()
+
+    function removeElements() {
+        $(".dynamic").remove();
+        $(".page-item").remove();
+    }
 
     function initTable() {
-        $(".dynamic").remove();
-        $(".paged").remove();
+        removeElements();
+
         $.ajax({
             type: "GET",
             url: `@Url.Action("TableIndex", "Clientes")?Page=null&Id=${$('#Id').val()}&Cpf=${$("#Cpf").val()}&Nome=${$("#Nome").val()}&Email=${$("#Email").val()}`,
-    dataType: "json",
-        success: function (data) {
-            createTable(data);
-            createPaged(data);
-            $('#load').css('display', 'none');
-        }
-    });
+            dataType: "json",
+            success: function (data) {
+                createTable(data);
+                createPaged(data);
+                $('#load').css('display', 'none');
+            }
+        });
     }
 
-    function createPaged(data) {
+    $(document).on('click', '.delete', function () {
+        $(".delete-yes-modal").remove();
+        $('.modal-footer').append(`<a class='btn btn-default delete-yes-modal' href="@Url.Action("Delete","Clientes")/${$(this).attr('id').split('-')[1]}">Sim</a>`)
+    });
+
+    $(document).on('click', '.page-link', function () {
+        removeElements();
+
+        var id = $(this).attr('id').split('-')[1];
+
+        $('#load').css('display', 'inline-block');
+        $.ajax({
+            type: "GET",
+            url: `@Url.Action("TableIndex", "Clientes")?Page=null&Id=${$('#Id').val()}&Cpf=${$("#Cpf").val()}&Nome=${$("#Nome").val()}&Email=${$("#Email").val()}`,
+            dataType: "json",
+            success: function (data) {
+                createTable(data);
+                createPaged(data,id);
+                $('#load').css('display', 'none');
+            }
+        });
+    });
+
+    function createPaged(data, id = 1) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages; i++) {
-            html += `<li class="page-item"><a class='paged page-link' href='#' id="paged-${i}">${i}</a></li>`;
+        for (var i = 1; i <= data.countPages+1; i++) {
+            if (i == id) {
+                html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+                //html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}"></a>`;
+            } else {
+                html += `<li class="page-item"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+                //html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
+            }
         }
         $('#page').append(html);
     }
 
-    function createTable(data) {
-        var table = '';
-        for (var i = 0; i < data.list.length; i++) {
-            table += '<tr class="dynamic">';
-            table += `<td> ${data.list[i].Id}</td>`;
-            table += `<td> ${data.list[i].Cpf}</td>`;
-            table += `<td> ${data.list[i].Nome}</td>`;
-            table += `<td> ${data.list[i].Email}</td>`;
-            table += '<td>';
-            table += `<a href="@Url.Action("Details","Clientes")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href="@Url.Action("Edit", "Clientes")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-            table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
-            table += '</td>';
-            table += '</tr>';
+        function createTable(data) {
+            var table = '';
+
+            for (var i = 0; i < data.list.length; i++) {
+                table += '<tr class="dynamic">';
+                table += `<td> ${data.list[i].Id}</td>`;
+                table += `<td> ${data.list[i].Cpf}</td>`;
+                table += `<td> ${data.list[i].Nome}</td>`;
+                table += `<td> ${data.list[i].Email}</td>`;
+                table += '<td>';
+                table += `<a href="@Url.Action("Details","Clientes")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href="@Url.Action("Edit", "Clientes")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`
+                table += '</td>';
+                table += '</tr>';
+            }
+            $('#table').append(table);
         }
-        $('#table').append(table);
-    }
 </script>
