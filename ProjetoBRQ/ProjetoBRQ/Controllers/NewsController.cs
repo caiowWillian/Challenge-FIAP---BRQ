@@ -192,7 +192,7 @@ namespace ProjetoBRQ.Controllers
             
             Page = Page ?? 1;
             Page--;
-
+            Db.Configuration.LazyLoadingEnabled = false;
             var query = Db.News.Where(x => x.Deletado != 1);
 
             if (Model.Id != null)
