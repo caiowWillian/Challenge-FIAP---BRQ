@@ -15,12 +15,25 @@
     }
 </style>
 
-<ul id="list-news"></ul>
-<p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+<link href="~/Content/NovidadesStyle.css" rel="stylesheet" />
 
-<p class="text-center">
-    <button class="btn btn-link" id="more">Carregar mais noticias</button>
-</p>
+<br />
+<div class="container">
+    <ul id="list-news"></ul>
+    <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+
+    <p class="text-center">
+        <button class="btn btn-link" id="more">Carregar mais noticias</button>
+    </p>
+</div>
+
+<svg id="svg-filter">
+    <filter id="svg-blur">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="4"></feGaussianBlur>
+    </filter>
+</svg>
+
+
 <script>
     var count = 1;
 
@@ -36,7 +49,7 @@
         $('#more').css('display', 'none');
         $.ajax({
             type: "GET",
-            url: `@Url.Action("TableIndex", "News")?Page=${count}`,
+            url: `@Url.Action("NovidadesIndex", "News")?Page=${count}`,
             dataType: "json",
             success: function (data) {
                 createList(data);
@@ -51,12 +64,25 @@
         var l = '';
 
         for (var i = 0; i < data.list.length; i++) {
-            l += `<a target="_blank" href = '@Url.Action("Preview","News")/${data.list[i].Id}'>`;
+            l += `<article class="article article--2">`;
+            l += `<li>`;
+            l += `<img class="img article-image" src="https://yesassets.okdk.co.uk/minititle/cache/minititle-5342-q90-h900-ml99-rz3-b75.jpg"/>`;
+            l += `<div class="article-copy">`;
+            l += `<h1 class="article-title">${data.list[i].Title}</h1>`;
+            l += `<h2 class="article-subtitle">${data.list[i].Description}</h2>`;
+            l += `<a class="btn article-link btn--arrow " href='@Url.Action("Preview","News")/${data.list[i].Id}'>read more</a>`;
+            l += `</div>`;
+            l += `</li>`;
+            l += `</article>`;
+
+            @*l += `<a target="_blank" href = '@Url.Action("Preview","News")/${data.list[i].Id}'>`;
             l += `<li><h3>${data.list[i].Title}</h3>`;
             l += `<h4>${data.list[i].Description}</h4>`;
             l += `</li>`
-            l += '</a>';
+            l += '</a>';*@
         }
         $('#list-news').append(l);
     }
+
+
 </script>
