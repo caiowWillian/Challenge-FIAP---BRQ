@@ -219,6 +219,7 @@
     <Compile Include="Controllers\InvestimentAPIController.cs" />
     <Compile Include="Controllers\InvestimentController.cs" />
     <Compile Include="Controllers\InvestimentUserController.cs" />
+    <Compile Include="Controllers\NewsAPIController.cs" />
     <Compile Include="Models\Investiment.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsController.cs" />

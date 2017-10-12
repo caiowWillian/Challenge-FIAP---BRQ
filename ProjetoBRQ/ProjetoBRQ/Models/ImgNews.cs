@@ -25,6 +25,7 @@ namespace ProjetoBRQ.Models
         public byte[] FileContent { get; set; }
 
         [ScriptIgnore(ApplyToOverrides = true)]
+        [JsonIgnore]
         public virtual News News { get; set; }
 
         [ForeignKey("News"),Column("ID_NOTICIA")]
