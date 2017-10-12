@@ -66,8 +66,11 @@ namespace ProjetoBRQ.Controllers
             string result = "";
             try
             {
+                var cliente = Db.Cliente.Where(x => x.Id == Id).FirstOrDefault();
                 var cb = new ClienteBusiness();
                 result = await cb.DeleteAsync(Id ?? 0);
+
+                TempData["MsgDelete"] = "O Cliente '" + cliente.Nome + "' foi removido";
 
                 if (cb.Error(result))
                 {

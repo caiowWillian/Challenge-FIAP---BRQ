@@ -3,28 +3,30 @@
     ViewBag.Title = "Index";
 }
 
-<br />
-<div class="container">
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <!-- Modal content-->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Excluir</h4>
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-                <div class="modal-body">
-                    <p>Tem certeza de que você deseja deletar esta noticia?</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-                </div>
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Excluir</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Tem certeza de que você deseja deletar esta noticia?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
             </div>
         </div>
     </div>
+</div>
 
+<br />
+<div class="container">
     <div id="content" class="col-md-12">
         <h2>Notícias</h2>
+
+        @Html.Partial("_MsgDelete")
 
         <a href="@Url.Action("Create","News")">
             <i class="fa fa-plus" aria-hidden="true"></i>
@@ -40,13 +42,13 @@
                 <td>@Html.LabelFor(m => m.Id)</td>
                 <td>@Html.LabelFor(m => m.Title)</td>
                 @*<td>@Html.LabelFor(m => m.Description)</td>*@
-                <td>Ações</td>
+                <td width="10%">Ações</td>
             </tr>
         </table>
         <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size: 54px"></i></p>
 
         <ul class="pagination" id="page"></ul>
-    </div>    
+    </div>
 </div>
 <br />
 
@@ -112,7 +114,7 @@
     });
 
     function createPaged(data, id = 1) {
-        var html = '';   
+        var html = '';
 
         for (var i = 1; i <= data.countPages; i++) {
             if (i == id) {
