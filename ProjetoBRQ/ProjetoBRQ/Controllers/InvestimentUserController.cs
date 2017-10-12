@@ -1,4 +1,5 @@
 ﻿using ProjetoBRQ.Business;
+using ProjetoBRQ.Context;
 using ProjetoBRQ.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,8 @@ namespace ProjetoBRQ.Controllers
 {
     public class InvestimentUserController : Controller
     {
+        private DbBRQ Db = new DbBRQ();
+
         // GET: InvestimentUser
         public ActionResult Index()
         {
@@ -23,39 +26,46 @@ namespace ProjetoBRQ.Controllers
             return View();
         }
 
-        // GET: InvestimentUser/Create
-        //public ActionResult Create()
-        //{
-          //  return View();
-        //}
+        [Authorize]
+        //GET: InvestimentUser/Create
+        public ActionResult Create()
+        {
+            ViewBag.InvestimentId = new SelectList(Db.Investiment.OrderBy(x => x.Id), "Id", "Name");
+            ViewBag.CurrentUser = User.Identity.Name;
 
-        // POST: InvestimentUser/Create
-        //[HttpPost]
+            return View();
+        }
+
+        //POST: InvestimentUser/Create
+        [HttpPost]
         public async Task<ActionResult> Create(InvestimentUser model)
         {
             string result = "";
+            model.UserGUID = User.Identity.Name;
+            model.InputDate = DateTime.Now;
 
             try
             {
+                var cb = new InvestimentUserBusiness();
 
-                model = new InvestimentUser()
-                {
-                    InvestimentId = 1,
-                    CardNumber = "0000 0000 0000 0000",
-                    Num = 2,
-                    UserGUID = "caiow.willian@gmail.com",
-                };
+                result = await cb.AddAsync(model);
+
+                ViewBag.InvestimentId = new SelectList(Db.Investiment.OrderBy(x => x.Id), "Id", "Name");
+
+                TempData["MsgInvestimentoSucesso"] = "O investimento foi realizado com sucesso";
+
+                return View();
 
                 // TODO: Add insert logic here
-                var cb = new InvestimentUserBusiness();
-                result = await cb.AddAsync(model);
+
 
                 //if (cb.Error(result))
                 //{
-                    ModelState.AddModelError("", result);
-                    return View(model);
+                //    ModelState.AddModelError("", result);
+
+                //    ViewBag.InvestimentId = new SelectList(Db.Investiment.OrderBy(x => x.Id), "Id", "Name");
+                //    return View(model);
                 //}
-                return RedirectToAction("Index");
             }
             catch
             {

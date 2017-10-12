@@ -41,7 +41,7 @@
                         @Html.ActionLink("Novidades", "Novidades", "Home", routeValues: null, htmlAttributes: new { @class = "nav-link", id = "loginLink" })
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Contact</a>
+                        @Html.ActionLink("Gostou da ideia? Nos ajude!", "Create", "InvestimentUser", routeValues: null, htmlAttributes: new { @class = "nav-link", id = "investimentUserLink" })
                     </li>
                 </ul>
                 <ul class="navbar-nav">
