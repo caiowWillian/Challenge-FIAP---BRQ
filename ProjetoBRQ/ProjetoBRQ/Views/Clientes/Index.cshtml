@@ -23,6 +23,9 @@
 <div class="container">
     <div id="content" class="col-md-12">
         <h2>Clientes</h2>
+
+        @Html.Partial("_MsgDelete")
+
         <a href="@Url.Action("Create","Clientes")">
             <i class="fa fa-plus" aria-hidden="true"></i>
             Cadastrar Clientes
@@ -109,7 +112,7 @@
         $('#load').css('display', 'inline-block');
         $.ajax({
             type: "GET",
-            url: `@Url.Action("TableIndex", "Clientes")?Page=null&Id=${$('#Id').val()}&Cpf=${$("#Cpf").val()}&Nome=${$("#Nome").val()}&Email=${$("#Email").val()}`,
+            url: `@Url.Action("TableIndex", "Clientes")?Page=${id}&Id=${$('#Id').val()}&Cpf=${$("#Cpf").val()}&Nome=${$("#Nome").val()}&Email=${$("#Email").val()}`,
             dataType: "json",
             success: function (data) {
                 createTable(data);

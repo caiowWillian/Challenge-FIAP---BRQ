@@ -127,8 +127,12 @@ namespace ProjetoBRQ.Controllers
 
             try
             {
+                var contatos = Db.Contatos.Where(x => x.Id == id).FirstOrDefault();
                 var cb = new ContatosBusiness();
+
                 result = await cb.DeleteAsync(id ?? 0);
+
+                TempData["MsgDelete"] = "O Contato '" + contatos.Nome + "' foi removido";
 
                 if (cb.Error(result))
                 {

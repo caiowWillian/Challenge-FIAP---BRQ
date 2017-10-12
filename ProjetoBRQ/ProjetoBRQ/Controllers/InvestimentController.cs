@@ -127,7 +127,11 @@ namespace ProjetoBRQ.Controllers
         {
             try
             {
+                var investiment = Db.Investiment.Where(x => x.Id == id).FirstOrDefault();
+
                 await new InvestmentBusiness().DeleteAsync(id);
+
+                TempData["MsgDelete"] = "O Investimento de código '" + id + "' foi removido";
             }
             catch (Exception e)
             {

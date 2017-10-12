@@ -7,6 +7,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.IO;
 
 namespace ProjetoBRQ.Controllers
 {
@@ -157,9 +158,11 @@ namespace ProjetoBRQ.Controllers
                 }
 
                 await new NewsBusiness().DeleteAsync(Id.Value);
+
+                TempData["MsgDelete"] = "A notícia '" + news.Title +"' foi removida";
             }
             catch (Exception) { return View("Index"); }
-
+            
             return RedirectToAction("Index");
         }
 
@@ -214,5 +217,37 @@ namespace ProjetoBRQ.Controllers
                 titulo = Model.Title == null ? "" : Model.Title
             }, JsonRequestBehavior.AllowGet);
         }
+
+        public JsonResult NovidadesIndex(int? Page, News Model)
+        {
+            const int registers = 10;
+
+            Page = Page ?? 1;
+            Page--;
+            Db.Configuration.LazyLoadingEnabled = false;
+            var query = Db.News.Where(x => x.Deletado != 1);
+
+            if (Model.Id != null)
+                query = query.Where(x => x.Id == Model.Id);
+
+            if (Model.Title != null)
+                query = query.Where(x => x.Title == Model.Title);
+
+            var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
+            var count = query.Count();
+            int countPages = (int)(count / registers);
+
+            return Json(new
+            {
+                list = arr,
+                count = count,
+                countPages = countPages,
+                cod = Model.Id,
+                titulo = Model.Title == null ? "" : Model.Title,
+                imagem = Model.ImgNews == null ? "" : Model.ImgNews.ToString()
+        }, JsonRequestBehavior.AllowGet);
+        }
+
+
     }
 }
