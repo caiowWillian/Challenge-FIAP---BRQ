@@ -30,9 +30,11 @@ namespace ProjetoBRQ.Models
 
         [CreditCard]
         [Column("CARD_NUMBER")]
+        [Display(Name = "Nº Cartão")]
         public string CardNumber { get; set; }
 
         [NotMapped]
+        [Display(Name = "Tipo de investimento")]
         public int InvestimentId { get; set; }
     }
 }
