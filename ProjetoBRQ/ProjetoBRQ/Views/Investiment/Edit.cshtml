@@ -31,7 +31,7 @@
 
         <div class="form-group">
             @Html.LabelFor(m => m.Value)
-            @Html.TextBoxFor(m => m.Value, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Value, new { @class = "form-control money" })
             @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
         </div>
 

@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Cpf)
-            @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control cpf" })
             @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
@@ -31,7 +31,7 @@
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Telefone)
-            @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+            @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control phone_with_ddd" })
             @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
         </div>
         <div class="form-group">
