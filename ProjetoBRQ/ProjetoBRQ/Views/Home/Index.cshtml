@@ -2,6 +2,18 @@
     ViewBag.Title = "Home Page";
 }
 
+@*Gambiarra para redirecionar o scroll para o formulario de cadastro de contato após uma requisição pra action "CriarCadastro"*@
+@if (TempData["scroolPosition"] != null)
+{
+    <head>
+        <script>
+            $(document).ready(function () {
+                window.location.href = '#cadContato';
+            });
+        </script>
+    </head>
+}
+
 <header class="masthead">
     <div class="overlay">
         <div class="container">
@@ -62,5 +74,45 @@
                 </div>
             </div>
         </div>
+    </div>
+</section>
+<section style="background-color:#484d53" id="cadContato">
+    <br />
+    <div class="container text-white">
+        <h2 class="display-4">Gostou da ideia e quer se manter informado?</h2>
+        <h3 class="display-4">Deixe seu contato aqui!</h3>
+        @if (TempData["msgContatoSucesso"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @TempData["msgContatoSucesso"]
+            </div>
+        }
+        @using (Html.BeginForm("CriarContato", "Home"))
+        {
+            @model ProjetoBRQ.Models.Contatos
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.Nome)
+                @Html.TextBoxFor(m => m.Nome, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.Nome, "", new { @class = "text-danger" })
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Email)
+                    @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Telefone)
+                    @Html.TextBoxFor(m => m.Telefone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.Telefone, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <input type="submit" class="btn btn-default" value="Cadastrar" />
+        }
+        <br />
     </div>
 </section>
