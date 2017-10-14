@@ -15,6 +15,9 @@ namespace ProjetoBRQ.Controllers
 
         public IEnumerable<News> GetNews(string title = null, int? id = null)
         {
+            const int register = 10;
+
+            db.Configuration.LazyLoadingEnabled = false;
             var query = db.News.Where(m => m.Deletado != 1);
 
             if (title != null)
@@ -23,7 +26,7 @@ namespace ProjetoBRQ.Controllers
             if (id != null)
                 query = query.Where(m => m.Id == id);
 
-            return query.AsEnumerable();
+            return query.OrderByDescending(m => m.Id).AsEnumerable();
         }
     }
 }

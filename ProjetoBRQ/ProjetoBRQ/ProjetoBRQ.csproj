@@ -216,6 +216,7 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\ContatosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImgNewsAPIController.cs" />
     <Compile Include="Controllers\InvestimentAPIController.cs" />
     <Compile Include="Controllers\InvestimentController.cs" />
     <Compile Include="Controllers\InvestimentUserController.cs" />
