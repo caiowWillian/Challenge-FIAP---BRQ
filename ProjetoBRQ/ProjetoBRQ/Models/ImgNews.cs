@@ -43,6 +43,9 @@ namespace ProjetoBRQ.Models
         [Column("FILE_LENGHT")]
         public int FileLenght { get; set; }
 
+        [NotMapped]
+        public string Base64 { get { return Base64Image(); } }
+
         public string Base64Image()
         {
             if (FileContent != null && MimeType != null)
