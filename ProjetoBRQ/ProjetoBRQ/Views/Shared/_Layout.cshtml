@@ -77,14 +77,15 @@
         </div>
     </footer>
 
-    <script src="~/Scripts/jquery-2.1.1.min.js"></script>
-    @*<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>*@
-    <script src="~/Content/Layout/vendor/popper/popper.js"></script>
-    <script src="~/Content/Layout/vendor/jquery/jquery.js"></script>
-
+    <script src="~/Scripts/jquery-3.2.1.min.js"></script>
+    <script src="~/Content/Layout/vendor/popper/popper.js"></script>    
+    @*<script src="~/Content/Layout/vendor/jquery/jquery.js"></script>*@
+       
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+    <script src="~/Scripts/jquery.mask.min.js"></script>
 
     <!-- Menu Toggle Script -->
     <script>
@@ -92,6 +93,13 @@
             e.preventDefault();
             $("#wrapper").toggleClass("toggled");
         });
+
+        $(document).ready(function ($) {
+            $('.phone_with_ddd').mask('(00) 0000-0000');
+            $('.cpf').mask('000.000.000-00', { reverse: true });
+            $('.money').mask('000.000.000.000.000,00 ', { reverse: true });
+        }); 
+        
     </script>
 </body>
 </html>
