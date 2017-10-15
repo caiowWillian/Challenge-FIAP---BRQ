@@ -116,5 +116,42 @@ namespace ProjetoBRQ.Controllers
                 return View();
             }
         }
+
+        public ActionResult DuvidasInvest()
+        {
+            return View();
+        }
+
+        public JsonResult TableIndex(int? Page, Investiment model)
+        {
+            const int registers = 10;
+            IQueryable<Investiment> query;
+            Page = Page ?? 1;
+            Page--;
+
+            query = Db.Investiment.Where(x => !x.Deleted);
+
+            if (model.Id != null)
+                query = query.Where(m => m.Id == model.Id);
+            if (model.Name != null)
+                query = query.Where(m => m.Name == model.Name);
+            if (model.Stock != null)
+                query = query.Where(m => m.Stock == model.Stock);
+            if (model.Value != null)
+                query = query.Where(m => m.Value == model.Value);
+
+            var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
+            var count = query.Count();
+            int countPages = (int)(count / registers);
+
+            return Json(new
+            {
+                list = arr,
+                count = count,
+                countPages = countPages,
+                cod = model.Id,
+                desc = model.Description
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }

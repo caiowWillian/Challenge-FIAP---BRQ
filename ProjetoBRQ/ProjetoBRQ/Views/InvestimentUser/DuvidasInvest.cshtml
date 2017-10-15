@@ -1,0 +1,123 @@
+﻿@model ProjetoBRQ.Models.Investiment
+
+@{
+    ViewBag.Title = "DuvidasInvest";
+}
+
+<br />
+<div class="container">
+    <div id="content" class="col-md-12">
+        <h2>Tipos de investimento</h2>
+
+        <a href="@Url.Action("Create","InvestimentUser")">Voltar</a>
+
+        <table id="table" class="table table-bordered table-hover table-striped">
+            <tr>
+                <td width="20%">@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Pesquisar por nome" })</td>
+                <td width="20%">@Html.TextBoxFor(m => m.Value, new { @class = "form-control", @placeholder = "Pesquisar por valor" })</td>
+            </tr>
+            <tr id="head">
+                <td><b>@Html.LabelFor(m => m.Name)</b></td>
+                <td><b>@Html.LabelFor(m => m.Value)</b></td>
+                <td><b>@Html.LabelFor(m => m.Description)</b></td>
+            </tr>
+        </table>
+        <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
+        <ul class="pagination" id="page"></ul>
+    </div>
+</div>
+<br />
+<script>
+    //Inicio - Scripts para pesquisa
+    $('#Id').keypress(function (e) {
+        enterPress(e);
+    });
+
+    $('#Name').keypress(function (e) {
+        enterPress(e);
+    });
+
+    $('#Stock').keypress(function (e) {
+        enterPress(e);
+    });
+
+    $('#Value').keypress(function (e) {
+        enterPress(e);
+    });
+
+    function enterPress(e) {
+        if (e.which == 13) {
+            initTable();
+            $(this).blur();
+        }
+    }
+    //Fim - Scripts para pesquisa
+
+    initTable()
+
+    function removeElements() {
+        $(".dynamic").remove();
+        $(".page-item").remove();
+    }
+
+    function initTable() {
+        removeElements();
+
+        $.ajax({
+            type: "GET",
+            url: `@Url.Action("TableIndex", "Investiment")?Page=null&Name=${$("#Name").val()}&Value=${$('#Value').val()}`,
+            dataType: "json",
+            success: function (data) {
+                createTable(data);
+                createPaged(data);
+                $('#load').css('display', 'none');
+            }
+        });
+    }
+
+    $(document).on('click', '.page-link', function () {
+        removeElements();
+
+        var id = $(this).attr('id').split('-')[1];
+
+        $('#load').css('display', 'inline-block');
+        $.ajax({
+            type: "GET",
+            url: `@Url.Action("TableIndex", "Investiment")?Page=${id}&Name=${$("#Name").val()}&Value=${$('#Value').val()}`,
+            dataType: "json",
+            success: function (data) {
+                createTable(data);
+                createPaged(data,id);
+                $('#load').css('display', 'none');
+            }
+        });
+    });
+
+    function createPaged(data, id = 1) {
+        var html = '';
+
+        for (var i = 1; i <= data.countPages + 1; i++) {
+            if (i == id) {
+                html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+            } else {
+                html += `<li class="page-item"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+            }
+        }
+        $('#page').append(html);
+    }
+
+        function createTable(data) {
+            var table = '';
+
+            for (var i = 0; i < data.list.length; i++) {
+                table += '<tr class="dynamic">';
+                table += `<td> ${data.list[i].Name}</td>`;
+                table += `<td> ${data.list[i].Value}</td>`;
+                table += `<td> ${data.list[i].Description}</td>`
+                table += '</tr>';
+            }
+            $('#table').append(table);
+    }
+
+
+</script>
