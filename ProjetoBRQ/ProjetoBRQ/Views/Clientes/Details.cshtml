@@ -7,7 +7,7 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>Informações</h3>
+            <h3>Informações de @Model.Nome</h3>
         </div>
 
         <a class="btn btn-default" href="@Url.Action("Index","Clientes")">
@@ -21,10 +21,26 @@
                     <table class="table table-bordered table-condensed table-hover ">
                         <tr>
                             <td>
+                                <b>@Html.LabelFor(m => m.Id)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => m.Id)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
                                 <b>@Html.LabelFor(m => m.Nome)</b>
                             </td>
                             <td>
                                 @Html.DisplayFor(m => m.Nome)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <b>@Html.LabelFor(m => m.Cpf)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => m.Cpf)
                             </td>
                         </tr>
                         <tr>
@@ -62,6 +78,25 @@
                                 </td>
                             </tr>
                         }
+                        <tr>
+                            <td>
+                                <b>@Html.LabelFor(m => m.DataCadastro)</b>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(m => m.DataCadastro)
+                            </td>
+                        </tr>
+                        @if (Model.DataAlteracao != null)
+                        {
+                            <tr>
+                                <td>
+                                    <b>@Html.LabelFor(m => m.DataAlteracao)</b>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(m => m.DataAlteracao)
+                                </td>
+                            </tr>
+                        }                        
                     </table>
                 </div>
             </div>

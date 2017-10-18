@@ -53,9 +53,11 @@ namespace ProjetoBRQ.Models
         [Column("DELETADO")]
         public bool Deletado { get; set; }
 
+        [Display(Name = "Data de Cadastro")]
         [Column("DATA_CADASTRO")]
         public DateTime DataCadastro { get; set; }
 
+        [Display(Name = "Data da última alteração")]
         [Column("DATA_ALTERACAO")]
         public DateTime? DataAlteracao { get; set; }
     }
