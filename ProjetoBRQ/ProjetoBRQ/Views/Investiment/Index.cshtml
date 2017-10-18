@@ -152,7 +152,7 @@
                 table += `<td> ${data.list[i].Id}</td>`;
                 table += `<td> ${data.list[i].Name}</td>`;
                 table += `<td> ${data.list[i].Stock}</td>`;
-                table += `<td> ${data.list[i].Value}</td>`;
+                table += `<td>${(data.list[i].Value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>`;                
                 table += '<td>';
                 table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
                 table += `<a href="@Url.Action("Edit", "Investiment")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;

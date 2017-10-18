@@ -30,9 +30,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(m => m.Value)
-            @Html.TextBoxFor(m => m.Value, new { @class = "form-control money" })
-            @Html.ValidationMessageFor(m => m.Value, "", new { @class = "text-danger" })
+            @Html.LabelFor(m => m.DisplayValue)
+            @Html.TextBoxFor(m => m.DisplayValue, new { @class = "form-control money", data_prefix = "R$ ", data_decimal = "," })
+            @Html.ValidationMessageFor(m => m.DisplayValue, "", new { @class = "text-danger" })
         </div>
 
         <div class="form-group">

@@ -35,10 +35,15 @@ namespace ProjetoBRQ.Models
         [Display(Name = "Valor")]
         [Column("VALUE")]
         [Range(1, 999999, ErrorMessage = "valor invalido")]
-        [Required(ErrorMessage = "valor é obrigatorio", AllowEmptyStrings = false)]
+        //[Required(ErrorMessage = "Valor é obrigatorio", AllowEmptyStrings = false)]
         public double? Value { get; set; }
 
-        [Display(Name = "Date de cadastro")]
+        [NotMapped]
+        [Display(Name = "Valor")]
+        [Required(ErrorMessage = "Valor é obrigatorio", AllowEmptyStrings = false)]
+        public string DisplayValue { get; set; }
+
+        [Display(Name = "Data de cadastro")]
         [Column("INPUT_DATE")]
         public DateTime InputDate { get; set; }
 

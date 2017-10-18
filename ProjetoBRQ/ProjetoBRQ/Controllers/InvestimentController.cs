@@ -5,6 +5,7 @@ using ProjetoBRQ.Models;
 using ProjetoBRQ.Business;
 using System.Threading.Tasks;
 using ProjetoBRQ.Context;
+using System.Globalization;
 
 namespace ProjetoBRQ.Controllers
 {
@@ -29,7 +30,9 @@ namespace ProjetoBRQ.Controllers
 
                 var investiment = await Db.Investiment.FindAsync(id);
 
-                if(investiment == null)
+                investiment.DisplayValue = string.Format("R$ {0:0,0.00}", investiment.Value);
+
+                if (investiment == null)
                 {
                     ModelState.AddModelError("", "Investimento não encontrado");
                     return RedirectToAction("Index");
@@ -49,17 +52,28 @@ namespace ProjetoBRQ.Controllers
         public ActionResult Create()
         {
             return View();
-        }
+        }  
 
         [Authorize(Roles = "ADMIN")]
         [HttpPost]
         [ValidateInput(false)]
         public async Task<ActionResult> Create(Investiment model)
         {
-            string result = "";
-            if (!ModelState.IsValid)
-                return View(model);
+            if(model.DisplayValue != null && model.DisplayValue != "R$ 0,00")
+            {
+                string strValue = model.DisplayValue;
+                string[] arrayValue = strValue.Split();
 
+                model.Value = Convert.ToDouble(arrayValue[1]);
+            }
+            
+            string result = "";
+            
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+                
             try
             {
                 var cb = new InvestmentBusiness();
@@ -87,7 +101,9 @@ namespace ProjetoBRQ.Controllers
 
             var investimento = await Db.Investiment.FindAsync(id);
 
-            if(investimento == null)
+            investimento.DisplayValue = string.Format("R$ {0:0,0.00}", investimento.Value);
+
+            if (investimento == null)
             {
                 ModelState.AddModelError("", "Investimento não encontrado");
                 return RedirectToAction("Index");
@@ -101,6 +117,15 @@ namespace ProjetoBRQ.Controllers
         [ValidateInput(false)]
         public async Task<ActionResult> Edit(Investiment model)
         {
+
+            if (model.DisplayValue != null && model.DisplayValue != "R$ 0,00")
+            {
+                string strValue = model.DisplayValue;
+                string[] arrayValue = strValue.Split();
+
+                model.Value = Convert.ToDouble(arrayValue[1]);
+            }
+
             string result = "";
             try
             {
