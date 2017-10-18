@@ -70,7 +70,7 @@
                         <li>Lucas Farias</li>
                         <li>Caio Willian</li>
                         <li>Marco Antonio</li>
-                        <li>Rafael Finoti</li>
+                        <li>Raphael Finoti</li>
                     </ul>
                 </div>
             </div>
@@ -86,6 +86,7 @@
     @RenderSection("scripts", required: false)
 
     <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script src="~/Scripts/jquery.moneymask.js" type="text/javascript"></script>
 
     <!-- Menu Toggle Script -->
     <script>
@@ -97,8 +98,21 @@
         $(document).ready(function ($) {
             $('.phone_with_ddd').mask('(00) 0000-0000');
             $('.cpf').mask('000.000.000-00', { reverse: true });
-            $('.money').mask('000.000.000.000.000,00 ', { reverse: true });
+            $('.cpfsearch').mask('000.000.000-00');
+            //$('.money').mask('R$ 000.000.000.000.000,00 ', { reverse: true });
             $('.creditcard').mask('0000 0000 0000 0000');
+            $(".money").maskMoney();
+            //$(".money").mask('decimal', {
+            //    'alias': 'numeric',
+            //    'groupSeparator': ',',
+            //    'autoGroup': true,
+            //    'digits': 2,
+            //    'radixPoint': ".",
+            //    'digitsOptional': false,
+            //    'allowMinus': false,
+            //    'prefix': 'R$ ',
+            //    'placeholder': ''
+            //});
         }); 
         
     </script>
