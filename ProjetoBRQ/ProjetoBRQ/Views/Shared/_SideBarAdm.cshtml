@@ -10,6 +10,26 @@
                     <a href="#menu-toggle" id="menu-toggle" style="margin-top: 20px; float: right;"><i class="fa fa-bars " style="font-size: 20px !Important;" aria-hidden="true" aria-hidden="true"></i>
                 </li>
 
+                @if (User.IsInRole("ADMIN"))
+                {
+                    <li>
+                        <a class=text-white collapsed" data-toggle="collapse">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span style="margin-left: 10px;">Admin</span>
+                        </a>
+                    </li>
+                }
+                else
+                {
+                    <li>
+                        <a class=text-white collapsed" data-toggle="collapse">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            <span style="margin-left: 10px;">@User.Identity.GetUserName().Split('@')[0]</span>
+                        </a>
+                    </li>
+                }
+
+
                 <!-- Admin Area -->
                 @if (User.IsInRole("ADMIN"))
                 {

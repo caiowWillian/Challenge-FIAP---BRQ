@@ -88,7 +88,7 @@ namespace ProjetoBRQ.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult> Edit(int? Id)
         {
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("Index");
             }
@@ -107,6 +107,7 @@ namespace ProjetoBRQ.Controllers
             catch (Exception) { return View("Index"); }
         }
 
+        [ValidateInput(false)]
         [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public async Task<ActionResult> Edit(News model)
@@ -134,15 +135,20 @@ namespace ProjetoBRQ.Controllers
                 }
                 await new NewsBusiness().UpdateAsync(model);
             }
-            catch (Exception) { return View("Index"); }
+            catch (Exception ex)
+            {
+                TempData["MsgDelete"] = ex.ToString(); 
+                return View("Index");
 
-            return RedirectToAction("Details",new { Id = model.Id });
+            }
+
+            return RedirectToAction("Details", new { Id = model.Id });
         }
 
         [Authorize(Roles = "ADMIN")]
         public async Task<ActionResult> Delete(int? Id)
         {
-            if(Id == null)
+            if (Id == null)
             {
                 return RedirectToAction("Index");
             }
@@ -159,17 +165,17 @@ namespace ProjetoBRQ.Controllers
 
                 await new NewsBusiness().DeleteAsync(Id.Value);
 
-                TempData["MsgDelete"] = "A notícia '" + news.Title +"' foi removida";
+                TempData["MsgDelete"] = "A notícia '" + news.Title + "' foi removida";
             }
             catch (Exception) { return View("Index"); }
-            
+
             return RedirectToAction("Index");
         }
 
         public async Task<ActionResult> Preview(int? Id)
         {
             News news = null;
-            if(Id == null)
+            if (Id == null)
             {
                 return View("Index");
             }
@@ -178,7 +184,7 @@ namespace ProjetoBRQ.Controllers
             {
                 news = await Db.News.FindAsync(Id);
 
-                if(news == null)
+                if (news == null)
                 {
                     ModelState.AddModelError("", "Nenhuma noticia encontrada! Tente novamente");
                     return View("Index");
@@ -192,7 +198,7 @@ namespace ProjetoBRQ.Controllers
         public JsonResult TableIndex(int? Page, News Model)
         {
             const int registers = 10;
-            
+
             Page = Page ?? 1;
             Page--;
             Db.Configuration.LazyLoadingEnabled = false;
@@ -245,7 +251,7 @@ namespace ProjetoBRQ.Controllers
                 cod = Model.Id,
                 titulo = Model.Title == null ? "" : Model.Title,
                 imagem = Model.ImgNews == null ? "" : Model.ImgNews.ToString()
-        }, JsonRequestBehavior.AllowGet);
+            }, JsonRequestBehavior.AllowGet);
         }
 
 

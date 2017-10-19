@@ -28,7 +28,7 @@ namespace ProjetoBRQ.Models
 
         [Display(Name = "Estoque")]
         [Column("STOCK")]
-        [Range(0,999999,ErrorMessage = "Numero de estoque invalido")]
+        [Range(0,999999,ErrorMessage = "Numero de estoque inválido")]
         [Required(ErrorMessage = "Estoque é obrigatorio", AllowEmptyStrings = false)]
         public int? Stock { get; set; }
 

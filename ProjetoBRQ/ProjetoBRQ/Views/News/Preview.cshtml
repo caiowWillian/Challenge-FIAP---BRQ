@@ -30,7 +30,15 @@
     <div class="card">
         <br />
         <div class="col-xs-6 col-md-12">
-            <p><font size="2">Data: @Model.DataCadastro</font></p>
+            <p>
+                <font size="2">
+                    Publicado em @Model.DataCadastro
+                    @if (Model.DataAlteracao != null)
+                    {
+                        <div>Atualizado em @Model.DataAlteracao</div>
+                    }
+                </font>
+            </p>
         </div>
 
         <div class="col-xs-6 col-md-12 hero-image">
@@ -44,6 +52,17 @@
             <h5 class="card-title text-center">@Model.Description</h5>
             <p class="card-text text-center">@Html.Raw(Model.Body)</p>
         </div>
+
+        @if ((Request.IsAuthenticated) && (User.IsInRole("ADMIN")))
+        {
+            <div class="col-xs-6 col-md-12">
+                <a href="@Url.Action("Edit","News", new { Id = Model.Id })">
+                    <i class="fa fa-edit" aria-hidden="true"></i>
+                    Editar
+                </a>
+            </div>
+        }
+        
     </div>
 </div>
 <br />
