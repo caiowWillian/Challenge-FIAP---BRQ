@@ -46,8 +46,8 @@ namespace ProjetoBRQ.DAO
 
                         cmd.Parameters.Add(new OracleParameter("v_id", OracleDbType.Int32, News.Id, ParameterDirection.Input));
                         cmd.Parameters.Add(new OracleParameter("v_title", OracleDbType.Varchar2, News.Title, ParameterDirection.Input));
-                        cmd.Parameters.Add(new OracleParameter("v_body", OracleDbType.Varchar2, News.Body, ParameterDirection.Input));
                         cmd.Parameters.Add(new OracleParameter("v_description", OracleDbType.Varchar2, News.Description, ParameterDirection.Input));
+                        cmd.Parameters.Add(new OracleParameter("v_body", OracleDbType.Varchar2, News.Body, ParameterDirection.Input));
                         cmd.Parameters.Add("result", OracleDbType.Int32).Direction = ParameterDirection.Output;
                         await cmd.ExecuteNonQueryAsync();
                         id = cmd.Parameters["result"].Value.ToString();
