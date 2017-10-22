@@ -45,11 +45,11 @@
                 <td>@Html.TextBoxFor(m => m.Value, new { @class = "form-control", @placeholder = "Pesquisar por valor" })</td>
             </tr>
             <tr id="head">
-                <td>@Html.LabelFor(m => m.Id)</td>
-                <td>@Html.LabelFor(m => m.Name)</td>
-                <td>@Html.LabelFor(m => m.Stock)</td>
-                <td>@Html.LabelFor(m => m.Value)</td>
-                <td>Ações</td>
+                <td><b>@Html.LabelFor(m => m.Id)</b></td>
+                <td><b>@Html.LabelFor(m => m.Name)</b></td>
+                <td><b>@Html.LabelFor(m => m.Stock) Disponível/Total</b></td>
+                <td><b>@Html.LabelFor(m => m.Value)</b></td>
+                <td><b>Ações</b></td>
             </tr>
         </table>
         <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size:54px"></i></p>
@@ -131,7 +131,7 @@
     function createPaged(data, id = 1) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages + 1; i++) {
+        for (var i = 1; i <= data.countPages; i++) {
             if (i == id) {
                 html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
                 //html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}"></a>`;
@@ -151,7 +151,7 @@
                 table += '<tr class="dynamic">';
                 table += `<td> ${data.list[i].Id}</td>`;
                 table += `<td> ${data.list[i].Name}</td>`;
-                table += `<td> ${data.list[i].Stock}</td>`;
+                table += `<td> ${data.list[i].NumDisponivel}/${data.list[i].Stock}</td>`;
                 table += `<td>${(data.list[i].Value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>`;                
                 table += '<td>';
                 table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;

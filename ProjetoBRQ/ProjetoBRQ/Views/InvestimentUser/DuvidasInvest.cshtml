@@ -14,11 +14,12 @@
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
                 <td width="20%">@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Pesquisar por nome" })</td>
-                <td width="20%">@Html.TextBoxFor(m => m.Value, new { @class = "form-control", @placeholder = "Pesquisar por valor" })</td>
+                <td width="20%">@Html.TextBoxFor(m => m.Value, new { @class = "form-control", @placeholder = "Pesquisar por valor" })</td>                
             </tr>
             <tr id="head">
                 <td><b>@Html.LabelFor(m => m.Name)</b></td>
                 <td><b>@Html.LabelFor(m => m.Value)</b></td>
+                <td width="15%"><b>Quant. Disponível/Total</b></td>
                 <td><b>@Html.LabelFor(m => m.Description)</b></td>
             </tr>
         </table>
@@ -27,6 +28,7 @@
     </div>
 </div>
 <br />
+
 <script>
     //Inicio - Scripts para pesquisa
     $('#Id').keypress(function (e) {
@@ -96,7 +98,7 @@
     function createPaged(data, id = 1) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages + 1; i++) {
+        for (var i = 1; i <= data.countPages; i++) {
             if (i == id) {
                 html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
             } else {
@@ -113,7 +115,8 @@
                 table += '<tr class="dynamic">';
                 table += `<td> ${data.list[i].Name}</td>`;
                 table += `<td> ${data.list[i].Value}</td>`;
-                table += `<td> ${data.list[i].Description}</td>`
+                table += `<td> ${data.list[i].NumDisponivel}/${data.list[i].Stock}</td>`;
+                table += `<td> ${data.list[i].Description}</td>`;
                 table += '</tr>';
             }
             $('#table').append(table);
