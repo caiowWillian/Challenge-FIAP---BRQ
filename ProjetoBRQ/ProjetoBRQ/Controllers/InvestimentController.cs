@@ -175,25 +175,9 @@ namespace ProjetoBRQ.Controllers
             IQueryable<Investiment> query;
             Page = Page ?? 1;
             Page--;
-            IQueryable<InvestimentUser> histInvestimento;
 
             query = Db.Investiment.Where(x => !x.Deleted);
-            histInvestimento = Db.InvestimentUser;
-            
-            foreach (var i in query)
-            {
-                int disponivel = (int) i.Stock;
-                foreach(var x in histInvestimento)
-                {
-                    if(i.Id == x.InvestimentId)
-                    {
-                        disponivel -= (int) x.Num;
-                    }
-                }
 
-                i.NumDisponivel = disponivel;
-            }
-            
             if (model.Id != null)
                 query = query.Where(m => m.Id == model.Id);
             if (model.Name != null)
@@ -206,11 +190,6 @@ namespace ProjetoBRQ.Controllers
             var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
             var count = query.Count();
             int countPages = (int)(count / registers);
-            
-            if( count % registers != 0)
-            {
-                countPages++;
-            }
 
             return Json(new
             {
@@ -218,8 +197,6 @@ namespace ProjetoBRQ.Controllers
                 count = count,
                 countPages = countPages,
                 cod = model.Id,
-                loteDisponivel = model.NumDisponivel,
-                loteTotal = model.Stock
             }, JsonRequestBehavior.AllowGet);
         }
     }

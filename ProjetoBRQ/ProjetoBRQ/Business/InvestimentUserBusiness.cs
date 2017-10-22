@@ -27,14 +27,14 @@ namespace ProjetoBRQ.Business
             var result = x.ToString();
 
             if (Convert.ToInt32(result) == -1)
-                result = "Nenhum investimento encontrato, por favor tente novamente";
+                return "Nenhum investimento encontrato, por favor tente novamente";
             if(Convert.ToInt32(result) == -2)
-                result = "Houve um erro ao inserir o contato, tente novamente";
+                return "Houve um erro ao inserir o contato, tente novamente";
             if (Convert.ToInt32(result) == -3)
             {
                 int? stock=0;
                 stock = Db.Investiment.Find(investiment.InvestimentId).Stock;
-                result = "Infelizmente temos apenas "+stock + " unidades em estoque";
+                return "Infelizmente temos apenas "+stock + " unidades em estoque";
             }
                 
             return result.ToString();

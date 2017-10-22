@@ -2,31 +2,19 @@
 @{
     ViewBag.Title = "Index";
 }
-<style>
-    .paged {
-        border: 1px solid black;
-        padding: 3px;
-    }
-</style>
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">Excluir</h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p>Tem certeza de que você deseja deletar este investimento?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
-            </div>
-        </div>
-    </div>
-</div>
-<br />
+
+<h2>Index</h2>
+
 <div class="container">
+    @if (TempData["MsgInvestimentoSucesso"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            @TempData["MsgInvestimentoSucesso"]
+        </div>
+    }
     <div id="content" class="col-md-12">
         <h2>Investimentos</h2>
 
@@ -57,7 +45,7 @@
         <ul class="pagination" id="page"></ul>
     </div>
 </div>
-<br />
+
 <script>
     //Inicio - Scripts para pesquisa
     $('#Id').keypress(function (e) {
@@ -153,12 +141,15 @@
                 table += `<td> ${data.list[i].Id}</td>`;
                 table += `<td> ${data.list[i].Name}</td>`;
                 table += `<td> ${data.list[i].Stock}</td>`;
-                table += `<td>${(data.list[i].Value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>`;                
+                table += `<td>${(data.list[i].Value).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>`;
                 table += `<td>${data.list[i].StockTotal}</td>`;
                 table += '<td>';
-                table += `<a href="@Url.Action("Details", "Investiment")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-                table += `<a href="@Url.Action("Edit", "Investiment")/${data.list[i].Id}"><i class="fa fa-pencil" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
-                table += `<a href='#' class='delete' id='delete-${data.list[i].Id}' data-toggle='modal' data-target='#myModal'><i class="fa fa-trash-o" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+
+                if (data.list[i].Stock > 0) {
+                    table += `<a href="@Url.Action("Create", "InvestimentUser")/${data.list[i].Id}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+                } else {
+                    table += `<p>Indisponivel</p>`;
+                }
                 table += '</td>';
                 table += '</tr>';
             }

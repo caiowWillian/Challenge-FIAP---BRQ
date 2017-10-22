@@ -38,7 +38,7 @@ namespace ProjetoBRQ.Models
         public int? InvestimentId { get; set; }
 
         [Column("VALUE_INVESTIMENT")]
-        public float ValueInvestiment { get; set; }
+        public double ValueInvestiment { get; set; }
 
         [NotMapped]
         public double? TotalValue { get; set; }

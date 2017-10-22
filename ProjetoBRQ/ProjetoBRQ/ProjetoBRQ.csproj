@@ -329,6 +329,7 @@
     <Content Include="Views\InvestimentUser\Create.cshtml" />
     <Content Include="Views\InvestimentUser\DuvidasInvest.cshtml" />
     <Content Include="Views\InvestimentUser\Details.cshtml" />
+    <Content Include="Views\InvestimentUser\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

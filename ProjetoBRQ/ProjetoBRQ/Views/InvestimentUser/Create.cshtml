@@ -5,20 +5,51 @@
 }
 
 <br />
+
 <div class="container">
     <h2>Nos ajude, faça seu investimento</h2>
-  
     <a href="@Url.Action("DuvidasInvest","InvestimentUser")">
         <i class="fa fa-question-circle" aria-hidden="true">Tire suas dúvidas</i>
     </a>
 
-    @if (TempData["MsgInvestimentoSucesso"] != null)
+
+    @if (Model.Investiment != null)
     {
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-            @TempData["MsgInvestimentoSucesso"]
+        <div class="col-md-5">
+            <table class="table table-bordered table-condensed table-responsive table-hover">
+                <tr>
+                    <th>
+                        @Html.LabelFor(m => m.Investiment.FirstOrDefault().Id)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(m => m.Investiment.FirstOrDefault().Id)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.LabelFor(m => m.Investiment.FirstOrDefault().Name)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(m => m.Investiment.FirstOrDefault().Name)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.LabelFor(m => m.Investiment.FirstOrDefault().Stock)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(m => m.Investiment.FirstOrDefault().Stock)
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        @Html.LabelFor(m => m.Investiment.FirstOrDefault().Value)
+                    </th>
+                    <td>
+                        @Html.DisplayFor(m => m.Investiment.FirstOrDefault().Value)
+                    </td>
+                </tr>
+            </table>
         </div>
     }
 
@@ -27,10 +58,8 @@
         @Html.AntiForgeryToken();
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">            
-            @Html.LabelFor(m => m.InvestimentId)
-            @Html.DropDownList("InvestimentId", null, htmlAttributes: new { @class = "form-control" })            
-        </div>
+        @Html.HiddenFor(m => m.InvestimentId)
+
         <div class="form-group row">
             <div class="col-md-6">
                 @Html.LabelFor(m => m.Num)
@@ -41,8 +70,51 @@
                 @Html.TextBoxFor(m => m.CardNumber, htmlAttributes: new { @class = "form-control creditcard" })
             </div>
         </div>
-        
-        <input type="submit" class="btn btn-default" value="Concluir investimento" />
+
+            <input type="submit" class="btn btn-default" value="Concluir investimento" />
     }
 </div>
-<br />
+
+@*
+    <div class="container">
+        <h2>Nos ajude, faça seu investimento</h2>
+
+        <a href="@Url.Action("DuvidasInvest","InvestimentUser")">
+            <i class="fa fa-question-circle" aria-hidden="true">Tire suas dúvidas</i>
+        </a>
+
+        @if (TempData["MsgInvestimentoSucesso"] != null)
+        {
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                @TempData["MsgInvestimentoSucesso"]
+            </div>
+        }
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(m => m.InvestimentId)
+                @Html.DropDownList("InvestimentId", null, htmlAttributes: new { @class = "form-control" })
+            </div>
+            <div class="form-group row">
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.Num)
+                    @Html.TextBoxFor(m => m.Num, htmlAttributes: new { @class = "form-control", @type = "number" })
+                </div>
+                <div class="col-md-6">
+                    @Html.LabelFor(m => m.CardNumber)
+                    @Html.TextBoxFor(m => m.CardNumber, htmlAttributes: new { @class = "form-control creditcard" })
+                </div>
+            </div>
+
+            <input type="submit" class="btn btn-default" value="Concluir investimento" />
+        }
+    </div>
+    <br />
+*@

@@ -14,6 +14,11 @@ namespace ProjetoBRQ.Controllers
     {
         private DbBRQ Db = new DbBRQ();
 
+        public ActionResult Index()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "ADMIN")]
         public ActionResult Details(string email)
         {
@@ -41,12 +46,28 @@ namespace ProjetoBRQ.Controllers
 
         [Authorize]
         //GET: InvestimentUser/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
-            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "NameWithValue");
-            ViewBag.CurrentUser = User.Identity.Name;
 
-            return View();
+            if (id == null)
+                return RedirectToAction("Index");
+
+            var investiment = Db.Investiment.Find(id);
+
+            if (investiment == null)
+                return RedirectToAction("Index");
+
+            InvestimentUser iUser = new InvestimentUser();
+
+            iUser.Investiment = new List<Investiment>();
+            iUser.InvestimentId = id;
+            iUser.Investiment.Add(investiment);
+
+
+            //ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "NameWithValue");
+            //ViewBag.CurrentUser = User.Identity.Name;
+
+            return View(iUser);
         }
 
         //POST: InvestimentUser/Create
@@ -64,18 +85,19 @@ namespace ProjetoBRQ.Controllers
             {
                 var cb = new InvestimentUserBusiness();
                 result = await cb.AddAsync(model);
-                if (cb.Error(result))
+                string txt = result.ToString();
+                if (cb.Error(txt))
                 {
-                    ModelState.AddModelError("", result);
+                    ModelState.AddModelError("", txt);
                     return View(model);
                 }
                 else
                 {
                     TempData["MsgInvestimentoSucesso"] = "O investimento foi realizado com sucesso";
-                    return View();
+                    return RedirectToAction("Index");
                 }
             }
-            catch
+            catch(Exception e)
             {
                 return View();
             }
@@ -173,11 +195,6 @@ namespace ProjetoBRQ.Controllers
                 
             var count = query.Count();
             int countPages = (int)(count / registers);
-
-            if (count % registers != 0)
-            {
-                countPages++;
-            }
 
             return Json(new
             {

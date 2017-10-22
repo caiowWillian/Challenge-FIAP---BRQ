@@ -19,7 +19,7 @@ namespace ProjetoBRQ.Models
         [Required(ErrorMessage = "Nome é obrigatorio", AllowEmptyStrings = false)]
         [StringLength(50, ErrorMessage = "Nome pode ter até 50 caracteres")]
         public string Name { get; set; }
-
+        
         [Display(Name = "Descrição")]
         [Column("DESCRIPTION")]
         [Required(ErrorMessage = "Descrição é obrigatorio", AllowEmptyStrings = false)]
@@ -28,7 +28,7 @@ namespace ProjetoBRQ.Models
 
         [Display(Name = "Estoque")]
         [Column("STOCK")]
-        [Range(0, 999999, ErrorMessage = "Numero de estoque inválido")]
+        [Range(0,999999,ErrorMessage = "Numero de estoque inválido")]
         [Required(ErrorMessage = "Estoque é obrigatorio", AllowEmptyStrings = false)]
         public int? Stock { get; set; }
 
@@ -56,22 +56,22 @@ namespace ProjetoBRQ.Models
 
         [Display(Name = "Investimentos")]
         [NotMapped]
-        public InvestimentUser InvestimentUser { get; set; }
+        public InvestimentUser InvestimentUser{ get;set; }
 
         [NotMapped]
         public int? Num { get; set; }
 
         [NotMapped]
-        public int NumDisponivel { get; set; }
+        public double? Total { get; set; }
 
-        [NotMapped]
-        public float? Total { get; set; }
+        [Column("STOCK_TOTAL")]
+        public int? StockTotal { get; set; }
 
         public string NameWithValue
         {
             get
             {
-                return Name + " - R$ " + Value;
+                return Name + " - R$ "+Value;
             }
         }
     }
