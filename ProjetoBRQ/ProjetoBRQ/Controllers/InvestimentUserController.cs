@@ -97,7 +97,7 @@ namespace ProjetoBRQ.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return View();
             }
@@ -158,10 +158,10 @@ namespace ProjetoBRQ.Controllers
         [Authorize(Roles = "ADMIN")]
         public async Task<JsonResult> GetTotalInvestiment()
         {
-            double x= 0.0;
+            double x = 0.0;
             try
             {
-                x = await new InvestimentUserBusiness().GetTotalInvestimentAsync(); 
+                x = await new InvestimentUserBusiness().GetTotalInvestimentAsync();
             }
             catch (Exception) { }
 
@@ -169,7 +169,7 @@ namespace ProjetoBRQ.Controllers
             {
                 x = x,
 
-            },JsonRequestBehavior.AllowGet);
+            }, JsonRequestBehavior.AllowGet);
         }
 
         [Authorize(Roles = "ADMIN")]
@@ -179,7 +179,6 @@ namespace ProjetoBRQ.Controllers
             Page = Page ?? 1;
             Page--;
             IList<string> investiment = new List<string>();
-            Investiment aux;
 
             var query = Db.InvestimentUser.Select(x => new
             {
@@ -191,10 +190,15 @@ namespace ProjetoBRQ.Controllers
 
             query = query.Distinct();
 
-           var arr = query.OrderByDescending(x => x.Email).Skip(Page.Value * registers).Take(registers).ToArray();
-                
+            var arr = query.OrderByDescending(x => x.Email).Skip(Page.Value * registers).Take(registers).ToArray();
+
             var count = query.Count();
             int countPages = (int)(count / registers);
+
+            if (count % registers != 0 && count > 10)
+            {
+                countPages++;
+            }
 
             return Json(new
             {

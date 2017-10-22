@@ -3,8 +3,6 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
 <div class="container">
     @if (TempData["MsgInvestimentoSucesso"] != null)
     {
@@ -27,16 +25,16 @@
 
         <table id="table" class="table table-bordered table-hover table-striped">
             <tr>
-                <td width="17%">@Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Pesquisar por ID" })</td>
-                <td>@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Pesquisar por nome" })</td>
+                <td width="16%">@Html.TextBoxFor(m => m.Id, new { @class = "form-control", @placeholder = "Pesquisar por ID" })</td>
+                <td width="20%">@Html.TextBoxFor(m => m.Name, new { @class = "form-control", @placeholder = "Pesquisar por nome" })</tdwidth="20%">
                 <td>@Html.TextBoxFor(m => m.Stock, new { @class = "form-control", @placeholder = "Pesquisar por estoque" })</td>
                 <td>@Html.TextBoxFor(m => m.Value, new { @class = "form-control", @placeholder = "Pesquisar por valor" })</td>
             </tr>
             <tr id="head">
                 <td>@Html.LabelFor(m => m.Id)</td>
                 <td>@Html.LabelFor(m => m.Name)</td>
-                <td>@Html.LabelFor(m => m.Stock)</td>
-                <td>@Html.LabelFor(m => m.Value)</td>
+                <td width="20%">@Html.LabelFor(m => m.Stock)</td>
+                <td width="18%">@Html.LabelFor(m => m.Value)</td>
                 <td>@Html.LabelFor(m => m.StockTotal)</td>
                 <td>Ações</td>
             </tr>
@@ -45,6 +43,7 @@
         <ul class="pagination" id="page"></ul>
     </div>
 </div>
+<br />
 
 <script>
     //Inicio - Scripts para pesquisa
@@ -72,7 +71,7 @@
     }
     //Fim - Scripts para pesquisa
 
-    initTable()
+    initTable();
 
     function removeElements() {
         $(".dynamic").remove();
@@ -120,18 +119,15 @@
     function createPaged(data, id = 1) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages + 1; i++) {
+        for (var i = 1; i <= data.countPages; i++) {
             if (i == id) {
                 html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
-                //html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}"></a>`;
             } else {
                 html += `<li class="page-item"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
-                //html += `<a class='paged' href='#' id="paged-${i}">${i}</a>`;
             }
         }
         $('#page').append(html);
     }
-
 
         function createTable(data) {
             var table = '';

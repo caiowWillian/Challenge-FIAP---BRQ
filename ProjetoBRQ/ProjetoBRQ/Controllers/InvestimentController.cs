@@ -191,6 +191,11 @@ namespace ProjetoBRQ.Controllers
             var count = query.Count();
             int countPages = (int)(count / registers);
 
+            if (count % registers != 0)
+            {
+                countPages++;
+            }
+
             return Json(new
             {
                 list = arr,

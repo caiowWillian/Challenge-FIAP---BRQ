@@ -26,7 +26,7 @@ namespace ProjetoBRQ.Models
         [StringLength(100, ErrorMessage = "Descrição pode ter até 100 caracteres")]
         public string Description { get; set; }
 
-        [Display(Name = "Estoque")]
+        [Display(Name = "Estoque Disponível")]
         [Column("STOCK")]
         [Range(0,999999,ErrorMessage = "Numero de estoque inválido")]
         [Required(ErrorMessage = "Estoque é obrigatorio", AllowEmptyStrings = false)]
@@ -65,6 +65,7 @@ namespace ProjetoBRQ.Models
         public double? Total { get; set; }
 
         [Column("STOCK_TOTAL")]
+        [Display(Name = "Estoque Total")]
         public int? StockTotal { get; set; }
 
         public string NameWithValue
