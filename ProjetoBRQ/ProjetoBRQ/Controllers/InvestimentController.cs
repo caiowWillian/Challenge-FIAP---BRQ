@@ -29,6 +29,9 @@ namespace ProjetoBRQ.Controllers
                     return RedirectToAction("Index");
 
                 var investiment = await Db.Investiment.FindAsync(id);
+                investiment.Total = 0;
+                foreach (var item in Db.InvestimentUser.Where(x => x.InvestimentId == id))
+                    investiment.Total += item.Num * item.ValueInvestiment;
 
                 investiment.DisplayValue = string.Format("R$ {0:0,0.00}", investiment.Value);
 

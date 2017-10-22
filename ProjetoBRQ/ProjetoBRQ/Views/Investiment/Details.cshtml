@@ -14,30 +14,34 @@
             <div class="col-md-5">
                 <table class="table table-hover table-bordered table-condensed">
                     <tr>
-                        <td>@Html.LabelFor(m => m.Name)</td>
+                        <th>@Html.LabelFor(m => m.Name)</th>
                         <td>@Html.DisplayFor(m => m.Name)</td>
                     </tr>
                     <tr>
-                        <td>@Html.LabelFor(m => m.Stock)</td>
+                        <th>@Html.LabelFor(m => m.Stock)</th>
                         <td>@Html.DisplayFor(m => m.Stock)</td>
                     </tr>
                     <tr>
-                        <td>@Html.LabelFor(m => m.DisplayValue)</td>
+                        <th>@Html.LabelFor(m => m.DisplayValue)</th>
                         <td>@Html.DisplayFor(m => m.DisplayValue)</td>
                     </tr>
                     <tr>
-                        <td>@Html.LabelFor(m => m.InputDate)</td>
+                        <th>@Html.LabelFor(m => m.Total)</th>
+                        <td>R$ @Html.DisplayFor(m => m.Total)</td>
+                    </tr>
+                    <tr>
+                        <th>@Html.LabelFor(m => m.InputDate)</th>
                         <td>@Html.DisplayFor(m => m.InputDate)</td>
                     </tr>
                     @if (Model.UpdateDate != null)
                     {
                         <tr>
-                            <td>@Html.LabelFor(m => m.UpdateDate)</td>
+                            <th>@Html.LabelFor(m => m.UpdateDate)</th>
                             <td>@Html.DisplayFor(m => m.UpdateDate)</td>
                         </tr>
                     }
                     <tr>
-                        <td>@Html.LabelFor(m => m.Description)</td>
+                        <th>@Html.LabelFor(m => m.Description)</th>
                         <td>@Html.Raw(Model.Description)</td>
                     </tr>
                 </table>
