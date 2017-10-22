@@ -42,6 +42,25 @@ namespace ProjetoBRQ.Repository
             return Convert.ToInt32(id);
         }
 
+        public async Task<double> GetTotalInvestimentAsync()
+        {
+            double total = 0;
+
+            using(var cmd = Db.Database.Connection.CreateCommand() as OracleCommand)
+            {
+                OracleConnection connection = (OracleConnection)Db.Database.Connection;
+                connection.Open();
+                cmd.CommandText = "sp_get_total_investiment";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add("result", OracleDbType.Double).Direction = ParameterDirection.Output;
+                await cmd.ExecuteNonQueryAsync();
+                total = Convert.ToDouble(cmd.Parameters["result"].Value.ToString());
+                connection.Close();
+            }
+            return total;
+        }
+
         public void Dispose()
         {
             Db.Dispose();

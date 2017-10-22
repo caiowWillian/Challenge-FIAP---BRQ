@@ -228,6 +228,7 @@
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Contatos.cs" />
     <Compile Include="Models\InvestimentUser.cs" />
+    <Compile Include="Models\InvestimetUserViewModel.cs" />
     <Compile Include="Repository\ClientesRepository.cs" />
     <Compile Include="Repository\ContatosRepository.cs" />
     <Compile Include="Repository\ImgNewsRepository.cs" />
@@ -324,10 +325,13 @@
     <Content Include="Views\Investiment\Details.cshtml" />
     <Content Include="Views\Investiment\Edit.cshtml" />
     <Content Include="Views\Investiment\Index.cshtml" />
+    <Content Include="Views\InvestimentUser\Historico.cshtml" />
+    <Content Include="Views\InvestimentUser\Create.cshtml" />
+    <Content Include="Views\InvestimentUser\DuvidasInvest.cshtml" />
+    <Content Include="Views\InvestimentUser\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\InvestimentUser\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

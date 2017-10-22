@@ -15,6 +15,7 @@ namespace ProjetoBRQ.Context
         public DbSet<Cliente> Cliente { get; set; }
         public DbSet<Contatos> Contatos { get; set; }
         public DbSet<Investiment> Investiment { get; set; }
+        public DbSet<InvestimentUser> InvestimentUser { get; set; }
 
         public DbBRQ() : base("name=DbBRQ")
         {

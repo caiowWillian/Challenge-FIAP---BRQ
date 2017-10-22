@@ -1,0 +1,44 @@
+﻿@model ProjetoBRQ.Models.InvestimentUser
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="container">
+    <h2>Informações</h2>
+
+    <div class="col-md-5">
+        <table class="table table-bordered table-condensed table-hover table-responsive">
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.UserGUID)
+                </th>
+                <td>
+                    @Html.DisplayFor(m => m.UserGUID)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.GetAllInvestimentNameWithValue)
+                </th>
+                <td>
+                    @Html.Raw(Model.GetAllInvestimentNameWithValue)
+                </td>
+            </tr>
+            <tr>
+                <th>
+                    @Html.LabelFor(m => m.GetTotalInvestiment)
+                </th>
+                <td>
+                    @Html.DisplayFor(m => m.GetTotalInvestiment)
+                </td>
+            </tr>
+        </table>
+    </div>
+    
+</div>
+
+
+
+
+

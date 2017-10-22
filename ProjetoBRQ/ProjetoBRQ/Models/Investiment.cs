@@ -54,7 +54,14 @@ namespace ProjetoBRQ.Models
         [Column("DELETED")]
         public bool Deleted { get; set; }
 
+        [Display(Name = "Investimentos")]
         [NotMapped]
-        public virtual InvestimentUser InvestimentUser{ get;set; }
+        public InvestimentUser InvestimentUser{ get;set; }
+
+        [NotMapped]
+        public int? Num { get; set; }
+
+        [NotMapped]
+        public float? Total { get; set; }
     }
 }

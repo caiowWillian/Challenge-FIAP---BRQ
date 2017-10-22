@@ -14,58 +14,66 @@ namespace ProjetoBRQ.Controllers
     {
         private DbBRQ Db = new DbBRQ();
 
-        // GET: InvestimentUser
-        public ActionResult Index()
+        [Authorize(Roles = "ADMIN")]
+        public ActionResult Details(string email)
         {
-            return View();
-        }
+            IList<Investiment> l = new List<Investiment>();
+            var ius = Db.InvestimentUser.Where(x => x.UserGUID == email).FirstOrDefault();
+            ius.TotalValue = ius.Num * ius.ValueInvestiment;
+            Investiment investiment;
+            foreach (var item in Db.InvestimentUser.Where(x => x.UserGUID == ius.UserGUID && x.Id != ius.Id))
+            {
+                ius.TotalValue += item.Num * item.ValueInvestiment;
+                investiment = Db.Investiment.Find(item.InvestimentId);
+                investiment.Num = item.Num;
+                investiment.Total = item.Num * item.ValueInvestiment;
+                l.Add(investiment);
+                investiment = null;
+            }
 
-        // GET: InvestimentUser/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
+            var i = Db.Investiment.Find(ius.InvestimentId);
+            i.Num = ius.Num;
+            i.Total = ius.Num * ius.ValueInvestiment;
+            l.Add(i);
+            ius.Investiment = l;
+            return View(ius);
         }
 
         [Authorize]
         //GET: InvestimentUser/Create
         public ActionResult Create()
         {
-            ViewBag.InvestimentId = new SelectList(Db.Investiment.OrderBy(x => x.Id), "Id", "Name");
+            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "Name");
             ViewBag.CurrentUser = User.Identity.Name;
 
             return View();
         }
 
         //POST: InvestimentUser/Create
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> Create(InvestimentUser model)
         {
             string result = "";
             model.UserGUID = User.Identity.Name;
-            model.InputDate = DateTime.Now;
+            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "Name");
+            if (!ModelState.IsValid)
+                return View(model);
 
             try
             {
                 var cb = new InvestimentUserBusiness();
-
                 result = await cb.AddAsync(model);
-
-                ViewBag.InvestimentId = new SelectList(Db.Investiment.OrderBy(x => x.Id), "Id", "Name");
-
-                TempData["MsgInvestimentoSucesso"] = "O investimento foi realizado com sucesso";
-
-                return View();
-
-                // TODO: Add insert logic here
-
-
-                //if (cb.Error(result))
-                //{
-                //    ModelState.AddModelError("", result);
-
-                //    ViewBag.InvestimentId = new SelectList(Db.Investiment.OrderBy(x => x.Id), "Id", "Name");
-                //    return View(model);
-                //}
+                if (cb.Error(result))
+                {
+                    ModelState.AddModelError("", result);
+                    return View(model);
+                }
+                else
+                {
+                    TempData["MsgInvestimentoSucesso"] = "O investimento foi realizado com sucesso";
+                    return View();
+                }
             }
             catch
             {
@@ -73,20 +81,19 @@ namespace ProjetoBRQ.Controllers
             }
         }
 
+        [Authorize(Roles = "ADMIN")]
         // GET: InvestimentUser/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: InvestimentUser/Edit/5
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add update logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -95,20 +102,18 @@ namespace ProjetoBRQ.Controllers
             }
         }
 
-        // GET: InvestimentUser/Delete/5
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: InvestimentUser/Delete/5
+        [Authorize(Roles = "ADMIN")]
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                // TODO: Add delete logic here
-
                 return RedirectToAction("Index");
             }
             catch
@@ -122,62 +127,50 @@ namespace ProjetoBRQ.Controllers
             return View();
         }
 
+        [Authorize(Roles = "ADMIN")]
         public ActionResult Historico()
         {
             return View();
         }
 
-        public JsonResult TableHistorico(int? Page, Investiment model)
+        [Authorize(Roles = "ADMIN")]
+        public async Task<JsonResult> GetTotalInvestiment()
         {
-            const int registers = 10;
-            IQueryable<Investiment> query;
-            Page = Page ?? 1;
-            Page--;
-
-            query = Db.Investiment.Where(x => !x.Deleted);
-
-            if (model.Id != null)
-                query = query.Where(m => m.Id == model.Id);
-            if (model.Name != null)
-                query = query.Where(m => m.Name == model.Name);
-            if (model.Stock != null)
-                query = query.Where(m => m.Stock == model.Stock);
-            if (model.Value != null)
-                query = query.Where(m => m.Value == model.Value);
-
-            var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
-            var count = query.Count();
-            int countPages = (int)(count / registers);
+            double x= 0.0;
+            try
+            {
+                x = await new InvestimentUserBusiness().GetTotalInvestimentAsync(); 
+            }
+            catch (Exception) { }
 
             return Json(new
             {
-                list = arr,
-                count = count,
-                countPages = countPages,
-                cod = model.Id,
-                desc = model.Description
-            }, JsonRequestBehavior.AllowGet);
+                x = x,
+
+            },JsonRequestBehavior.AllowGet);
         }
 
-        public JsonResult TableIndex(int? Page, Investiment model)
+        [Authorize(Roles = "ADMIN")]
+        public JsonResult TableHistorico(int? Page, InvestimentUser model)
         {
             const int registers = 10;
-            IQueryable<Investiment> query;
             Page = Page ?? 1;
             Page--;
+            IList<string> investiment = new List<string>();
+            Investiment aux;
 
-            query = Db.Investiment.Where(x => !x.Deleted);
+            var query = Db.InvestimentUser.Select(x => new
+            {
+                Email = x.UserGUID
+            }).Distinct();
 
-            if (model.Id != null)
-                query = query.Where(m => m.Id == model.Id);
-            if (model.Name != null)
-                query = query.Where(m => m.Name == model.Name);
-            if (model.Stock != null)
-                query = query.Where(m => m.Stock == model.Stock);
-            if (model.Value != null)
-                query = query.Where(m => m.Value == model.Value);
+            if (model.UserGUID != null)
+                query = query.Where(m => m.Email == model.UserGUID);
 
-            var arr = query.OrderByDescending(x => x.Id).Skip(Page.Value * registers).Take(registers).ToArray();
+            query = query.Distinct();
+
+           var arr = query.OrderByDescending(x => x.Email).Skip(Page.Value * registers).Take(registers).ToArray();
+                
             var count = query.Count();
             int countPages = (int)(count / registers);
 
@@ -186,8 +179,6 @@ namespace ProjetoBRQ.Controllers
                 list = arr,
                 count = count,
                 countPages = countPages,
-                cod = model.Id,
-                desc = model.Description
             }, JsonRequestBehavior.AllowGet);
         }
     }

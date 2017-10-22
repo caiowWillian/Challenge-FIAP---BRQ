@@ -1,7 +1,116 @@
-﻿
+﻿@model ProjetoBRQ.Models.InvestimentUser
 @{
     ViewBag.Title = "Historico";
 }
 
-<h2>Historico</h2>
 
+<div class="container">
+    <h2>Historico</h2>
+    <div class="row">
+        <div class="col-md-2" style="margin:5px;">
+            <div class="card">
+                <div class="card-block">
+                    <h5 class="card-title text-center">Subtotal</h5>
+                </div>
+                <div class="card-text">
+                    <p class="text-center"><i id="load-total" class="fa fa-spinner fa-spin" style="font-size: 54px"></i></p>
+                    <p class="text-center"><b id="subtotal"></b></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="col-md-12">
+        <table id="table" class="table table-bordered table-hover table-striped">
+            <tr>
+                <td width="17%">@Html.TextBoxFor(m => m.UserGUID, new { @class = "form-control", @placeholder = "Pesquisar pelo email" })</td>
+            </tr>
+            <tr id="head">
+                <td>@Html.LabelFor(m => m.UserGUID)</td>
+                <td width="10%">Ações</td>
+            </tr>
+        </table>
+        <p class="text-center"><i id="load" class="fa fa-spinner fa-spin" style="font-size: 54px"></i></p>
+
+        <ul class="pagination" id="page"></ul>  
+    </div>
+</div>
+
+
+<script>
+    function createPaged(data, id = 1) {
+        var html = '';
+
+        for (var i = 1; i <= data.countPages + 1; i++) {
+            if (i == id) 
+                html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+            else 
+                html += `<li class="page-item"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
+            
+        }
+        $('#page').append(html);
+    }
+
+    initTable()
+
+    function removeElements() {
+        $(".dynamic").remove();
+        $(".page-item").remove();
+    }
+
+    $.ajax({
+        type: "GET",
+        url: `@Url.Action("GetTotalInvestiment", "InvestimentUser")`,
+        dataType: "json",
+        success: function (data) {
+            $('#subtotal').append(`R$ ${data.x}`);
+            $('#load-total').css('display', 'none');
+        }
+    });
+
+    function initTable() {
+        
+        removeElements();
+
+        $.ajax({
+            type: "GET",
+            url: `@Url.Action("TableHistorico", "InvestimentUser")?Page=null&Id=${$('#InvestimentUser_Id').val()}`,
+            dataType: "json",
+            success: function (data) {
+                createTable(data);
+                createPaged(data);
+                $('#load').css('display', 'none');
+            }
+        });
+    }
+
+    $(document).on('click', '.page-link', function () {
+        removeElements();
+
+        var id = $(this).attr('id').split('-')[1];
+
+        $('#load').css('display', 'inline-block');
+        $.ajax({
+            type: "GET",
+            url: `@Url.Action("TableHistorico", "InvestimentUser")?Page=${id}&Id=${$('#InvestimentUser_Id').val()}`,
+            dataType: "json",
+            success: function (data) {
+                createTable(data);
+                createPaged(data,id);
+                $('#load').css('display', 'none');
+            }
+        });
+    });
+
+    function createTable(data) {
+        var table = '';
+        for (var i = 0; i < data.list.length; i++) {
+            table += '<tr class="dynamic">';
+            table += `<td> ${data.list[i].Email}</td>`;
+            table += '<td>'
+            table += `<a href="@Url.Action("Details","InvestimentUser")?email=${data.list[i].Email}"><i class="fa fa-info" aria-hidden="true" style='color:black'></i></a>&nbsp&nbsp`;
+            table += '</td>';
+            table += '</tr>';
+        }
+        $('#table').append(table);
+    }
+</script>
