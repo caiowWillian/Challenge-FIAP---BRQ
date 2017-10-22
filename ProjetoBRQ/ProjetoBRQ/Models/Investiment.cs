@@ -63,5 +63,13 @@ namespace ProjetoBRQ.Models
 
         [NotMapped]
         public float? Total { get; set; }
+
+        public string NameWithValue
+        {
+            get
+            {
+                return Name + " - R$ "+Value;
+            }
+        }
     }
 }

@@ -43,7 +43,7 @@ namespace ProjetoBRQ.Controllers
         //GET: InvestimentUser/Create
         public ActionResult Create()
         {
-            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "Name");
+            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "NameWithValue");
             ViewBag.CurrentUser = User.Identity.Name;
 
             return View();
@@ -56,7 +56,7 @@ namespace ProjetoBRQ.Controllers
         {
             string result = "";
             model.UserGUID = User.Identity.Name;
-            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "Name");
+            ViewBag.InvestimentId = new SelectList(Db.Investiment.Where(x => !x.Deleted && x.Stock > 0).OrderBy(x => x.Id), "Id", "NameWithValue");
             if (!ModelState.IsValid)
                 return View(model);
 
