@@ -19,7 +19,7 @@ namespace ProjetoBRQ.Controllers
             return View();
         }
 
-        [Authorize(Roles = "ADMIN")]
+        [Authorize]
         public ActionResult Details(string email)
         {
             IList<Investiment> l = new List<Investiment>();
@@ -149,7 +149,7 @@ namespace ProjetoBRQ.Controllers
             return View();
         }
 
-        [Authorize(Roles = "ADMIN")]
+        [Authorize]
         public ActionResult Historico()
         {
             return View();

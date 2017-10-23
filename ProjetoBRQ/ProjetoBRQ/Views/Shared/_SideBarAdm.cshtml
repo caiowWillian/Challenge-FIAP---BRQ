@@ -98,7 +98,16 @@
                             @Html.ActionLink("Investir", "Create", "InvestimentUser", routeValues: null, htmlAttributes: new { id = "createInvestimentUserLink" })
                         </li>
                         <li>
-                            @Html.ActionLink("Histórico", "Historico", "InvestimentUser", routeValues: null, htmlAttributes: new { id = "historicoInvestimentUserLink" })
+                            @if (User.IsInRole("ADMIN"))
+                            {
+                                @Html.ActionLink("Histórico", "Historico", "InvestimentUser", routeValues: null, htmlAttributes: new { id = "historicoInvestimentUserLink" })
+                            }
+                            else
+                            {
+                                @Html.ActionLink("Histórico", "Details", "InvestimentUser", new { email = User.Identity.Name }, null );
+                            }
+
+
                         </li>
                     </ul>
                 </li>
