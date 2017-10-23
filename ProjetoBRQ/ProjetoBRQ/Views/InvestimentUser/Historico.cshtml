@@ -63,7 +63,7 @@
         url: `@Url.Action("GetTotalInvestiment", "InvestimentUser")`,
         dataType: "json",
         success: function (data) {
-            $('#subtotal').append(`R$ ${data.x}`);
+            $('#subtotal').append(`${(data.x).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}`);
             $('#load-total').css('display', 'none');
         }
     });

@@ -132,7 +132,7 @@
     function createPaged(data, id = 1) {
         var html = '';
 
-        for (var i = 1; i <= data.countPages + 1; i++) {
+        for (var i = 1; i <= data.countPages; i++) {
             if (i == id) {
                 html += `<li class="page-item active"><a class="page-link" href="#" id="paged-${i}">${i}</a></li>`;
                 //html += `<a class='paged' href='#' style='background-color:blue' id="paged-${i}"></a>`;
